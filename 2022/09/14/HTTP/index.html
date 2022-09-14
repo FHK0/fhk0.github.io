@@ -1,0 +1,331 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>HTTP | fhk0</title><meta name="author" content="fhk0"><meta name="copyright" content="fhk0"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HTTPRFC 2616 - Hypertext Transfer Protocol – HTTP&#x2F;1.1 Introduction &amp; TerminolojiHTTP bir uygulama düzeyi (application-level) protokolüdür. HTTP, World-Wide Web (WWW) aracılığıyla 1990’dan ber">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP">
+<meta property="og:url" content="https://fhk0.github.io/2022/09/14/HTTP/index.html">
+<meta property="og:site_name" content="fhk0">
+<meta property="og:description" content="HTTPRFC 2616 - Hypertext Transfer Protocol – HTTP&#x2F;1.1 Introduction &amp; TerminolojiHTTP bir uygulama düzeyi (application-level) protokolüdür. HTTP, World-Wide Web (WWW) aracılığıyla 1990’dan ber">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fhk0.github.io/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/http_htbacademy.jpg">
+<meta property="article:published_time" content="2022-09-14T18:18:44.000Z">
+<meta property="article:modified_time" content="2022-09-14T19:23:21.901Z">
+<meta property="article:author" content="fhk0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fhk0.github.io/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/http_htbacademy.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://fhk0.github.io/2022/09/14/HTTP/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HTTP',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-14 22:23:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/mrrobot.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/http_htbacademy.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">fhk0</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HTTP</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-09-14T18:18:44.000Z" title="Created 2022-09-14 21:18:44">2022-09-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-14T19:23:21.901Z" title="Updated 2022-09-14 22:23:21">2022-09-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/">HTB Academy</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/Bug-Bounty-Hunter/">Bug Bounty Hunter</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HTTP"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h1><p><a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc2616">RFC 2616 - Hypertext Transfer Protocol – HTTP&#x2F;1.1</a></p>
+<h1 id="Introduction-amp-Terminoloji"><a href="#Introduction-amp-Terminoloji" class="headerlink" title="Introduction &amp; Terminoloji"></a>Introduction &amp; Terminoloji</h1><p>HTTP bir uygulama düzeyi (application-level) protokolüdür. HTTP, World-Wide Web (WWW) aracılığıyla 1990’dan beri kullanım halindedir. HTTP’nin ilk versiyonu, ham verinin internet boyunca gönderilmesini sağlayan HTTP&#x2F;0.9 protokolüdür.</p>
+<p>HTTP, kullanıcı aracıları (user agents) ile proxy’ler&#x2F;ağ geçitleri (proxies&#x2F;gateways) arasındaki iletişim için genel bir protokol olarak kullanılır. Bu şekilde HTTP, çeşitli uygulamalardan sağlanan kaynaklara temel hiper ortam (hypermedia) erişimi sağlar.</p>
+<div class="note info flat"><p>🌐 <strong>Protocol Nedir?:</strong> Protokol, elektronik cihazların birbirleriyle iletişim kurmasını sağlayan standart bir kurallar dizisidir. Bu kurallar, ne tür verilerin iletilebileceğini, veri göndermek ve almak için hangi komutların kullanıldığını ve veri aktarımlarının nasıl onaylandığını içerir. Bir protokolü konuşma dili olarak düşünebilirsiniz. Her dilin kendine özgü kuralları ve sözcük dağarcığı vardır. Benzer şekilde, iki donanım aygıtı aynı protokolü destekliyorsa, üretici veya aygıt türünden bağımsız olarak birbirleriyle iletişim kurabilirler.</p>
+</div>
+
+<div class="note info flat"><p>🌐 <strong>User Agent nedir?:</strong> Bir istek başlatan istemcilerdir. Bunlar genellikle tarayıcılar, editörler, örümcekler (web’de dolaşan robotlar) veya diğer son kullanıcı araçlarıdır.</p>
+</div>
+
+<div class="note info flat"><p>🌐 <strong>Peki ya Client ve Server?: Client</strong>, istek göndermek amacıyla bağlantılar kuran bir programdır. <strong>Server</strong> ise yanıtları geri göndererek istekleri yerine getirmek için bağlantıları kabul eden bir uygulama programı. Herhangi bir program hem istemci hem de sunucu olabilir.</p>
+</div>
+
+<div class="note info flat"><p>🌐 <strong>Proxy Nedir?:  Proxy</strong> kelimesinin Türkçe‘deki anlamı <strong>vekil sunucu</strong> olarak geçmektedir. Bu şekilde belirtilmesinin sebebi ise internet üzerinde bir web sitesini görüntülemek istediğimizde doğrudan değil, bir ara sunucu aracılığıyla ulaşılmak istenilen bilginin bir kopyasını size farklı bir pencere üzerinden yeniden gösterilmesi gibi düşünülebilir. Tarayıcı üzerinden proxy sunucusu kullanarak bir internet sitesine bağlanmamız, bizim doğrudan değil de, bir köprü aracılığıyla siteye eriştiğimiz anlamına gelmektedir. Araya bir ek bağlantı daha sağlanıp biz bir proxy sunucusuna istek gönderiyoruz. Proxy ise erişmek istediğimiz yerde ki bilgiyi alıyor ve ardından bize gösteriyor. Toplamak gerekirse proxy sunucu siteye girer oraya yer alan verileri görüntüleri çeker ve bize gösterir. Bu sayede bizim ip adresimiz yada bağlı olduğumuz ağdaki engellemeler gibi unsurlardan korumuş oluruz.</p>
+<p><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/Untitled.png" alt="Untitled"></p>
+</div>
+
+<div class="note info flat"><p>🌐 <strong>Gateway Nedir?:</strong> Ağ geçidi (Gateway), iletişimleri bir protokolden diğerine çevirerek farklı ağları birbirine bağlayan bir cihaz veya düğümdür. <em><strong>Ağ geçidi, telekomünikasyonda kullanılan, farklı iletim protokollerine sahip iki ağı birbirine bağlayan bir ağ düğümüdür.</strong></em> Ağ geçitleri, tüm verilerin yönlendirilmeden önce ağ geçidinden geçmesi veya ağ geçidi ile iletişim kurması gerektiğinden bir ağ için giriş ve çıkış noktası görevi görür. Ağ geçitleri temelde iki protokol arasındaki uyumluluğu kolaylaştıran ve (OSI) modelinin herhangi bir katmanında çalışan protokol dönüştürücülerdir.</p>
+</div>
+
+<div class="note info flat"><p>🌐 <strong>Pekiii… Gateway ile Proxy Farkları Nelerdir?:</strong> Proxy’ler aynı protokolü konuşan iki veya daha fazla uygulamayı birbirine bağlarken, ağ geçitleri farklı protokoller konuşan iki veya daha fazla tarafı birbirine bağlar. Şekil 6-2a’daki aracı cihaz bir HTTP proxy’sidir, çünkü proxy hem istemciye hem de sunucuya HTTP konuşur. Şekil 6-2b’deki aracı cihaz bir HTTP&#x2F;POP ağ geçididir, çünkü bir HTTP ön ucunu bir POP e-posta arka ucuna bağlar. Ağ geçidi, kullanıcının e-postayı HTTP aracılığıyla okumasını sağlamak için web işlemlerini uygun POP işlemlerine dönüştürür. Yahoo! gibi web tabanlı e-posta programları Mail ve MSN Hotmail, HTTP e-posta ağ geçitleridir.</p>
+<p><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/Untitled%201.png" alt="Untitled"></p>
+</div>
+
+<h1 id="HTTP’ye-Genel-Bir-Bakis"><a href="#HTTP’ye-Genel-Bir-Bakis" class="headerlink" title="HTTP’ye Genel Bir Bakış"></a>HTTP’ye Genel Bir Bakış</h1><p>HTTP, HTML belgeleri gibi kaynakları getirmek için kullanılan bir protokoldür. Web üzerindeki herhangi bir veri alışverişinin temelidir ve isteklerin alıcı tarafından, genellikle Web tarayıcısı tarafından başlatıldığı anlamına gelen bir istemci-sunucu protokolüdür. Komple bir doküman, örneğin metin, resimler, videolar, komut dosyaları ve daha fazlası gibi getirilen farklı alt belgelerden yeniden oluşturulur. Aşağıdaki resim bunun bir örneğidir.</p>
+<p><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/Untitled%202.png" alt="Untitled"></p>
+<p>Uygulama seviyesinde bir protokoldür. TCP üzerinden ya da TLS-şifreli TCP bağlantısı üzerinden iletişim kurar.</p>
+<div class="note info flat"><p>🌐 Due to its extensibility, it is used to not only fetch hypertext documents, but also images and videos or to post content to servers, like with HTML form results. HTTP can also be used to fetch parts of documents to update Web pages on demand.</p>
+</div>
+
+<h2 id="Client-Server-Iliskisi"><a href="#Client-Server-Iliskisi" class="headerlink" title="Client-Server İlişkisi"></a>Client-Server İlişkisi</h2><p>HTTP bir istemci-sunucu protokolüdür: istekler bir varlık, kullanıcı aracısı (veya onun adına bir proxy) tarafından gönderilir. Kullanıcı aracısı çoğu zaman bir Web tarayıcısıdır, ancak herhangi bir şey olabilir, örneğin bir arama motoru dizinini doldurmak ve sürdürmek için Web’i tarayan bir robot olabilir.</p>
+<p><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/Untitled%203.png" alt="Untitled"></p>
+<p>Gerçekte, bir tarayıcı ile isteği işleyen sunucu arasında daha fazla uç nokta vardır: routerlar, modemler ve daha fazlası… Web’in katmanlı tasarımı sayesinde bunlar ağ ve taşıma katmanlarında gizlidir. HTTP, uygulama katmanındadır (application-level) yani en üsttedir. </p>
+<h2 id="Stateless-Hali"><a href="#Stateless-Hali" class="headerlink" title="Stateless Hali"></a>Stateless Hali</h2><p>HTTP durumsuzdur: aynı bağlantı üzerinde art arda yürütülen iki istek arasında bağlantı yoktur. Bu, örneğin e-ticaret alışveriş sepetlerini kullanarak belirli sayfalarla tutarlı bir şekilde etkileşime girmeye çalışan kullanıcılar için hemen sorunlu bir durum teşkil edebilir ancak HTTP’nin özü durumsuz olsa da, HTTP tanımlama bilgileri durum bilgisi olan cookie’lerin kullanılmasına izin verir. Başlık genişletilebilirliği kullanılarak, iş akışına HTTP cookie’leri (Türkçesiyle çerezler) eklenir ve aynı bağlamı veya aynı durumu paylaşmak için her HTTP isteğinde oturum oluşturulmasına izin verilir.</p>
+<h2 id="HTTP-Flow"><a href="#HTTP-Flow" class="headerlink" title="HTTP Flow"></a>HTTP Flow</h2><p>Client bir server ile iletişime geçmek istediğinde şu adımları gerçekleştirir:</p>
+<ol>
+<li><strong>TCP Bağlantısı Açılır:</strong> TCP bağlantısı, bir veya birkaç istek göndermek ve bir yanıt almak için kullanılır. İstemci yeni bir bağlantı açabilir, mevcut bir bağlantıyı yeniden kullanabilir veya sunuculara birkaç TCP bağlantısı açabilir.</li>
+<li><strong>HTTP Mesaj Gönderilir:</strong> HTTP mesajları (HTTP&#x2F;2’den önce) insanlar tarafından okunabilir. HTTP&#x2F;2 ile bu basit mesajlar frameler içine alınır, bu da onların doğrudan okunmasını imkansız hale getirir, ancak prensip aynı kalır. Örneğin:</li>
+</ol>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>[developer.mozilla.org](http://developer.mozilla.org/)</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>fr</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>Server Tarafından Gönderilen Yanıt Okunur:</strong></li>
+</ol>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Date</span><span class="punctuation">: </span>Sat, 09 Oct 2010 14:28:02 GMT</span><br><span class="line"><span class="attribute">Server</span><span class="punctuation">: </span>Apache</span><br><span class="line"><span class="attribute">Last-Modified</span><span class="punctuation">: </span>Tue, 01 Dec 2009 20:18:22 GMT</span><br><span class="line"><span class="attribute">ETag</span><span class="punctuation">: </span>&quot;51142bc1-7449-479b075b2891b&quot;</span><br><span class="line"><span class="attribute">Accept-Ranges</span><span class="punctuation">: </span>bytes</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>29769</span><br><span class="line"><span class="attribute">Content-Type</span><span class="punctuation">: </span>text/html</span><br><span class="line">&lt;!DOCTYPE html&gt;… (here come the 29769 bytes of the requested web page)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>Daha Fazla İstek için Bağlantı Yeniden Kullanılır ya da Bağlantıyı Kapatılır.</strong></li>
+</ol>
+<p>HTTP akışının yukarı seviyedeki anatomisine bir göz atalım.</p>
+<p><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/Untitled%204.png" alt="Untitled"></p>
+<p>Bir kullanıcı adresi ilk kez tarayıcıya girdiğinde DNS bu adresi çözümler ve o adrese ait olan IP adresini döndürür. Bir sunucu, IP adresi olmadan iletişim kuramayacağı için tüm alan adlarının bu şekilde çözülmesi gerekir.</p>
+<div class="note info flat"><p>🌐 <strong>Not:</strong> Browser’larımız önce <code>/etc/hosts</code> dosyasına bakarlar. Eğer burada o adrese ait tanımlanmış bir IP adresi varsa onu kullanırlar. Aksi takdirde gidip diğer DNS sunucuları ile iletişime geçerler.</p>
+</div>
+
+<h1 id="HTTP-Request-and-Response"><a href="#HTTP-Request-and-Response" class="headerlink" title="HTTP Request and Response"></a>HTTP Request and Response</h1><h2 id="HTTP-Request"><a href="#HTTP-Request" class="headerlink" title="HTTP Request"></a>HTTP Request</h2><p><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/Untitled%205.png" alt="Untitled"></p>
+<p><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/Untitled%206.png" alt="Untitled"></p>
+<p>• <code>[http://inlanefreight.com/users/login.html](http://inlanefreight.com/users/login.html)</code> adresine yapılan GET isteği yukarıda gösterilmiştir. Burada:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Method</td>
+<td>GET</td>
+<td>The HTTP method or verb, which specifies the type of action to perform. Genelolarak, bir istemci bir kaynağı almak (GET kullanarak) veya bir HTML formunun değerini göndermek (POST kullanarak) ister, ancak diğer durumlarda daha fazla işlem gerekebilir.</td>
+</tr>
+<tr>
+<td>Path</td>
+<td>&#x2F;users&#x2F;login.html</td>
+<td>The path to the resource being accessed. This field can also be suffixed with a query string (e.g. ?username&#x3D;user).</td>
+</tr>
+<tr>
+<td>Version</td>
+<td>HTTP&#x2F;1.1</td>
+<td>The third and final field is used to denote the HTTP version.</td>
+</tr>
+</tbody></table>
+<p>Sonraki satır grubu, Host, User-Agent, Cookie ve diğer birçok olası başlık gibi HTTP başlık değer çiftlerini içerir. Bu başlıklar, bir isteğin çeşitli niteliklerini belirtmek için kullanılır. Başlıklar, sunucunun isteği doğrulaması için gerekli olan yeni bir satırla sonlandırılır. Son olarak, bir istek, istek gövdesi ve verileriyle sona erebilir.</p>
+<h2 id="HTTP-Response"><a href="#HTTP-Response" class="headerlink" title="HTTP Response"></a>HTTP Response</h2><p>Sunucu isteğimizi işlediğinde yanıtını gönderir. Aşağıda örnek bir HTTP yanıtı verilmiştir:</p>
+<p><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/Untitled%207.png" alt="Untitled"></p>
+<p>Bir HTTP yanıtının ilk satırı, boşluklarla ayrılmış iki alan içerir. Birincisi HTTP sürümüdür (ör. HTTP&#x2F;1.1), ikincisi HTTP yanıt kodunu belirtir (ör. 200 OK).</p>
+<p>Yanıt kodları, talebin durumunu belirlemek için kullanılır. İlk satırdan sonra yanıt, HTTP isteğine benzer şekilde başlıklarını listeler.</p>
+<p>Son olarak, yanıt, başlıklardan sonra yeni bir satırla ayrılan bir yanıt gövdesiyle bitebilir. Yanıt gövdesi genellikle HTML kodu olarak tanımlanır. Ancak, JSON gibi diğer kod türleriyle, resimler, stil sayfaları veya komut dosyaları gibi web sitesi kaynaklarıyla ve hatta web sunucusunda barındırılan PDF belgesi gibi bir belgeyle de yanıt verebilir.</p>
+<h1 id="CURL"><a href="#CURL" class="headerlink" title="CURL"></a>CURL</h1><p><strong>Cheat Sheet:</strong></p>
+<table>
+<thead>
+<tr>
+<th>curl -h</th>
+<th>cURL Yardım Menüsü</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>curl inlanefreight.com</td>
+<td>Temel GET İsteği</td>
+</tr>
+<tr>
+<td>curl -s -O inlanefreight.com&#x2F;index.html</td>
+<td>Silent bir şekilde sayfayı indir</td>
+</tr>
+<tr>
+<td>curl -k <a target="_blank" rel="noopener" href="https://inlanefreight.com/">https://inlanefreight.com</a></td>
+<td>Skip HTTPS (SSL) certificate validation</td>
+</tr>
+<tr>
+<td>curl inlanefreight.com -v</td>
+<td>Print full HTTP request&#x2F;response details</td>
+</tr>
+<tr>
+<td>curl -I <a target="_blank" rel="noopener" href="https://www.inlanefreight.com/">https://www.inlanefreight.com</a></td>
+<td>Send HEAD request (only prints response headers)</td>
+</tr>
+<tr>
+<td>curl -i <a target="_blank" rel="noopener" href="https://www.inlanefreight.com/">https://www.inlanefreight.com</a></td>
+<td>Print response headers and response body</td>
+</tr>
+<tr>
+<td>curl <a target="_blank" rel="noopener" href="https://www.inlanefreight.com/">https://www.inlanefreight.com</a> -A ‘Mozilla&#x2F;5.0’</td>
+<td>Set User-Agent header</td>
+</tr>
+<tr>
+<td>curl -u admin:admin http:&#x2F;&#x2F;<SERVER_IP>:<PORT>&#x2F;</td>
+<td>Set HTTP basic authorization credentials</td>
+</tr>
+<tr>
+<td>curl <a href="http://admin:admin@">http://admin:admin@</a><SERVER_IP>:<PORT>&#x2F;</td>
+<td>Pass HTTP basic authorization credentials in the URL</td>
+</tr>
+<tr>
+<td>curl -H ‘Authorization: Basic YWRtaW46YWRtaW4&#x3D;’ http:&#x2F;&#x2F;<SERVER_IP>:<PORT>&#x2F;</td>
+<td>Set request header</td>
+</tr>
+<tr>
+<td>curl ‘http:&#x2F;&#x2F;<SERVER_IP>:<PORT>&#x2F;search.php?search&#x3D;le’</td>
+<td>Pass GET parameters</td>
+</tr>
+<tr>
+<td>curl -X POST -d ‘username&#x3D;admin&amp;password&#x3D;admin’ http:&#x2F;&#x2F;<SERVER_IP>:<PORT>&#x2F;</td>
+<td>Send POST request with POST data</td>
+</tr>
+<tr>
+<td>curl -b ‘PHPSESSID&#x3D;c1nsa6op7vtk7kdis7bcnbadf1’ http:&#x2F;&#x2F;<SERVER_IP>:<PORT>&#x2F;</td>
+<td>Set request cookies</td>
+</tr>
+<tr>
+<td>curl -X POST -d ‘{“search”:”london”}’ -H ‘Content-Type: application&#x2F;json’ http:&#x2F;&#x2F;<SERVER_IP>:<PORT>&#x2F;search.php</td>
+<td>Send POST request with JSON data</td>
+</tr>
+</tbody></table>
+<h2 id="GET-Islemleri"><a href="#GET-Islemleri" class="headerlink" title="GET İşlemleri"></a>GET İşlemleri</h2><p>Herhangi bir URL’yi kullanarak cURL ile temel bir HTTP isteği gönderebiliriz.</p>
+<p>Eğer bir authorization varsa bunu iki şekilde gerçekleştirebilirsin:</p>
+<ul>
+<li>Ya flag ile kullanıcı adı ve şifreyi belirtip giriş yaparsın:</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FHK@htb[/htb]$ curl -u admin:admin http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="built_in">head</span>&gt;</span><br><span class="line">...SNIP...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Ya da bu giriş bilgilerini URL’ye eklersin.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FHK@htb[/htb]$ curl http://admin:admin@&lt;SERVER_IP&gt;:&lt;PORT&gt;/</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="built_in">head</span>&gt;</span><br><span class="line">...SNIP...</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Diyelim ki <code>&gt; Authorization: Basic YWRtaW46YWRtaW4=</code> şeklinde bir ifade gördün. Bu demek oluyor ki bu senin basit bir jetonun. Bu jetonu belirterek artık istediğin şekilde giriş yapabilirsin. Bu belirtme işlemini <code>-H</code> flag’i ile yapabilirsin.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FHK@htb[/htb]$ curl -H <span class="string">&#x27;Authorization: Basic YWRtaW46YWRtaW4=&#x27;</span> http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="built_in">head</span>&gt;</span><br><span class="line">...SNIP...</span><br></pre></td></tr></table></figure>
+
+<h2 id="POST-Islemleri"><a href="#POST-Islemleri" class="headerlink" title="POST İşlemleri"></a>POST İşlemleri</h2><p>Web uygulamaları dosyaları aktarması veya kullanıcı parametrelerini URL’den taşıması gerektiğinde, <code>POST</code> isteklerini kullanırlar.</p>
+<div class="note info flat"><p>🌐 <strong>İpucu:</strong> Birçok oturum açma formu, kimliği doğrulandıktan sonra bizi farklı bir sayfaya yönlendirir (örn. &#x2F;dashboard.php). Yönlendirmeyi cURL ile takip etmek istiyorsak <code>-L</code> bayrağını kullanabiliriz.</p>
+</div>
+
+<p>Giriş formlarındaki kaydımızı sürdürmek ve her seferinde giriş yapmakla uğraşmamak için iki yöntem vardır:</p>
+<ul>
+<li>-b flag’i ile çerezi belirtmek.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FHK@htb[/htb]$ curl -b <span class="string">&#x27;PHPSESSID=c1nsa6op7vtk7kdis7bcnbadf1&#x27;</span> http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</span><br><span class="line"></span><br><span class="line">...SNIP...</span><br><span class="line">        &lt;em&gt;Type a city name and hit &lt;strong&gt;Enter&lt;/strong&gt;&lt;/em&gt;</span><br><span class="line">...SNIP...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-H flag’i ile header’i belirterek çerezi belirtmek.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">&#x27;Cookie: PHPSESSID=c1nsa6op7vtk7kdis7bcnbadf1&#x27;</span> http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/</span><br></pre></td></tr></table></figure>
+
+<p>Şimdi aşağıdaki komutu inceleyelim:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -d <span class="string">&#x27;&#123;&quot;search&quot;:&quot;flag&quot;&#125;&#x27;</span> -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> -H <span class="string">&#x27;Cookie: PHPSESSID=8gb2f42pm21l66f57lm7sfb62i&#x27;</span> [http://68.183.36.105:32270/search.php](http://68.183.36.105:32270/search.php)</span><br></pre></td></tr></table></figure>
+
+<p>Post olduğunu -X POST olarak belirttikten sonra aramak istediğimiz veriyi <code>-d</code> flag’i ile göstererek uygun formatta aratıyoruz. Bu uygun formatı browser tools ile görebiliriz. Ardından JSON formatında olduğu için bu tipi de <code>-H</code> ile header göstererek belirtiyoruz. Tekrardan bir başka header tanımlaması ile de cookie’yi belirtiyoruz ki giriş yapmış olalım. En sonda da ulaşmak istediğimiz sayfayı barındıran adresi girip komutu çalıştırıyoruz.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://fhk0.github.io">fhk0</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://fhk0.github.io/2022/09/14/HTTP/">https://fhk0.github.io/2022/09/14/HTTP/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/http_htbacademy.jpg" data-sites="facebook, twitter, linkedin"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/09/13/Lab-Username-enumeration-via-different-responses/"><img class="next-cover" src="/img/auth.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Lab: Username enumeration via different responses</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/mrrobot.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">fhk0</div><div class="author-info__description">Web Application Pentester</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/FHK0"><i class="fab fa-github"></i><span>Follow Me on GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.linkedin.com/in/firathilmikaplan/" target="_blank" title="Linkedin"><i class="fa-brands fa-linkedin"></i></a><a class="social-icon" href="https://medium.com/@fhk0" target="_blank" title="Medium"><i class="fa-brands fa-medium"></i></a><a class="social-icon" href="https://www.youtube.com/channel/UCik9LW_i9-h2NKVrs6180ng" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a class="social-icon" href="https://www.hackerrank.com/fhk0x" target="_blank" title="HackerRank"><i class="fa-brands fa-hackerrank"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Hey! I'm currently solving PortSwigger Labs. I'll share the solutions of them soon.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP"><span class="toc-number">1.</span> <span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction-amp-Terminoloji"><span class="toc-number">2.</span> <span class="toc-text">Introduction &amp; Terminoloji</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP%E2%80%99ye-Genel-Bir-Bakis"><span class="toc-number">3.</span> <span class="toc-text">HTTP’ye Genel Bir Bakış</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Client-Server-Iliskisi"><span class="toc-number">3.1.</span> <span class="toc-text">Client-Server İlişkisi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stateless-Hali"><span class="toc-number">3.2.</span> <span class="toc-text">Stateless Hali</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-Flow"><span class="toc-number">3.3.</span> <span class="toc-text">HTTP Flow</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP-Request-and-Response"><span class="toc-number">4.</span> <span class="toc-text">HTTP Request and Response</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-Request"><span class="toc-number">4.1.</span> <span class="toc-text">HTTP Request</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-Response"><span class="toc-number">4.2.</span> <span class="toc-text">HTTP Response</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CURL"><span class="toc-number">5.</span> <span class="toc-text">CURL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GET-Islemleri"><span class="toc-number">5.1.</span> <span class="toc-text">GET İşlemleri</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POST-Islemleri"><span class="toc-number">5.2.</span> <span class="toc-text">POST İşlemleri</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/14/HTTP/" title="HTTP"><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/http_htbacademy.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTTP"/></a><div class="content"><a class="title" href="/2022/09/14/HTTP/" title="HTTP">HTTP</a><time datetime="2022-09-14T18:18:44.000Z" title="Created 2022-09-14 21:18:44">2022-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/13/Lab-Username-enumeration-via-different-responses/" title="Lab: Username enumeration via different responses"><img src="/img/auth.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lab: Username enumeration via different responses"/></a><div class="content"><a class="title" href="/2022/09/13/Lab-Username-enumeration-via-different-responses/" title="Lab: Username enumeration via different responses">Lab: Username enumeration via different responses</a><time datetime="2022-09-13T15:30:50.000Z" title="Created 2022-09-13 18:30:50">2022-09-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/12/Lab-SQL-injection-UNION-attack-determining-the-number-of-columns-returned-by-the-query/" title="Lab: SQL injection UNION attack, determining the number of columns returned by the query"><img src="/img/sqli.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lab: SQL injection UNION attack, determining the number of columns returned by the query"/></a><div class="content"><a class="title" href="/2022/09/12/Lab-SQL-injection-UNION-attack-determining-the-number-of-columns-returned-by-the-query/" title="Lab: SQL injection UNION attack, determining the number of columns returned by the query">Lab: SQL injection UNION attack, determining the number of columns returned by the query</a><time datetime="2022-09-12T14:23:15.000Z" title="Created 2022-09-12 17:23:15">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/11/Lab-SQL-injection-vulnerability-allowing-login-bypass/" title="Lab: SQL injection vulnerability allowing login bypass"><img src="/img/sqli.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lab: SQL injection vulnerability allowing login bypass"/></a><div class="content"><a class="title" href="/2022/09/11/Lab-SQL-injection-vulnerability-allowing-login-bypass/" title="Lab: SQL injection vulnerability allowing login bypass">Lab: SQL injection vulnerability allowing login bypass</a><time datetime="2022-09-11T18:53:43.000Z" title="Created 2022-09-11 21:53:43">2022-09-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/08/Lab-SQL-injection-vulnerability-in-WHERE-clause-allowing-retrieval-of-hidden-data/" title="Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data"><img src="/img/sqli.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data"/></a><div class="content"><a class="title" href="/2022/09/08/Lab-SQL-injection-vulnerability-in-WHERE-clause-allowing-retrieval-of-hidden-data/" title="Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data">Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data</a><time datetime="2022-09-08T12:34:28.000Z" title="Created 2022-09-08 15:34:28">2022-09-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By fhk0</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,0" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

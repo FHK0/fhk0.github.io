@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Web Proxy | fhk0</title><meta name="author" content="fhk0"><meta name="copyright" content="fhk0"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Burp Suite KullanımıInterceptFoxyProxy’den proxy ayarını değiştirmeyi unutma! Intercept kısmında giden ve gelen http isteklerini görüntüleyebiliriz.   Daha öncelerden ele aldığımız bilgileri burada da">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web Proxy">
+<meta property="og:url" content="https://fhk0.github.io/2022/09/14/Web-Proxy/index.html">
+<meta property="og:site_name" content="fhk0">
+<meta property="og:description" content="Burp Suite KullanımıInterceptFoxyProxy’den proxy ayarını değiştirmeyi unutma! Intercept kısmında giden ve gelen http isteklerini görüntüleyebiliriz.   Daha öncelerden ele aldığımız bilgileri burada da">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fhk0.github.io/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/webproxy_htbacademy.jpg">
+<meta property="article:published_time" content="2022-09-14T19:31:29.000Z">
+<meta property="article:modified_time" content="2022-09-14T19:42:18.516Z">
+<meta property="article:author" content="fhk0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fhk0.github.io/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/webproxy_htbacademy.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://fhk0.github.io/2022/09/14/Web-Proxy/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Web Proxy',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-14 22:42:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/mrrobot.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/webproxy_htbacademy.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">fhk0</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Web Proxy</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-09-14T19:31:29.000Z" title="Created 2022-09-14 22:31:29">2022-09-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-14T19:42:18.516Z" title="Updated 2022-09-14 22:42:18">2022-09-14</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Web Proxy"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Burp-Suite-Kullanimi"><a href="#Burp-Suite-Kullanimi" class="headerlink" title="Burp Suite Kullanımı"></a>Burp Suite Kullanımı</h1><h2 id="Intercept"><a href="#Intercept" class="headerlink" title="Intercept"></a>Intercept</h2><p>FoxyProxy’den proxy ayarını değiştirmeyi unutma!</p>
+<p>Intercept kısmında giden ve gelen http isteklerini görüntüleyebiliriz. </p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled.png" alt="Untitled"></p>
+<p>Daha öncelerden ele aldığımız bilgileri burada da görebiliriz. Şimdi burada standart header’lerin aksine yeni bir başlık görüyoruz ki bu <code>ip</code> kısmıdır. Burada sayfadaki belirttiğimiz ip adresine yönelik bir ping’leme yapıldığı açıktır. Biz buradaki değeri linux komutlarını kullanarak değiştireceğiz. Böylece içeriğe erişmiş olacağız.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%201.png" alt="Untitled"></p>
+<p>Bunun için ip kısmını <code>;</code> ile kapattıktan sonra yeni komutumuzu girer ve onu da kapatırız.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%202.png" alt="Untitled"></p>
+<p>Yukarıdaki resimde de görüldüğü üzere success.txt döndürüldüğü sağda gözüküyor ve solda da ls komutumuzun bir sonucu olarak dizindeki dosyaları görüyoruz. Aradığımız dosya flag.txt olduğunu için şimdi dosyayı açmak isteyelim.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%203.png" alt="Untitled"></p>
+<p>Ve sonuç olarak flag’i elde ettik:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%204.png" alt="Untitled"></p>
+<h2 id="Intercepting-Responses"><a href="#Intercepting-Responses" class="headerlink" title="Intercepting Responses"></a>Intercepting Responses</h2><p><code>Diyelim ki elinde yalnızca sayı girmene izin veren bir kutucuk var ama sen oraya harf girmek istiyorsun peki o zaman ne yapmalısın?</code>  Güzel soru. Önceki alıştırmamızda, IP alanı yalnızca sayısal değerler girmemize izin veriyordu. Yanıtı tarayıcımıza ulaşmadan önce durdurursak, herhangi bir değeri kabul edecek şekilde düzenleyebiliriz, bu da en son kullandığımız payload’ı doğrudan girmemizi sağlayacaktır. Yani bu demek oluyor ki dönen cevabı da intercept edeceğiz. </p>
+<p>Burp’te bunu yapmak için şu ayarlara sahip olmak gerekir:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%205.png" alt="Untitled"></p>
+<p>Burp’ta, (Proxy&gt;Seçenekler) seçeneğine giderek ve Intercept Server Responses altında Intercept Response’u etkinleştirerek yanıt müdahalesini etkinleştirebiliriz. Bundan sonra, istek müdahalesini bir kez daha etkinleştirebilir ve tarayıcımızda [CTRL+SHIFT+R] ile sayfayı yenileyebiliriz (tam yenilemeyi zorlamak için- bu sayede istediğimiz ayar oturur). Burp’a geri döndüğümüzde, ele geçirilen isteği görürüz ve ileriye tıklayabiliriz. İsteği ilettiğimizde, ele geçirilen yanıtımızı göreceğiz:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%206.png" alt="Untitled"></p>
+<p>Bak 127.0.0. kısmının altındaki <code>input type=”number”</code> kısmı var. İşte bizim dert ettiğimiz kısım burasıydı. Yalnızca sayı girmemizin sebebi buradaki ‘number’ belirteciydi. Şimdi burayı isteğimize göre düzenleyelim. </p>
+<ol start="27">
+<li>satırdaki <code>type=&quot;number&quot;</code> değerini <code>type=&quot;text&quot;</code> olarak değiştirmeyi deneyelim, bu istediğimiz herhangi bir değeri yazabilmemizi sağlayacak. Ayrıca maxlength&#x3D;”3” değerini maxlength&#x3D;”100” olarak değiştireceğiz, böylece daha uzun bir şeyler yazabiliriz:</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;ip&quot;</span> <span class="attr">name</span>=<span class="string">&quot;ip&quot;</span> <span class="attr">min</span>=<span class="string">&quot;1&quot;</span> <span class="attr">max</span>=<span class="string">&quot;255&quot;</span> <span class="attr">maxlength</span>=<span class="string">&quot;100&quot;</span><span class="attr">oninput</span>=<span class="string">&quot;javascript: if (this.value.length &gt; this.maxLength) this.value = this.value.slice(0, this.maxLength);&quot;</span><span class="attr">required</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Şimdi, tekrar forward’ladığımızda, düzenlenmiş yanıtı incelemek için Firefox’a geri dönebiliriz. Bak işte şimdi artık istediğimiz değeri girebiliyoruz.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%207.png" alt="Untitled"></p>
+<p>Bu sayede web sitelerindeki etkinleştirilmemiş butonları kullanabiliriz. </p>
+<h2 id="Otomatik-Modifikasyon"><a href="#Otomatik-Modifikasyon" class="headerlink" title="Otomatik Modifikasyon"></a>Otomatik Modifikasyon</h2><p>Diyelim ki bazı User-Agent’lar engelleniyor ve sen bu engellenenlerden bir tanesisin. Her seferinde elinle teker teker her isteği değiştirecek misin? Tabii ki hayır bu çok zahmetli. Onun yerine gidip bir şeyleri otomatize hale getireceksin. Bunun için Burp’ın Match and Replace özelliğini kullanacağız.</p>
+<p>(Proxy&gt;Seçenekler&gt;Eşleştir ve Değiştir) seçeneğine gidip Burp’ta Ekle’ye tıklayabiliriz. Aşağıdaki ekran görüntüsünün gösterdiği şekilde seçenekleri ayarlayacağız:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%208.png" alt="Untitled"></p>
+<table>
+<thead>
+<tr>
+<th>Type: Request header</th>
+<th>Since the change we want to make will be in the request header and not in its body.</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Match: ^User-Agent.*$</td>
+<td>The regex pattern that matches the entire line with User-Agent in it.</td>
+</tr>
+<tr>
+<td>Replace: User-Agent: HackTheBox Agent 1.0</td>
+<td>This is the value that will replace the line we matched above.</td>
+</tr>
+<tr>
+<td>Regex match: True</td>
+<td>We don’t know the exact User-Agent string we want to replace, so we’ll use regex to match any value that matches the pattern we specified above.</td>
+</tr>
+</tbody></table>
+<p>Yukarıdaki seçenekleri girip Tamam’ı tıkladığımızda, yeni Eşleştir ve Değiştir seçeneğimiz eklenecek ve etkinleştirilecek ve isteklerimizde otomatik olarak User-Agent başlığını yeni User-Agent ile değiştirmeye başlayacaktır. Önceden yapılandırılmış Burp tarayıcısını kullanarak herhangi bir web sitesini ziyaret ederek ve ele geçirilen isteği inceleyerek bunu doğrulayabiliriz. Kullanıcı Aracımızın gerçekten otomatik olarak değiştirildiğini göreceğiz:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%209.png" alt="Untitled"></p>
+<h2 id="Otomatik-Cevap-Modifikasyonu"><a href="#Otomatik-Cevap-Modifikasyonu" class="headerlink" title="Otomatik Cevap Modifikasyonu"></a>Otomatik Cevap Modifikasyonu</h2><p>Evet şimdi de gelen cevapları otomatik olarak modifiye etmek istiyoruz diyelim. Buna bir örnek olarak her seferinde number kabul eden kutucuğun bu özelliğini ortadan kaldırarak onu text kabul eden bir hale bürümek istediğimizi söyleyelim. Her seferinde tek tek elimizle mü düzelteceğiz tabii ki hayır. Bunun için yine benzer işlemler yapacağız:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2010.png" alt="Untitled"></p>
+<p>İşlem bu kadar. Bu sayede artık her number gördüğü yere text yerleştirecek. Regex Match’i false yaptığımıza da dikkat çekmek isterim. Her gördüğü benzer yere bu işlemi uygulasın istemiyoruz.</p>
+<h2 id="Istek-Tekrarlari"><a href="#Istek-Tekrarlari" class="headerlink" title="İstek Tekrarları"></a>İstek Tekrarları</h2><p>Tekrarlayan işlemleri manuel olarak tek tek yapmak büyük bir zaman ve enerji kaybı. Burp yine bu konuda da yardımımıza yetişiyor. İstek tekrarı, daha önce web proxy’sinden geçen herhangi bir web isteğini yeniden göndermemize olanak tanır. Bu, herhangi bir istekte göndermeden önce hızlı değişiklikler yapmamıza ve ardından her bir isteği engellemeden ve değiştirmeden araçlarımız içinde yanıt almamıza olanak tanır.</p>
+<p>Başlangıç olarak proxy geçmişine (<code>Proxy&gt;HTTP History</code>) üzerinden bir göz atalım:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2011.png" alt="Untitled"></p>
+<p>Geçmişteki herhangi bir isteğe tıklarsak, ayrıntıları gösterilecektir:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2012.png" alt="Untitled"></p>
+<p>Evet bu istekleri şimdi asıl işleme sokacağımız yere göndereceğiz yani <code>Repeater’a.</code> Tekrarlayıcı (Repeater) sekmesine göndermek için Burp’ta [CTRL+R]’ye tıklayabiliriz ve ardından Tekrarlayıcı sekmesine gidebilir veya doğrudan gitmek için [CTRL+SHIFT+R]’ye tıklayabiliriz. Tekrarlayıcı’ya girdikten sonra, isteği göndermek için Send’e tıklayabiliriz:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2013.png" alt="Untitled"></p>
+<p>Değiştirmek istediğimiz metni seçip istediğimiz şeyle değiştirebilir ve ardından tekrar göndermek için Gönder düğmesine tıklayabiliriz:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2014.png" alt="Untitled"></p>
+<hr>
+<p>Şimdi örnek bir case çalışmasını inceleyelim. Ben öncelikle yalnızca number kabul eden kısma yazı yazabilmek istiyorum. O yüzden de önce proxy &gt; options kısmından <code>Intercept Server Responses</code> alanını etkinleştirdim. Ardından gelen cevapta number kısmını text ile değiştirdim ve max length’i de 100’e ayarladım. Şimdi bana başka bir flag’i bulmamı söyledi. Tamam bunun için bir şekilde flag dosyalarını aratmalıyım ki bulabileyim. Sürekli bir arama yapacağım için Repeater’a bu bağlantıyı gönderdim ve işlemlerimi orada devam ettireceğim. <code>Peki nasıl etkili bir şekilde arama yapabilirim?</code></p>
+<ul>
+<li>İsmi flag olabilir ya da içinde flag geçiyor olabilir. Veya bir .txt dosyası olabilir. Ya da hepsi birden olabilir. Şu şekilde bir arama yapalım bakalım:</li>
+</ul>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2015.png" alt="Untitled"></p>
+<p>Burada dikkat etmemiz gereken find komutundan sonra <code>/</code> kullanmış olmam yani root’dan itibaren arama yap demiş oluyorum. Tipinin bir dosya olduğunu belirtiyorum ve ismini de flag.txt olarak ayarlıyorum. İsmi belirtirken tırnak işaretleri içerisine almayı unutma. URL encode yapıyorum <code>(CTRL + U)</code> ve gönderiyorum.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2016.png" alt="Untitled"></p>
+<p>İki adet flag dosyası var. Bizim daha öncelerden elde ettiğimiz flag dosyası 13. satırdaki olandı. Çünkü biz işlemlerimizi &#x2F;var&#x2F;www&#x2F;html içerisinde yapıyorduk. Yeni dosyamız ise 14. satırdaki dosya. Şimdi tek yapmamız gereken bu dosyayı okumak:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2017.png" alt="Untitled"></p>
+<p>Görüldüğü üzere yaptıklarımı kaybetmemek adına ; koyup yeni komutumu bir yana yazdım. Son haliyle flag’imizi elde etmiş olduk:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2018.png" alt="Untitled"></p>
+<h2 id="Burp-Intruder"><a href="#Burp-Intruder" class="headerlink" title="Burp Intruder"></a>Burp Intruder</h2><p>Burp Intruder, web uygulamalarına karşı otomatikleştirilmiş payload denemeleri ve brute force işlemlerini sağlayan araçtır. Intruder aracı sayesinde bir isteğin parametreleri değiştirilerek çok sayıda deneme gerçekleştirilebilir.</p>
+<p>Proxy Geçmişine gidebilir, isteğimizi bulabilir, ardından isteğe sağ tıklayıp Davetsiz Misafire Gönder’i seçebilir veya Intruder’a göndermek için [CTRL+I] kısayolunu kullanabiliriz. Ardından sekmesine tıklayarak veya bizi doğrudan Burp Intruder’a götüren [CTRL+SHIFT+I] kısayoluyla Intruder’a gidebiliriz. Bizi şöyle bir pencere karşılar:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2019.png" alt="Untitled"></p>
+<p>İlk sekme olan ‘Target’ta, Intruder’a gönderdiğimiz istekten beslenen fuzzing yapacağımız hedefin detaylarını görüyoruz.</p>
+<p>Şimdi biz bir nevi brute force yaparak istediğimiz sayfanın olup olmadığını araştıracağız tıpkı gobuster ile tarama yapar gibi. </p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2020.png" alt="Untitled"></p>
+<p>Yani o zaman nereyi değiştirmem lazım? Tabii ki DIRECTORY alanını. Bu kısım bize dizinleri döndürür. Eğer o dizin varsa 200 OK yanıtını alırız. Eğer öyle bir dizin yoksa 404 NOT FOUND hatasını alırız. Pekii değişikliği nasıl sağlayacağız? <code>§</code> işareti burada devreye giriyor. Değiştirmek istediğimiz parametreyi <code>§</code> işaretinin arasına alıyoruz. Bu durumda <code>§DIRECTORY§</code> şeklinde bir belirtme yoluna gidiyoruz. Evet şimdi tek bir payload üzerinden ilerleyeceğimiz için <code>Sniper</code> atak türü ile yolumuza devam edelim.</p>
+<p>Yapılandırmamız gereken ilk şey Payload Setidir. Payload seti, identifies the Payload number, depending on the attack type and number of Payloads we used in the Payload Position Pointers:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2021.png" alt="Untitled"></p>
+<p>Biz sniper seçtiğimiz için bizim 1 adet payload setimiz var. Biz wordlist tanımlayacağımız için simple list seçeneğini seçelim.</p>
+<p>Payload Options kısmında ise seçtiğimiz payload type’a göre ayarlar yer almaktadır. Biz simple list seçtiğimiz için burada basitçe liste belirtmemiz yeterlidir.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2022.png" alt="Untitled"></p>
+<p>Payload Processing kısmında, yüklenen wordliste belirli kurallar koyabilmemizi sağlar. Mesela diyelim ki her ifadenin sonuna .html koymak istiyorsun işte onu burada yapabilirsin.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2023.png" alt="Untitled"></p>
+<p>Yukarıda da gösterildiği üzere önce kuralımızı seçeriz ve sonrasında buna uyan regular expression’ı (regex) belirtiriz.</p>
+<h2 id="Ayarlar"><a href="#Ayarlar" class="headerlink" title="Ayarlar"></a>Ayarlar</h2><p>Şimdi ben burada dönen cevaba göre bir ayrıştırmaya gitmek istiyorum. Tamam sonuçlar dönüyor da hangisi benim istediğim? Tabii ki <code>200 OK</code> server cevabı aldığım benim istediğim cevap oluyor çünkü 200 OK demesinin anlamı o sayfanın var olduğunun bir göstergesidir.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2024.png" alt="Untitled"></p>
+<p>Grep - Match kısmına 200 OK cevabımı yerleştirirsek bu işi halletmiş oluruz. Bu sayede dönen cevapta geri kalan değerler önemli olmadan yalnızca spesifik bir bölüm olan 200 OK kısmı ile ilgilendiğimizi belirtmiş oluruz. Alttaki Exclude HTTP headers tikini de kaldırıyoruz çünkü aradığımız cevap halihazırda bir HTTP headerinden gelecek. Ben bu tiki kaldırmazsam o zaman nasıl göreceğim cevabı? Şimdi anlaştık işte.</p>
+<h2 id="Saldiri"><a href="#Saldiri" class="headerlink" title="Saldırı"></a>Saldırı</h2><p>En sonunda her şey hazır olduktan sonra saldırıyı başlatırız. Aşağıdaki resimde de görüldüğü üzere yaptığımız brute force bir sonuç döndürdü ve &#x2F;admin şeklinde bir sayfanın var olduğunu bizlere belirtmekte. Dikkat edersen yanındaki 200 OK sütununda bir tik işareti var. Yani bu o sayfanın var olduğunu belirtmektedir.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2025.png" alt="Untitled"></p>
+<hr>
+<p>Şimdi elimizde bir vaka çalışması var. Bana diyor ki: <code>Use Burp Intruder to fuzz for &#39;.html&#39; files under the /admin directory, to find a file containing the flag.</code> Tamam ben şimdi .html dosyalarını &#x2F;admin dizini içerisinde arayacağım. Peki güzel. Şimdi benim önce bir wordlist bulmam lazım. Acaba hangi wordlist uygun olur diye düşünürken aklıma gelen o modülde belirtileni kullanmak oluyor:</p>
+<p><code>/opt/useful/SecLists/Discovery/Web-Content/common.txt</code> </p>
+<p>Pki bu benim makinemde nerede? Benim makinede ise şurada:</p>
+<p><code>/usr/share/seclists/Discovery/Web-Content/common.txt</code></p>
+<p>Güzel. Şimdi listem hazır olduğuna göre ikinci yapacağım şey bu listenin sonuna .html eklemek. yani atıyorum içerisinde <code>admin</code> yazıyorsa bunu aratırken <code>admin.html</code> şeklinde aratmalı. Peki bunu nasıl yapacağız?</p>
+<p>Dur dur. Bundan önce adım adım ilerleyelim bir. Şimdi önce biz bir siteye ulaşalım. Siteye girdim ve HTTP geçmişinden onu Intruder’a yolladım. Şimdi sırada <code>§</code> işaretini yerine yerleştirmek var. Bunu admin&#x2F; ’den sonraki kısma ekleyelim. </p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2026.png" alt="Untitled"></p>
+<p>Ardından ayarları şu şekilde düzenledim:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2027.png" alt="Untitled"></p>
+<p>Sonrasında grep - match alanını 200 OK belirtecek şekilde ayarlayalım ve exclude ayarını deaktive edelim:</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2028.png" alt="Untitled"></p>
+<p>Şimdi saldırıya hazırız. </p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2029.png" alt="Untitled"></p>
+<p>Ve bummm. İstediğimiz sonucu elde ettik. Aradığımız sayfa &#x2F;admin&#x2F; uzantısının altındaki 2010.html sayfasıymış. İşte bu kadar.</p>
+<hr>
+<p>Bir başka vaka çalışması:</p>
+<p><code>The directory we found above sets the cookie to the md5 hash of the username, as we can see the md5 cookie in the request for the (guest) user. Visit &#39;/skills/&#39; to get a request with a cookie, then try to use ZAP Fuzzer to fuzz the cookie for different md5 hashed usernames to get the flag. Use the &quot;top-usernames-shortlist.txt&quot; wordlist from Seclists.</code></p>
+<p>Benim burada anladığım top-usernames-shortlist.txt dosyasındaki değerleri alıp md5’e çevirip cookie header’lerine brute force yapmak olacak. Eğer 200 OK yanıtını alıyorsam demekki o kullanıcı var ve ben login olabiliyorum demektir. O zaman yapılacaklar listem şöyle:</p>
+<ol>
+<li>Listeyi md5’e çevir ya da her değeri md5’e çevirip öyle dene.</li>
+<li>Cookie üzerinde deneme yap.</li>
+<li>200 OK’e göre sunucu belirle.</li>
+</ol>
+<p>Tamamdır başlıyoruz.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2030.png" alt="Untitled"></p>
+<p>Öncelikle cookie üzerinde işlem yapacağım için <code>§</code> işaretini cookie değerinin başına ve sonuna yerleştirdim. Tek bir değerde değişiklik yapacağım için de atak tipini sniper olarak belirledim.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2031.png" alt="Untitled"></p>
+<p>Sonrasında payload options kısmına <code>/usr/share/seclists/Usernames/top-usernames-shortlist.txt</code> listesini yükledim. Payload processing kısmına ise bu yüklediğim her bir listedeki değeri MD5 Hash’ine çevirmesi için komut verdim. </p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2032.png" alt="Untitled"></p>
+<p>Son olarak da ayarlar sekmesindeki grep - match alanında Welcome eklemesi yaptım. (Aslında önceki taramamda 200 OK yapmıştım ancak her ikisi de oluyor gibi aslında.)</p>
+<p>Buradan sonra hazırlık aşaması tamamlanıyor ve geriye saldırıya başlamak kalıyor.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2033.png" alt="Untitled"></p>
+<p>Yukarıdaki resimde de görüldüğü üzere statülerin hepsi 200 ama LENGTH değerlerinde farklılık var. Modül içerisinde, <code>“tekrarlayan değerlerin arasında farklı length’e sahip olanların istediğimiz değerler olabileceği”</code> ifadesini bize belirttiğini hatırlayarak en üstteki değeri seçtim ve bu <code>ee11cbb19052e40b07aac0ca060c23ee</code> değeri bana <code>user</code> kelimesini döndürmekte. Yani user adında bir kullanıcı daha olduğunu artık biliyoruz. Tek yapmamız gereken repeater’a bu http isteğini yollayıp orada user cookie’sini girmek ve flag’i almak.</p>
+<p><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/Untitled%2034.png" alt="Untitled"></p>
+<p>Evet dönen içerikten flag’imizi elde etmiş olduk.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://fhk0.github.io">fhk0</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://fhk0.github.io/2022/09/14/Web-Proxy/">https://fhk0.github.io/2022/09/14/Web-Proxy/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/webproxy_htbacademy.jpg" data-sites="facebook, twitter, linkedin"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/09/14/HTTP/"><img class="next-cover" src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/http_htbacademy.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">HTTP</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/mrrobot.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">fhk0</div><div class="author-info__description">Web Application Pentester</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/FHK0"><i class="fab fa-github"></i><span>Follow Me on GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.linkedin.com/in/firathilmikaplan/" target="_blank" title="Linkedin"><i class="fa-brands fa-linkedin"></i></a><a class="social-icon" href="https://medium.com/@fhk0" target="_blank" title="Medium"><i class="fa-brands fa-medium"></i></a><a class="social-icon" href="https://www.youtube.com/channel/UCik9LW_i9-h2NKVrs6180ng" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a class="social-icon" href="https://www.hackerrank.com/fhk0x" target="_blank" title="HackerRank"><i class="fa-brands fa-hackerrank"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Hey! I'm currently solving PortSwigger Labs. I'll share the solutions of them soon.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Burp-Suite-Kullanimi"><span class="toc-number">1.</span> <span class="toc-text">Burp Suite Kullanımı</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intercept"><span class="toc-number">1.1.</span> <span class="toc-text">Intercept</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Intercepting-Responses"><span class="toc-number">1.2.</span> <span class="toc-text">Intercepting Responses</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Otomatik-Modifikasyon"><span class="toc-number">1.3.</span> <span class="toc-text">Otomatik Modifikasyon</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Otomatik-Cevap-Modifikasyonu"><span class="toc-number">1.4.</span> <span class="toc-text">Otomatik Cevap Modifikasyonu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Istek-Tekrarlari"><span class="toc-number">1.5.</span> <span class="toc-text">İstek Tekrarları</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Burp-Intruder"><span class="toc-number">1.6.</span> <span class="toc-text">Burp Intruder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ayarlar"><span class="toc-number">1.7.</span> <span class="toc-text">Ayarlar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Saldiri"><span class="toc-number">1.8.</span> <span class="toc-text">Saldırı</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/14/Web-Proxy/" title="Web Proxy"><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/webproxy_htbacademy.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Web Proxy"/></a><div class="content"><a class="title" href="/2022/09/14/Web-Proxy/" title="Web Proxy">Web Proxy</a><time datetime="2022-09-14T19:31:29.000Z" title="Created 2022-09-14 22:31:29">2022-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/14/HTTP/" title="HTTP"><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/http_htbacademy.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTTP"/></a><div class="content"><a class="title" href="/2022/09/14/HTTP/" title="HTTP">HTTP</a><time datetime="2022-09-14T18:18:44.000Z" title="Created 2022-09-14 21:18:44">2022-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/13/Lab-Username-enumeration-via-different-responses/" title="Lab: Username enumeration via different responses"><img src="/img/auth.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lab: Username enumeration via different responses"/></a><div class="content"><a class="title" href="/2022/09/13/Lab-Username-enumeration-via-different-responses/" title="Lab: Username enumeration via different responses">Lab: Username enumeration via different responses</a><time datetime="2022-09-13T15:30:50.000Z" title="Created 2022-09-13 18:30:50">2022-09-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/12/Lab-SQL-injection-UNION-attack-determining-the-number-of-columns-returned-by-the-query/" title="Lab: SQL injection UNION attack, determining the number of columns returned by the query"><img src="/img/sqli.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lab: SQL injection UNION attack, determining the number of columns returned by the query"/></a><div class="content"><a class="title" href="/2022/09/12/Lab-SQL-injection-UNION-attack-determining-the-number-of-columns-returned-by-the-query/" title="Lab: SQL injection UNION attack, determining the number of columns returned by the query">Lab: SQL injection UNION attack, determining the number of columns returned by the query</a><time datetime="2022-09-12T14:23:15.000Z" title="Created 2022-09-12 17:23:15">2022-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/11/Lab-SQL-injection-vulnerability-allowing-login-bypass/" title="Lab: SQL injection vulnerability allowing login bypass"><img src="/img/sqli.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lab: SQL injection vulnerability allowing login bypass"/></a><div class="content"><a class="title" href="/2022/09/11/Lab-SQL-injection-vulnerability-allowing-login-bypass/" title="Lab: SQL injection vulnerability allowing login bypass">Lab: SQL injection vulnerability allowing login bypass</a><time datetime="2022-09-11T18:53:43.000Z" title="Created 2022-09-11 21:53:43">2022-09-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By fhk0</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,0" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

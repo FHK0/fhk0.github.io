@@ -1,0 +1,347 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Ffuf | fhk0</title><meta name="author" content="fhk0"><meta name="copyright" content="fhk0"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="FFuF KullanımıÖnce bir cheat sheet ile işe başlayalım:    Command Description    ffuf -h ffuf help   ffuf -w wordlist.txt:FUZZ -u http:&#x2F;&#x2F;SERVER_IP:PORT&#x2F;FUZZ Directory Fuzzing   ffuf -w wordlist.txt:FU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ffuf">
+<meta property="og:url" content="https://fhk0.github.io/2022/09/15/ffuf/index.html">
+<meta property="og:site_name" content="fhk0">
+<meta property="og:description" content="FFuF KullanımıÖnce bir cheat sheet ile işe başlayalım:    Command Description    ffuf -h ffuf help   ffuf -w wordlist.txt:FUZZ -u http:&#x2F;&#x2F;SERVER_IP:PORT&#x2F;FUZZ Directory Fuzzing   ffuf -w wordlist.txt:FU">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fhk0.github.io/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/ffuf.jpg">
+<meta property="article:published_time" content="2022-09-15T17:54:21.000Z">
+<meta property="article:modified_time" content="2022-09-15T17:57:55.074Z">
+<meta property="article:author" content="fhk0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fhk0.github.io/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/ffuf.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://fhk0.github.io/2022/09/15/ffuf/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Ffuf',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-15 20:57:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/mrrobot.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/ffuf.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">fhk0</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Ffuf</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-09-15T17:54:21.000Z" title="Created 2022-09-15 20:54:21">2022-09-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-15T17:57:55.074Z" title="Updated 2022-09-15 20:57:55">2022-09-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/">HTB Academy</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/Bug-Bounty-Hunter/">Bug Bounty Hunter</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Ffuf"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="FFuF-Kullanimi"><a href="#FFuF-Kullanimi" class="headerlink" title="FFuF Kullanımı"></a>FFuF Kullanımı</h1><p>Önce bir cheat sheet ile işe başlayalım:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ffuf -h</td>
+<td>ffuf help</td>
+</tr>
+<tr>
+<td>ffuf -w wordlist.txt:FUZZ -u <a href="http://SERVER_IP:PORT/FUZZ">http://SERVER_IP:PORT/FUZZ</a></td>
+<td>Directory Fuzzing</td>
+</tr>
+<tr>
+<td>ffuf -w wordlist.txt:FUZZ -u <a href="http://SERVER_IP:PORT/indexFUZZ">http://SERVER_IP:PORT/indexFUZZ</a></td>
+<td>Extension Fuzzing</td>
+</tr>
+<tr>
+<td>ffuf -w wordlist.txt:FUZZ -u <a href="http://SERVER_IP:PORT/blog/FUZZ.php">http://SERVER_IP:PORT/blog/FUZZ.php</a></td>
+<td>Page Fuzzing</td>
+</tr>
+<tr>
+<td>ffuf -w wordlist.txt:FUZZ -u <a href="http://SERVER_IP:PORT/FUZZ">http://SERVER_IP:PORT/FUZZ</a> -recursion -recursion-depth 1 -e .php -v</td>
+<td>Recursive Fuzzing</td>
+</tr>
+<tr>
+<td>ffuf -w wordlist.txt:FUZZ -u <a target="_blank" rel="noopener" href="https://fuzz.hackthebox.eu/">https://FUZZ.hackthebox.eu/</a></td>
+<td>Sub-domain Fuzzing</td>
+</tr>
+<tr>
+<td>ffuf -w wordlist.txt:FUZZ -u <a href="http://academy.htb:PORT/">http://academy.htb:PORT/</a> -H ‘Host: FUZZ.academy.htb’ -fs xxx</td>
+<td>VHost Fuzzing</td>
+</tr>
+<tr>
+<td>ffuf -w wordlist.txt:FUZZ -u <a href="http://admin.academy.htb:PORT/admin/admin.php?FUZZ=key">http://admin.academy.htb:PORT/admin/admin.php?FUZZ=key</a> -fs xxx</td>
+<td>Parameter Fuzzing - GET</td>
+</tr>
+<tr>
+<td>ffuf -w wordlist.txt:FUZZ -u <a href="http://admin.academy.htb:PORT/admin/admin.php">http://admin.academy.htb:PORT/admin/admin.php</a> -X POST -d ‘FUZZ&#x3D;key’ -H ‘Content-Type: application&#x2F;x-www-form-urlencoded’ -fs xxx</td>
+<td>Parameter Fuzzing - POST</td>
+</tr>
+<tr>
+<td>ffuf -w ids.txt:FUZZ -u <a href="http://admin.academy.htb:PORT/admin/admin.php">http://admin.academy.htb:PORT/admin/admin.php</a> -X POST -d ‘id&#x3D;FUZZ’ -H ‘Content-Type: application&#x2F;x-www-form-urlencoded’ -fs xxx</td>
+<td>Value Fuzzing</td>
+</tr>
+</tbody></table>
+<p><strong>Wordlistler:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;opt&#x2F;useful&#x2F;SecLists&#x2F;Discovery&#x2F;Web-Content&#x2F;directory-list-2.3-small.txt</td>
+<td>Directory&#x2F;Page Wordlist</td>
+</tr>
+<tr>
+<td>&#x2F;opt&#x2F;useful&#x2F;SecLists&#x2F;Discovery&#x2F;Web-Content&#x2F;web-extensions.txt</td>
+<td>Extensions Wordlist</td>
+</tr>
+<tr>
+<td>&#x2F;opt&#x2F;useful&#x2F;SecLists&#x2F;Discovery&#x2F;DNS&#x2F;subdomains-top1million-5000.txt</td>
+<td>Domain Wordlist</td>
+</tr>
+<tr>
+<td>&#x2F;opt&#x2F;useful&#x2F;SecLists&#x2F;Discovery&#x2F;Web-Content&#x2F;burp-parameter-names.txt</td>
+<td>Parameters Wordlist</td>
+</tr>
+</tbody></table>
+<p>Eğer wordlistlerindeki gereksiz commentleri silmek istersen şu komut dizisini kullanabilirsin:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FHK@htb[/htb]**$** sudo sed -i <span class="string">&#x27;s/^\#.*$//g&#x27;</span> /SecLists/Discovery/Web-Content/directory-list-2.3-small.txt &amp;&amp; sudo sed -i <span class="string">&#x27;/^$/d&#x27;</span> /SecLists/Discovery/Web-Content/directory-list-2.3-small.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>Farklı Kullanımlar:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sudo sh -c ‘echo “SERVER_IP academy.htb” &gt;&gt; &#x2F;etc&#x2F;hosts’</td>
+<td>Add DNS entry</td>
+</tr>
+<tr>
+<td>for i in $(seq 1 1000); do echo $i &gt;&gt; ids.txt; done</td>
+<td>Create Sequence Wordlist</td>
+</tr>
+<tr>
+<td>curl <a href="http://admin.academy.htb:PORT/admin/admin.php">http://admin.academy.htb:PORT/admin/admin.php</a> -X POST -d ‘id&#x3D;key’ -H ‘Content-Type: application&#x2F;x-www-form-urlencoded’</td>
+<td>curl w&#x2F; POST</td>
+</tr>
+</tbody></table>
+<p><strong>Peki kardeşim iyi güzel de bu fuzzing nedir?</strong></p>
+<p>Fuzzing terimi, farklı türlerdeki kullanıcı inputlarını belirli bir arayüze yönlendirip onun nasıl tepki vereceğini inceleyen bir test tekniğidir. Mesela sen SQLi için bir fuzzing yapacaksan eğer rastgele spesifik karakterler göndererek sunucunun nasıl tepki verdiğin incelersin ya da buffer overflow yapmak için uzun stringler gönderip tepki ölçebilirsin.</p>
+<h2 id="Dizin-Fuzzlamasi"><a href="#Dizin-Fuzzlamasi" class="headerlink" title="Dizin Fuzzlaması"></a>Dizin Fuzzlaması</h2><p>Bu şekilde kullanımı GoBuster’a benzer. Wordlist sonuna anahtar kelimemizi ekleyip sonrasında bu anahtar kelimeyi nerede dizin taraması yapmak istiyorsak orada kullanırız.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://SERVER_IP:PORT/FUZZ</span><br></pre></td></tr></table></figure>
+
+<div class="note info flat"><p>🌐 <strong>Not:</strong> Tarama yaparken IP adresinin başına <code>http://</code> eklemeyi unutma.</p>
+</div>
+
+<h2 id="Sayfa-Fuzzlamasi"><a href="#Sayfa-Fuzzlamasi" class="headerlink" title="Sayfa Fuzzlaması"></a>Sayfa Fuzzlaması</h2><p>Şimdi sayfa fuzzlaması yapacağız ama bundan önce bizim bu sayfaların hangi türde olduğunu bilmemiz lazım yani bunların uzantıları .html mi yoksa .php mi yoksa .asp mi hangisi? Bunu belirlemek için önce uzantı fuzzlaması yapalım. Tabii ki de bunu yapabilmek için uygun bir wordlist’e ihtiyacımız olacak. Tabii unutmadan bu sefer de FUZZ anahtar kelimesini ilgili sayfa isimlerinin sonuna ekleyeceğiz. Wordlistimiz .html .php tarzında içinde nokta barındıran ibareler barındırdığı için bizim homeFUZZ şeklinde eklememiz lazım. </p>
+<p>İki tane wordlist kullanarak hem uzantı hem de sayfa adı için fuzzlama yapabiliriz ancak bunun yerine biz her websitesinde bulunan <code>index</code> sayfasını fuzzlayalım ve ne cevap veriyor inceleyelim.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /opt/useful/SecLists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://SERVER_IP:PORT/blog/indexFUZZ</span><br></pre></td></tr></table></figure>
+
+<p>Gelen cevaba bakacak olursak:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.php                    [Status: 200, Size: 0, Words: 1, Lines: 1]</span><br><span class="line">.phps                   [Status: 403, Size: 283, Words: 20, Lines: 10]</span><br><span class="line">:: Progress: [39/39] :: Job [1/1] :: 0 req/sec :: Duration: [0:00:00] :: Errors: 0 ::</span><br></pre></td></tr></table></figure>
+
+<p>Yalnızca .php uzantısının STATUS 200 ile cevap verdiğini görüyoruz. O zaman bu sayfaların .php uzantısına sahip olduğunu söyleyebiliriz. </p>
+<p>Şimdi uzantıya sahip olduğumuza göre .php uzantısını dahil ederek sayfa fuzzlaması yapalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://SERVER_IP:PORT/blog/FUZZ.php</span><br></pre></td></tr></table></figure>
+
+<p>Bu sefer FUZZ sayfanın adı oldu ve sonuna .php ekledik. Dönen cevaba bakacak olursak:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">index                   [Status: 200, Size: 0, Words: 1, Lines: 1]</span><br><span class="line">REDACTED                [Status: 200, Size: 465, Words: 42, Lines: 15]</span><br><span class="line">:: Progress: [87651/87651] :: Job [1/1] :: 5843 req/sec :: Duration: [0:00:15] :: Errors: 0 ::</span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki cevaba göre REDACTED.php sayfasına sahip olduğumuzu görüyoruz.</p>
+<h2 id="Recursive-Fuzzing"><a href="#Recursive-Fuzzing" class="headerlink" title="Recursive Fuzzing"></a>Recursive Fuzzing</h2><p>Her bir dizin kendi alt dizinleri ve birçok dosyası olduğunu düşünürsek eğer onlarca dizini taramak zorlaşacaktır. Bu işi otomatize edebilmek için recursive fuzzing’e başvururuz. Recursive tarama yapmaya başladığımızda yeni tanımlanan dizinler altında otomatik olarak başka bir tarama daha başlatılır ve bu böylece devam eder. Karşıdaki domain çok kalabalık olup birçok dizinden oluşabilir. Bu yüzden derinlik belirtmekte fayda vardır. Yani en fazla 3 katman derinliğinde tarama yap şeklinde bir belirtim yoluna <code>-recursion-depth</code> parametresi ile gidilebilir. Uzantı belirtmek için de <code>-e</code> flag’ini kullanabiliriz. Son olarak -v flag’i ile de daha detaylı bir output çıktısı alabiliriz.</p>
+<p>Bir örnek yapalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://SERVER_IP:PORT/FUZZ -recursion -recursion-depth 1 -e .php -v</span><br></pre></td></tr></table></figure>
+
+<h2 id="Subdomain-Fuzzing"><a href="#Subdomain-Fuzzing" class="headerlink" title="Subdomain Fuzzing"></a>Subdomain Fuzzing</h2><p>Direkt örneğe bakalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u https://FUZZ.hackthebox.eu/</span><br></pre></td></tr></table></figure>
+
+<h2 id="Vhost-Fuzzing"><a href="#Vhost-Fuzzing" class="headerlink" title="Vhost Fuzzing"></a><strong><strong>Vhost Fuzzing</strong></strong></h2><p>Public DNS’lerin içerisinde public olarak listelenen subdomainler olur. Ancak sen kapalı bir alanda fuzzing gerçekleştiriyorsan aradığın subdomainler public dns’lerde olmayabilir. O zaman yapman gereken vhost fuzz’lamasıdır. HTTP header fuzz’laması yaparak vhost fuzz işlemini gerçekleştiririz:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /opt/useful/SecLists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://academy.htb:PORT/ -H <span class="string">&#x27;Host: FUZZ.academy.htb&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>Şöyle bir cevap aldık:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mail2                   [Status: 200, Size: 900, Words: 423, Lines: 56]</span><br><span class="line">dns2                    [Status: 200, Size: 900, Words: 423, Lines: 56]</span><br><span class="line">ns3                     [Status: 200, Size: 900, Words: 423, Lines: 56]</span><br><span class="line">dns1                    [Status: 200, Size: 900, Words: 423, Lines: 56]</span><br><span class="line">lists                   [Status: 200, Size: 900, Words: 423, Lines: 56]</span><br><span class="line">webmail                 [Status: 200, Size: 900, Words: 423, Lines: 56]</span><br><span class="line">static                  [Status: 200, Size: 900, Words: 423, Lines: 56]</span><br><span class="line">web                     [Status: 200, Size: 900, Words: 423, Lines: 56]</span><br><span class="line">www1                    [Status: 200, Size: 900, Words: 423, Lines: 56]</span><br><span class="line">&lt;...SNIP...&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Kelime listesindeki tüm kelimelerin 200 OK döndürdüğünü görüyoruz. <a target="_blank" rel="noopener" href="http://academy.htb/">http://academy.htb</a>:PORT&#x2F; adresini ziyaret ederken sadece header’i değiştirdiğimiz için bu beklenir. Yani her zaman 200 OK alacağımızı biliyoruz. Ancak, VHost varsa ve doğru header’i gönderirsek, farklı bir yanıt boyutu almalıyız, çünkü bu durumda, sayfayı o VHost’lardan alıyor olacağız ve muhtemelen farklı bir sayfa gösterecek.</p>
+<p>Şimdi tamam 200 OK döndürdük bir dolu ama bunlar da istediğimiz şeyler değil ki. <strong>E peki ben nasıl aktif bir şekilde filtreleme yapıp asıl cevaba ulaşacağım?</strong> <code>-fs</code> flag’i ile bu işlemi gerçekleştirebiliriz.</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled.png" alt="Untitled"></p>
+<p>Yukarıda boyutu tüm 986 olanları eledik ve elimizde admin ve test kalmış oldu. Test bizim yeni subdomainimizdir.</p>
+<hr>
+<h2 id="GET-Parametresi-Fuzz’lamasi"><a href="#GET-Parametresi-Fuzz’lamasi" class="headerlink" title="GET Parametresi Fuzz’laması"></a>GET Parametresi Fuzz’laması</h2><p>Diyelim ki bir sayfa fuzz’laması yaptık ve o sayfaya girmek istedik ancak ekranın kocaman ortasında diyor ki senin buraya girmeye yetkin yok. Benzer şekilde:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%201.png" alt="Untitled"></p>
+<p>Püüü. Ne yapmam lazım? Cookie olabilir mi? Biz bir kullanıcı girişi yapmadık ve herhangi bir çerez de ortalarda gözükmüyor. O zaman yapmamız gereken parametre fuzzlamasıdır. GET isteklerini fuzzlayarak işe başlayalım.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://admin.academy.htb:PORT/admin/admin.php?param1=key.</span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki adreste ? işaretinden sonraki kısım GET isteğini belirtmektedir. Burada yapmamız gereken param1 yerine kendi fuzz’lamak istediğimiz parametreleri eklemek. Bunun için elimizde şöyle güzel bir liste var: <code>/SecLists/Discovery/Web-Content/burp-parameter-names.txt</code></p>
+<p>Şimdi kullanımına bir göz atalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php?FUZZ=key -fs xxx</span><br></pre></td></tr></table></figure>
+
+<p>-fs kullanımını filtreleme yapmak için kullanıyoruz bunu unutmamak lazım.</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%202.png" alt="Untitled"></p>
+<p>Yukarıda da görüldüğü üzere aradığımız parametrenin user olduğunu görüyoruz.</p>
+<h2 id="POST-Parametresi-Fuzz’lamasi"><a href="#POST-Parametresi-Fuzz’lamasi" class="headerlink" title="POST Parametresi Fuzz’laması"></a>POST Parametresi Fuzz’laması</h2><p>POST ve GET arasındaki en kabaca fark nedir bilir misin yeğen? POST öyle URL içerisinde taşınmaz ve öyle soru işaretinden sonra öyle kolayca eklenemez. POST istekleri <code>data</code> alanından geçer.</p>
+<p>POST gönderimi için <code>POST -X</code> kullanacağız ve data göndermek için de <code>-d</code> flag’ini kullanacağız. </p>
+<div class="note info flat"><p>🌐 <strong>Tip:</strong> In PHP, “POST” data “content-type” can only accept “application&#x2F;x-www-form-urlencoded”. So, we can set that in “ffuf” with “-H ‘Content-Type: application&#x2F;x-www-form-urlencoded’”.</p>
+</div>
+
+<p>Yukarıdaki ipucunu da dikkate alarak şimdi kullanıma geçelim:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d <span class="string">&#x27;FUZZ=key&#x27;</span> -H <span class="string">&#x27;Content-Type: application/x-www-form-urlencoded&#x27;</span> -fs xxx</span><br></pre></td></tr></table></figure>
+
+<p>Yaptığımız tarama sonucunda şu değeri bulduk:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">id</span>                      [Status: xxx, Size: xxx, Words: xxx, Lines: xxx]</span><br></pre></td></tr></table></figure>
+
+<p>Yani bizim id parametremiz vardır. İyi güzel hoş da bunun değeri kaç acaba? Bir sonraki başlıkta bunu inceleyelim.</p>
+<h2 id="Value-Fuzz’lamasi"><a href="#Value-Fuzz’lamasi" class="headerlink" title="Value Fuzz’laması"></a>Value Fuzz’laması</h2><p>Şimdi biz id parametresini bulduk. Bunun bir sayı aldığını düşündüğümüze göre uygun bir wordlist bulmamız lazım. Her zaman seclist’in altında kendi istediğimiz wordlist’i bulamayabiliriz. Bu sebeple şimdi hızlıca 1’den 1000’e kadar sayılardan oluşan kendi wordlistimizi oluşturalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">seq</span> 1 1000); <span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$i</span> &gt;&gt; ids.txt; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki komutla kendi wordlistimizi oluşturduk. Şimdi sırada bu wordlisti kullanarak value fuzz’laması yapmak var. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w ids.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d <span class="string">&#x27;id=FUZZ&#x27;</span> -H <span class="string">&#x27;Content-Type: application/x-www-form-urlencoded&#x27;</span> -fs xxx</span><br></pre></td></tr></table></figure>
+
+<p>Son olarak şöyle bir sonuç elde ederiz:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%203.png" alt="Untitled"></p>
+<p>Sonrasında cURL kullanarak sayfa içeriğini elde ederiz:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%204.png" alt="Untitled"></p>
+<hr>
+<h2 id="Ornek-bir-vaka-calismasi"><a href="#Ornek-bir-vaka-calismasi" class="headerlink" title="Örnek bir vaka çalışması:"></a><strong>Örnek bir vaka çalışması:</strong></h2><h3 id="Run-a-sub-domain-x2F-vhost-fuzzing-scan-on-‘-academy-htb’-for-the-IP-shown-above-What-are-all-the-sub-domains-you-can-identify-Only-write-the-sub-domain-name"><a href="#Run-a-sub-domain-x2F-vhost-fuzzing-scan-on-‘-academy-htb’-for-the-IP-shown-above-What-are-all-the-sub-domains-you-can-identify-Only-write-the-sub-domain-name" class="headerlink" title="Run a sub-domain&#x2F;vhost fuzzing scan on ‘*.academy.htb’ for the IP shown above. What are all the sub-domains you can identify? (Only write the sub-domain name)"></a><strong>Run a sub-domain&#x2F;vhost fuzzing scan on ‘*.academy.htb’ for the IP shown above. What are all the sub-domains you can identify? (Only write the sub-domain name)</strong></h3><p>Şimdi bizden subdomain taraması yapmamızı istiyor. Burada kapalı bir pentest yaptığımız için ben direkt vhost araması yaptım. Zaten benzer olay aslında. Tek yaptığın <code>-H</code> ile bir header belirtmek.</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%205.png" alt="Untitled"></p>
+<p>Dönen üç tane sonuç oldu bunlar archive, test ve faculty’dir.</p>
+<h3 id="Before-you-run-your-page-fuzzing-scan-you-should-first-run-an-extension-fuzzing-scan-What-are-the-different-extensions-accepted-by-the-domains"><a href="#Before-you-run-your-page-fuzzing-scan-you-should-first-run-an-extension-fuzzing-scan-What-are-the-different-extensions-accepted-by-the-domains" class="headerlink" title="Before you run your page fuzzing scan, you should first run an extension fuzzing scan. What are the different extensions accepted by the domains?"></a><strong>Before you run your page fuzzing scan, you should first run an extension fuzzing scan. What are the different extensions accepted by the domains?</strong></h3><p>Benden uzantı fuzzlaması yapmamı istiyor yani bu arkadaşlar .html mi barındırıyor yoksa .php mi ne yani onları bul diyor bana. Bunu bulurken bulduğumuz her subdomain için de yapmamız gerektiğini unutmamamız lazım. Yani ben site içerisinde <code>index</code> sayfası için fuzzlama yapacaksam eğer bunu archive.sitediadı.TLD&#x2F;indexFUZZ şeklinde o dizinlerin içerisinde de yapmalıyım. Şimdi gerçekleştirimlerini yapalım. Sitenin kendi hali için:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%206.png" alt="Untitled"></p>
+<p>Archive için:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%207.png" alt="Untitled"></p>
+<p>Test için:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%208.png" alt="Untitled"></p>
+<p>Faculty için:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%209.png" alt="Untitled"></p>
+<p>Görüldüğü üzere tüm hepsinde .php var, diğerlerinde artı olarak .phps ve .php7 var. .phps’nin 403 FORBIDDEN döndürdüğüne de dikkat etmek gerekir.</p>
+<h3 id="One-of-the-pages-you-will-identify-should-say-‘You-don’t-have-access-’-What-is-the-full-page-URL"><a href="#One-of-the-pages-you-will-identify-should-say-‘You-don’t-have-access-’-What-is-the-full-page-URL" class="headerlink" title="One of the pages you will identify should say ‘You don’t have access!’. What is the full page URL?"></a>One of the pages you will identify should say ‘You don’t have access!’. What is the full page URL?</h3><p>Şimdi bu subdomainler içerisinde, bulduğumuz uzantıları da dahil ederek, uygun bir wordlist ile aradığımız sayfayı bulacağız ve bu sayfa oraya erişimimiz olmadığını söyleyecek. O zaman şimdi devreye recursive arama girmekte. Faculty için bir recursion taraması yaptığımızı düşünelim. Ben burada spesifik durduğu için uzantıyı .php7 olarak ayarladım:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%2010.png" alt="Untitled"></p>
+<p>Sonrasında kendisi bir alt dizin buldu ve bu alt dizin üzerinden otomatik olarak tarama başlattı:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%2011.png" alt="Untitled"></p>
+<p>Ve en sonunda aradığımız sayfayı buldu:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%2012.png" alt="Untitled"></p>
+<h3 id="In-the-page-from-the-previous-question-you-should-be-able-to-find-multiple-parameters-that-are-accepted-by-the-page-What-are-they"><a href="#In-the-page-from-the-previous-question-you-should-be-able-to-find-multiple-parameters-that-are-accepted-by-the-page-What-are-they" class="headerlink" title="In the page from the previous question, you should be able to find multiple parameters that are accepted by the page. What are they?"></a>In the page from the previous question, you should be able to find multiple parameters that are accepted by the page. What are they?</h3><p>Parametre fuzzlaması yapacağız. Basitçe <code>param1=key</code> ilişkisini hatırlamakta fayda var. Önce parametreyi arayacağımız için param1 yerine FUZZ yazacağız yani <code>FUZZ=key</code> olacak. </p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%2013.png" alt="Untitled"></p>
+<p>-fs ile önceki taramadan aldığımız boyut bilgisini girerek tekrardan filtreli bir arama yapıyoruz ve sonuçları elde ediyoruz:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%2014.png" alt="Untitled"></p>
+<h3 id="Try-fuzzing-the-parameters-you-identified-for-working-values-One-of-them-should-return-a-flag-What-is-the-content-of-the-flag"><a href="#Try-fuzzing-the-parameters-you-identified-for-working-values-One-of-them-should-return-a-flag-What-is-the-content-of-the-flag" class="headerlink" title="Try fuzzing the parameters you identified for working values. One of them should return a flag. What is the content of the flag?"></a>Try fuzzing the parameters you identified for working values. One of them should return a flag. What is the content of the flag?</h3><p>Şimdi elde ettiğimiz parametrelere göre o parametrelerin değerlerini fuzzlayacağız. Ben burada parametre olarak username’i kendime seçiyorum ve onun key değerini de FUZZ olarak ayarlıyorum yani <code>username=FUZZ</code> olacak. </p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%2015.png" alt="Untitled"></p>
+<p>781 boyutuna göre filtreledikten sonra şöyle yanıtlar alıyoruz:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%2016.png" alt="Untitled"></p>
+<p>Bu kullanıcılardan birisi bizi flag’e ulaştıracak. Ben en alttakini seçiyorum ve curl ile istek gönderiyorum:</p>
+<p><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/Untitled%2017.png" alt="Untitled"></p>
+<p>Flag’imizi bulmuş olduk. Challenge completed.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://fhk0.github.io">fhk0</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://fhk0.github.io/2022/09/15/ffuf/">https://fhk0.github.io/2022/09/15/ffuf/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/ffuf.jpg" data-sites="facebook, twitter, linkedin"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/09/15/Information-Gathering/"><img class="next-cover" src="/img/content-images/htb-academy/Bilgi%20Toplama%20a41d603810c34c25afd7c8af7953272e/infogathering.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Information Gathering</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/mrrobot.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">fhk0</div><div class="author-info__description">Web Application Pentester</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/FHK0"><i class="fab fa-github"></i><span>Follow Me on GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.linkedin.com/in/firathilmikaplan/" target="_blank" title="Linkedin"><i class="fa-brands fa-linkedin"></i></a><a class="social-icon" href="https://medium.com/@fhk0" target="_blank" title="Medium"><i class="fa-brands fa-medium"></i></a><a class="social-icon" href="https://www.youtube.com/channel/UCik9LW_i9-h2NKVrs6180ng" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a class="social-icon" href="https://www.hackerrank.com/fhk0x" target="_blank" title="HackerRank"><i class="fa-brands fa-hackerrank"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Hey! I'm currently solving PortSwigger Labs. I'll share the solutions of them soon.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FFuF-Kullanimi"><span class="toc-number">1.</span> <span class="toc-text">FFuF Kullanımı</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Dizin-Fuzzlamasi"><span class="toc-number">1.1.</span> <span class="toc-text">Dizin Fuzzlaması</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sayfa-Fuzzlamasi"><span class="toc-number">1.2.</span> <span class="toc-text">Sayfa Fuzzlaması</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Recursive-Fuzzing"><span class="toc-number">1.3.</span> <span class="toc-text">Recursive Fuzzing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Subdomain-Fuzzing"><span class="toc-number">1.4.</span> <span class="toc-text">Subdomain Fuzzing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vhost-Fuzzing"><span class="toc-number">1.5.</span> <span class="toc-text">Vhost Fuzzing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GET-Parametresi-Fuzz%E2%80%99lamasi"><span class="toc-number">1.6.</span> <span class="toc-text">GET Parametresi Fuzz’laması</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POST-Parametresi-Fuzz%E2%80%99lamasi"><span class="toc-number">1.7.</span> <span class="toc-text">POST Parametresi Fuzz’laması</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Value-Fuzz%E2%80%99lamasi"><span class="toc-number">1.8.</span> <span class="toc-text">Value Fuzz’laması</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ornek-bir-vaka-calismasi"><span class="toc-number">1.9.</span> <span class="toc-text">Örnek bir vaka çalışması:</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-a-sub-domain-x2F-vhost-fuzzing-scan-on-%E2%80%98-academy-htb%E2%80%99-for-the-IP-shown-above-What-are-all-the-sub-domains-you-can-identify-Only-write-the-sub-domain-name"><span class="toc-number">1.9.1.</span> <span class="toc-text">Run a sub-domain&#x2F;vhost fuzzing scan on ‘*.academy.htb’ for the IP shown above. What are all the sub-domains you can identify? (Only write the sub-domain name)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Before-you-run-your-page-fuzzing-scan-you-should-first-run-an-extension-fuzzing-scan-What-are-the-different-extensions-accepted-by-the-domains"><span class="toc-number">1.9.2.</span> <span class="toc-text">Before you run your page fuzzing scan, you should first run an extension fuzzing scan. What are the different extensions accepted by the domains?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#One-of-the-pages-you-will-identify-should-say-%E2%80%98You-don%E2%80%99t-have-access-%E2%80%99-What-is-the-full-page-URL"><span class="toc-number">1.9.3.</span> <span class="toc-text">One of the pages you will identify should say ‘You don’t have access!’. What is the full page URL?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#In-the-page-from-the-previous-question-you-should-be-able-to-find-multiple-parameters-that-are-accepted-by-the-page-What-are-they"><span class="toc-number">1.9.4.</span> <span class="toc-text">In the page from the previous question, you should be able to find multiple parameters that are accepted by the page. What are they?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Try-fuzzing-the-parameters-you-identified-for-working-values-One-of-them-should-return-a-flag-What-is-the-content-of-the-flag"><span class="toc-number">1.9.5.</span> <span class="toc-text">Try fuzzing the parameters you identified for working values. One of them should return a flag. What is the content of the flag?</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/15/ffuf/" title="Ffuf"><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/ffuf.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ffuf"/></a><div class="content"><a class="title" href="/2022/09/15/ffuf/" title="Ffuf">Ffuf</a><time datetime="2022-09-15T17:54:21.000Z" title="Created 2022-09-15 20:54:21">2022-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/15/Information-Gathering/" title="Information Gathering"><img src="/img/content-images/htb-academy/Bilgi%20Toplama%20a41d603810c34c25afd7c8af7953272e/infogathering.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Information Gathering"/></a><div class="content"><a class="title" href="/2022/09/15/Information-Gathering/" title="Information Gathering">Information Gathering</a><time datetime="2022-09-15T17:42:10.000Z" title="Created 2022-09-15 20:42:10">2022-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/15/Introduction-to-Web-Applications/" title="Introduction to Web Applications"><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/webapplications_htbacademy.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Introduction to Web Applications"/></a><div class="content"><a class="title" href="/2022/09/15/Introduction-to-Web-Applications/" title="Introduction to Web Applications">Introduction to Web Applications</a><time datetime="2022-09-15T16:48:47.000Z" title="Created 2022-09-15 19:48:47">2022-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/14/Web-Proxy/" title="Web Proxy"><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/webproxy_htbacademy.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Web Proxy"/></a><div class="content"><a class="title" href="/2022/09/14/Web-Proxy/" title="Web Proxy">Web Proxy</a><time datetime="2022-09-14T19:31:29.000Z" title="Created 2022-09-14 22:31:29">2022-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/14/HTTP/" title="HTTP"><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/http_htbacademy.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTTP"/></a><div class="content"><a class="title" href="/2022/09/14/HTTP/" title="HTTP">HTTP</a><time datetime="2022-09-14T18:18:44.000Z" title="Created 2022-09-14 21:18:44">2022-09-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By fhk0</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,0" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,772 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Introduction to Web Applications | fhk0</title><meta name="author" content="fhk0"><meta name="copyright" content="fhk0"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="IntroductionWeb uygulamaları, web tarayıcılarında çalışan etkileşimli uygulamalardır. Web uygulamaları, etkileşimleri çalıştırmak ve yönetmek için genellikle bir istemci-sunucu mimarisini benimser. Ge">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction to Web Applications">
+<meta property="og:url" content="https://fhk0.github.io/2022/09/15/Introduction-to-Web-Applications/index.html">
+<meta property="og:site_name" content="fhk0">
+<meta property="og:description" content="IntroductionWeb uygulamaları, web tarayıcılarında çalışan etkileşimli uygulamalardır. Web uygulamaları, etkileşimleri çalıştırmak ve yönetmek için genellikle bir istemci-sunucu mimarisini benimser. Ge">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fhk0.github.io/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/webapplications_htbacademy.jpg">
+<meta property="article:published_time" content="2022-09-15T16:48:47.000Z">
+<meta property="article:modified_time" content="2022-09-15T18:00:10.208Z">
+<meta property="article:author" content="fhk0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fhk0.github.io/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/webapplications_htbacademy.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://fhk0.github.io/2022/09/15/Introduction-to-Web-Applications/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Introduction to Web Applications',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-15 21:00:10'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/mrrobot.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/webapplications_htbacademy.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">fhk0</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Introduction to Web Applications</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-09-15T16:48:47.000Z" title="Created 2022-09-15 19:48:47">2022-09-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-15T18:00:10.208Z" title="Updated 2022-09-15 21:00:10">2022-09-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/">HTB Academy</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/Bug-Bounty-Hunter/">Bug Bounty Hunter</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Introduction to Web Applications"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Web uygulamaları, web tarayıcılarında çalışan etkileşimli uygulamalardır. Web uygulamaları, etkileşimleri çalıştırmak ve yönetmek için genellikle bir istemci-sunucu mimarisini benimser. Genellikle istemci tarafında (tarayıcı) çalışan ön uç bileşenlerine (yani web sitesi arayüzü veya “kullanıcının gördüğü”) ve sunucu tarafında çalışan diğer arka uç bileşenlerine (web uygulaması kaynak kodu) sahiptirler ( arka uç sunucu&#x2F;veritabanları).</p>
+<p>Bu, kuruluşların dünya çapında erişilebilir olurken, tasarımları ve işlevleri üzerinde neredeyse tama yakın gerçek zamanlı denetimle güçlü uygulamaları barındırmasına olanak tanır. Tipik web uygulamalarının bazı örnekleri, Gmail gibi çevrimiçi e-posta hizmetlerini, Amazon gibi çevrimiçi perakendecileri ve Google Dokümanlar gibi çevrimiçi kelime işlemcileri içerir.</p>
+<h2 id="Web-Applications-vs-Websites"><a href="#Web-Applications-vs-Websites" class="headerlink" title="Web Applications vs. Websites"></a><strong><strong>Web Applications vs. Websites</strong></strong></h2><p>Geçmişte, statik olan ve gerçek zamanlı olarak değiştirilemeyen web siteleriyle etkileşime girdik. Bu, geleneksel web sitelerinin belirli bilgileri temsil etmek için statik olarak oluşturulduğu ve bu bilgilerin etkileşimimizle değişmeyeceği anlamına gelir. Web sitesinin içeriğini değiştirmek için ilgili sayfanın geliştiriciler tarafından manuel olarak düzenlenmesi gerekir. Bu tür statik sayfalar işlev içermez ve bu nedenle gerçek zamanlı değişiklikler üretmez. Bu tür web sitesi Web 1.0 olarak da bilinir.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Web_2.0#Web_1.0">Web 2.0 - Wikipedia</a></p>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled.png" alt="Untitled"></p>
+<p>Öte yandan, çoğu web sitesi web uygulamalarını veya kullanıcı etkileşimine dayalı dinamik içerik sunan Web 2.0’ı çalıştırır. Bir diğer önemli fark, web uygulamalarının tamamen işlevsel olması ve son kullanıcı için çeşitli işlevleri yerine getirebilmesi, web sitelerinin bu tür işlevselliklerden yoksun olmasıdır. Geleneksel web siteleri ve web uygulamaları arasındaki diğer önemli farklar şunları içerir:</p>
+<ul>
+<li>Modüler olmak</li>
+<li>Herhangi bir ekran boyutunda çalışır</li>
+<li>Optimize edilmeden herhangi bir platformda çalışma</li>
+</ul>
+<h2 id="Web-Applications-vs-Native-Operating-System-Applications"><a href="#Web-Applications-vs-Native-Operating-System-Applications" class="headerlink" title="Web Applications vs. Native Operating System Applications"></a><strong><strong>Web Applications vs. Native Operating System Applications</strong></strong></h2><p>Yerel işletim sistemi (yerel işletim sistemi) uygulamalarından farklı olarak, web uygulamaları platformdan bağımsızdır ve herhangi bir işletim sisteminde bir tarayıcıda çalışabilir. Bu web uygulamaları ve işlevleri uzak sunucuda uzaktan yürütüldüğünden ve bu nedenle son kullanıcının sabit sürücüsünde herhangi bir yer tüketmediğinden, bu web uygulamalarının bir kullanıcının sistemine yüklenmesi gerekmez.</p>
+<p>Web uygulamalarının yerel işletim sistemi uygulamalarına göre bir başka avantajı da sürüm birliğidir. Bir web uygulamasına erişen tüm kullanıcılar, her kullanıcıya güncelleme göndermeden sürekli olarak güncellenebilen ve değiştirilebilen aynı sürümü ve aynı web uygulamasını kullanır. Web uygulamaları, her platform için farklı yapılar geliştirmeden tek bir konumda (web sunucusu) güncellenebilir, bu da bakım ve destek maliyetlerini önemli ölçüde azaltır, değişiklikleri tüm kullanıcılara ayrı ayrı iletme ihtiyacını ortadan kaldırır.</p>
+<p>Öte yandan, yerel işletim sistemi uygulamalarının web uygulamalarına göre, özellikle çalışma hızları ve yerel işletim sistemi kitaplıklarını ve yerel donanımı kullanma yetenekleri gibi belirli avantajları vardır. Yerel uygulamalar, yerel işletim sistemi kitaplıklarını kullanacak şekilde oluşturulduğundan, yüklenmeleri ve etkileşim kurmaları çok daha hızlıdır. Ayrıca, işletim sistemiyle daha derin bir entegrasyona sahip oldukları ve yalnızca tarayıcının yetenekleriyle sınırlı olmadıkları için yerel uygulamalar genellikle web uygulamalarından daha yeteneklidir.</p>
+<p>Ancak daha yakın zamanlarda, hibrit ve aşamalı web uygulamaları daha yaygın hale geliyor. Yerel işletim sistemi yeteneklerini ve kaynaklarını kullanarak web uygulamalarını çalıştırmak için modern çerçeveleri kullanırlar, bu da onları normal web uygulamalarından daha hızlı ve daha yetenekli hale getirir.</p>
+<h2 id="Web-Application-Distribution"><a href="#Web-Application-Distribution" class="headerlink" title="Web Application Distribution"></a>Web Application Distribution</h2><p>Dünya çapında kuruluşlar tarafından kullanılan ve her kuruluşun ihtiyaçlarını karşılamak üzere özelleştirilebilen birçok açık kaynaklı web uygulaması vardır. Bazı yaygın açık kaynaklı web uygulamaları şunları içerir:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://wordpress.com/">WordPress</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.opencart.com/">OpenCart</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.joomla.org/">Joomla</a></li>
+</ul>
+<p>Ayrıca, genellikle belirli bir kuruluş tarafından geliştirilen ve daha sonra başka bir kuruluşa satılan veya bir abonelik planı modeli aracılığıyla kuruluşlar tarafından kullanılan tescilli ‘kapalı kaynak’ web uygulamaları da vardır. Bazı yaygın kapalı kaynak web uygulamaları şunları içerir:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.wix.com/">Wix</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.shopify.com/">Shopify</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.dnnsoftware.com/">DotNetNuke</a></li>
+</ul>
+<h2 id="Security-Risks-of-Web-Applications"><a href="#Security-Risks-of-Web-Applications" class="headerlink" title="Security Risks of Web Applications"></a><strong><strong>Security Risks of Web Applications</strong></strong></h2><p>Web uygulaması saldırıları yaygındır ve boyutları ne olursa olsun, web varlığı olan çoğu kuruluş için bir zorluk teşkil eder. Sonuçta, genellikle herhangi bir ülkeden internet bağlantısı ve web tarayıcısı olan herkes tarafından erişilebilir ve genellikle geniş bir saldırı yüzeyi sunar. Web uygulamalarını taramak ve bunlara saldırmak için yanlış ellerde önemli hasara neden olabilecek birçok otomatik araç vardır. Web uygulamaları daha karmaşık ve gelişmiş hale geldikçe, kritik güvenlik açıklarının tasarımlarına dahil edilme olasılığı da artmaktadır.</p>
+<p>Başarılı bir web uygulaması saldırısı, önemli kayıplara ve büyük iş kesintilerine yol açabilir. Web uygulamaları, diğer hassas bilgileri barındırabilen sunucularda çalıştırıldığından ve genellikle hassas kullanıcı veya şirket verilerini içeren veritabanlarına da bağlı olduğundan, bir web sitesine başarılı bir şekilde saldırı yapılırsa bu verilerin tümü tehlikeye girebilir. Bu nedenle, web uygulamalarını kullanan herhangi bir işletme için bu uygulamaları güvenlik açıklarına karşı düzgün bir şekilde test etmek ve yamanın kusuru düzelttiğini ve yanlışlıkla herhangi bir yeni kusur oluşturmadığını test ederken bunları hemen yamalamak kritik öneme sahiptir.</p>
+<p>Web uygulaması sızma testi, öğrenilmesi giderek daha kritik hale gelen bir beceridir. İnternete yönelik (ve dahili) web uygulamalarını güvence altına almak isteyen herhangi bir kuruluş, sık sık web uygulaması testlerinden geçmeli ve her geliştirme yaşam döngüsü aşamasında güvenli kodlama uygulamaları uygulamalıdır. Web uygulamalarını doğru bir şekilde test etmek için, nasıl çalıştıklarını, nasıl geliştirildiklerini ve kullanılan teknolojilere bağlı olarak uygulamanın her katmanında ve bileşeninde ne tür bir risk bulunduğunu anlamamız gerekir.</p>
+<p>Her zaman farklı tasarlanmış ve yapılandırılmış çeşitli web uygulamalarıyla karşılaşacağız. Web uygulamalarını test etmek için en güncel ve yaygın olarak kullanılan yöntemlerden biri OWASP Web Güvenliği Test Kılavuzu’dur.</p>
+<p>En yaygın prosedürlerden biri, bir web uygulamasının HTML, CSS ve JavaScript (ön uç üçlüsü olarak da bilinir) gibi ön uç bileşenlerini gözden geçirerek başlamak ve Hassas Verilere Maruz Kalma ve Siteler Arası Komut Dosyası Çalıştırma gibi güvenlik açıklarını bulmaya çalışmaktır. (XSS). Tüm ön uç bileşenleri kapsamlı bir şekilde test edildikten sonra, web sunucusunun kullandığı teknolojileri sıralamak ve istismar edilebilir kusurları aramak için genellikle web uygulamasının temel işlevselliğini ve tarayıcı ile web sunucusu arasındaki etkileşimi gözden geçiririz. Kapsamı en üst düzeye çıkarmak ve olası her saldırı senaryosunu gözden geçirmek için web uygulamalarını genellikle hem kimliği doğrulanmamış hem de kimliği doğrulanmış bir bakış açısıyla (uygulamanın oturum açma işlevi varsa) değerlendiririz.</p>
+<h2 id="Attacking-Web-Applications"><a href="#Attacking-Web-Applications" class="headerlink" title="Attacking Web Applications"></a><strong><strong>Attacking Web Applications</strong></strong></h2><p>Bu gün ve çağda, çoğu şirket, büyüklüğü ne olursa olsun, dış çevrelerinde bir veya daha fazla web uygulamasına sahiptir. Bu uygulamalar, basit statik web sitelerinden, WordPress gibi İçerik Yönetim Sistemleri (CMS) tarafından desteklenen bloglara, temel kullanıcılardan süper yöneticilere kadar çeşitli kullanıcı rollerini destekleyen kaydolma&#x2F;oturum açma işlevine sahip karmaşık uygulamalara kadar her şey olabilir. Günümüzde, bilinen bir açıktan yararlanma (güvenlik açığı olan bir hizmet veya Windows uzaktan kod yürütme (RCE) güvenlik açığı gibi) yoluyla doğrudan yararlanılabilen, dışa dönük bir ana bilgisayar bulmak çok yaygın değildir, ancak bu gerçekleşmektedir. Web uygulamaları geniş bir saldırı yüzeyi sağlar ve dinamik yapıları, sürekli değişmeleri (ve gözden kaçırılmaları!) anlamına gelir. Nispeten basit bir kod değişikliği, hassas verilere erişim elde etmek veya web sunucusunda veya ortamdaki veritabanı sunucuları gibi diğer ana bilgisayarlarda uzaktan kod yürütülmesine erişmek için birlikte zincirlenebilecek feci bir güvenlik açığı veya bir dizi güvenlik açığı ortaya çıkarabilir.</p>
+<p>Kötü amaçlı kodun yüklenmesine izin veren bir dosya yükleme formu veya uzaktan kod yürütme elde etmek için kullanılabilecek bir dosya ekleme güvenlik açığı gibi doğrudan kod yürütülmesine yol açabilecek kusurlar bulmak nadir değildir. Çeşitli web uygulamalarında hala oldukça yaygın olan iyi bilinen bir güvenlik açığı SQL enjeksiyonudur. Bu tür güvenlik açığı, kullanıcı tarafından sağlanan girdilerin güvenli olmayan şekilde işlenmesinden kaynaklanır. Hassas verilere erişim, veritabanı sunucusundaki dosyaları okuma&#x2F;yazma ve hatta uzaktan kod yürütme ile sonuçlanabilir.</p>
+<p>Kimlik doğrulama için Active Directory kullanan web uygulamalarında genellikle SQL enjeksiyon güvenlik açıkları buluruz. Parolaları çıkarmak için genellikle bundan yararlanamasak da (Active Directory bunları yönettiğinden), genellikle kullanıcı adlarıyla aynı olan Active Directory kullanıcı e-posta adreslerinin çoğunu veya tamamını alabiliriz. Bu veriler daha sonra VPN veya Microsoft Outlook Web Access&#x2F;Microsoft O365 gibi kimlik doğrulama için Active Directory kullanan web portallarına parola püskürtme saldırısı gerçekleştirmek için kullanılabilir. Başarılı bir parola spreyi, genellikle e-posta gibi hassas verilere erişime ve hatta doğrudan kurumsal ağ ortamına bir dayanak noktası olmasına neden olabilir.</p>
+<p>Bu örnek, özellikle bir şirketin harici altyapısının diğer bölümlerine saldırmak için kullanılabilecek bir uygulamadan veri çıkarmak için “zincirleme” yapıldığında, tek bir web uygulaması güvenlik açığından kaynaklanabilecek hasarı göstermektedir. Çok yönlü bir bilgi güvenliği uzmanı, web uygulamaları hakkında derin bir anlayışa sahip olmalı ve ağ sızma testi ve Active Directory saldırıları gerçekleştirmek kadar web uygulamalarına saldırırken de rahat olmalıdır. Web uygulamalarında güçlü bir temele sahip bir sızma test cihazı, genellikle kendilerini benzerlerinden ayırabilir ve başkalarının gözden kaçırabileceği kusurları bulabilir. Web uygulaması saldırılarının birkaç gerçek dünya örneği ve etkisi aşağıdaki gibidir:</p>
+<table>
+<thead>
+<tr>
+<th>Flaw</th>
+<th>Real-world Scenario</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SQL injection</td>
+<td>Obtaining Active Directory usernames and performing a password spraying attack against a VPN or email portal.</td>
+</tr>
+<tr>
+<td>File Inclusion</td>
+<td>Reading source code to find a hidden page or directory which exposes additional functionality that can be used to gain remote code execution.</td>
+</tr>
+<tr>
+<td>Unrestricted File Upload</td>
+<td>A web application that allows a user to upload a profile picture that allows any file type to be uploaded (not just images). This can be leveraged to gain full control of the web application server by uploading malicious code.</td>
+</tr>
+<tr>
+<td>Insecure Direct Object Referencing (IDOR)</td>
+<td>When combined with a flaw such as broken access control, this can often be used to access another user’s files or functionality. An example would be editing your user profile browsing to a page such as &#x2F;user&#x2F;701&#x2F;edit-profile. If we can change the 701 to 702, we may edit another user’s profile!</td>
+</tr>
+<tr>
+<td>Broken Access Control</td>
+<td>Another example is an application that allows a user to register a new account. If the account registration functionality is designed poorly, a user may perform privilege escalation when registering. Consider the POST request when registering a new user, which submits the data username&#x3D;bjones&amp;password&#x3D;Welcome1&amp;email&#x3D;<a href="mailto:&#x62;&#x6a;&#111;&#x6e;&#x65;&#115;&#x40;&#105;&#x6e;&#108;&#x61;&#110;&#x65;&#102;&#114;&#x65;&#x69;&#x67;&#104;&#116;&#x2e;&#x6c;&#x6f;&#x63;&#x61;&#x6c;">&#x62;&#x6a;&#111;&#x6e;&#x65;&#115;&#x40;&#105;&#x6e;&#108;&#x61;&#110;&#x65;&#102;&#114;&#x65;&#x69;&#x67;&#104;&#116;&#x2e;&#x6c;&#x6f;&#x63;&#x61;&#x6c;</a>&amp;roleid&#x3D;3. What if we can manipulate the roleid parameter and change it to 0 or 1. We have seen real-world applications where this was the case, and it was possible to quickly register an admin user and access many unintended features of the web application.</td>
+</tr>
+</tbody></table>
+<h1 id="Web-Application-Layout"><a href="#Web-Application-Layout" class="headerlink" title="Web Application Layout"></a><strong><strong>Web Application Layout</strong></strong></h1><p>Hiçbir iki web uygulaması birbirinin aynısı değildir. İşletmeler, çok sayıda kullanım ve hedef kitle için web uygulamaları oluşturur. Web uygulamaları farklı tasarlanır ve programlanır ve arka uç altyapısı birçok farklı şekilde kurulabilir. Web uygulamalarının perde arkasında çalışabileceği çeşitli yolları, bir web uygulamasının yapısını, bileşenlerini ve bir şirketin altyapısı içinde nasıl kurulabileceklerini anlamak önemlidir.</p>
+<p>Web uygulaması düzenleri, aşağıdaki üç ana kategoriyle özetlenebilecek birçok farklı katmandan oluşur:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Web Application Infrastructure</td>
+<td>Describes the structure of required components, such as the database, needed for the web application to function as intended. Since the web application can be set up to run on a separate server, it is essential to know which database server it needs to access.</td>
+</tr>
+<tr>
+<td>Web Application Components</td>
+<td>The components that make up a web application represent all the components that the web application interacts with. These are divided into the following three areas: UI&#x2F;UX, Client, and Server components.</td>
+</tr>
+<tr>
+<td>Web Application Architecture</td>
+<td>Architecture comprises all the relationships between the various web application components.</td>
+</tr>
+</tbody></table>
+<h2 id="Web-Application-Infrastructure"><a href="#Web-Application-Infrastructure" class="headerlink" title="Web Application Infrastructure"></a><strong><strong>Web Application Infrastructure</strong></strong></h2><p>Web uygulamaları birçok farklı altyapı kurulumunu kullanabilir. Bunlara model de denir. En yaygın olanları aşağıdaki dört türe ayrılabilir:</p>
+<ul>
+<li>Client-Server</li>
+<li>Bir Sunucu</li>
+<li>Birçok Sunucu - Tek Veritabanı</li>
+<li>Birçok Sunucu - Birçok Veritabanı</li>
+</ul>
+<h3 id="Client-Server"><a href="#Client-Server" class="headerlink" title="Client-Server"></a><strong><strong>Client-Server</strong></strong></h3><p>Web uygulamaları genellikle istemci-sunucu modelini benimser. Bir sunucu, web uygulamasını bir istemci-sunucu modelinde barındırır ve ona erişmeye çalışan tüm istemcilere dağıtır.</p>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%201.png" alt="Untitled"></p>
+<p>Bu modelde, web uygulamaları, genellikle istemci tarafında (tarayıcı) yorumlanan ve yürütülen ön uçtakiler olmak üzere iki tür bileşene sahiptir. Ve arka uçtaki bileşenler, genellikle barındırma sunucusu tarafından derlenir, yorumlanır ve yürütülür.</p>
+<p>Bir istemci web uygulamasının URL’sini (web adresi, yani <a target="_blank" rel="noopener" href="https://www.acme.local/">https://www.acme.local</a>) ziyaret ettiğinde, sunucu ana web uygulaması arayüzünü (UI) kullanır. Kullanıcı bir düğmeye tıkladığında veya belirli bir işlev istediğinde, tarayıcı sunucuya bir HTTP web isteği gönderir, bu istek bu isteği yorumlar ve isteği tamamlamak için gerekli görev(ler)i gerçekleştirir (ör. alışveriş sepetine öğe, başka bir sayfaya göz atma vb.). Sunucu gerekli verilere sahip olduğunda, sonucu müşterinin tarayıcısına geri gönderir ve sonucu insan tarafından okunabilir bir şekilde görüntüler.</p>
+<h3 id="One-Server"><a href="#One-Server" class="headerlink" title="One Server"></a><strong><strong>One Server</strong></strong></h3><p>Bu mimaride, tüm web uygulaması veya hatta birkaç web uygulaması ve veritabanı dahil bileşenleri tek bir sunucuda barındırılmaktadır. Bu tasarım basit ve uygulanması kolay olsa da, aynı zamanda en riskli tasarımdır.</p>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%202.png" alt="Untitled"></p>
+<p>Bu sunucuda barındırılan herhangi bir web uygulamasının bu mimaride güvenliği ihlal edilirse, tüm web uygulamalarının verileri tehlikeye girer. Bu tasarım “tüm yumurtalar tek sepette” yaklaşımını temsil eder, çünkü barındırılan web uygulamalarından herhangi biri savunmasızsa, tüm web sunucusu savunmasız hale gelir.</p>
+<p>Ayrıca, web sunucusu herhangi bir nedenle kapanırsa, barındırılan tüm web uygulamaları sorun çözülene kadar tamamen erişilemez hale gelir.</p>
+<h3 id="Many-Servers-One-Database"><a href="#Many-Servers-One-Database" class="headerlink" title="Many Servers - One Database"></a><strong><strong>Many Servers - One Database</strong></strong></h3><p>Bu model, veritabanını kendi veritabanı sunucusuna ayırır ve web uygulamalarının barındırma sunucusunun, verileri depolamak ve almak için veritabanı sunucusuna erişmesine izin verir. Veritabanı kendi veritabanı sunucusunda ayrıldığı sürece, tek veritabanına çok sunucu ve tek veritabanına tek sunucu olarak görülebilir.</p>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%203.png" alt="Untitled"></p>
+<p>Bu model, birkaç web uygulamasının, verileri aralarında senkronize etmeden aynı verilere erişmesi için tek bir veritabanına erişmesine izin verebilir. Web uygulamaları, bir ana uygulamanın (yani, birincil&#x2F;yedek) kopyaları olabilir veya ortak verileri paylaşan ayrı web uygulamaları olabilir.</p>
+<p>Bu modelin ana avantajı (güvenlik açısından), bir web uygulamasının ana bileşenlerinin her birinin ayrı ayrı bulunduğu ve barındırıldığı bölümlemedir. Bir web sunucusunun güvenliğinin ihlal edilmesi durumunda, diğer web sunucuları doğrudan etkilenmez. Benzer şekilde, veritabanının güvenliği ihlal edilirse (yani, bir SQL enjeksiyon güvenlik açığı nedeniyle), web uygulamasının kendisi doğrudan etkilenmez. Web uygulaması erişimini yalnızca amaçlandığı gibi çalışması için gereken verilerle sınırlamak gibi, varlık segmentasyonundan sonra uygulanması gereken erişim kontrol önlemleri hala vardır.</p>
+<h3 id="Many-Servers-Many-Databases"><a href="#Many-Servers-Many-Databases" class="headerlink" title="Many Servers - Many Databases"></a><strong><strong>Many Servers - Many Databases</strong></strong></h3><p>Bu model, Many Servers, One Database modeli üzerine kuruludur. Ancak, veritabanı sunucusu içinde, her web uygulamasının verileri ayrı bir veritabanında barındırılır. Web uygulaması yalnızca özel verilere ve yalnızca web uygulamaları arasında paylaşılan ortak verilere erişebilir. Her web uygulamasının veritabanını ayrı veritabanı sunucusunda barındırmak da mümkündür.</p>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%204.png" alt="Untitled"></p>
+<p>Bu tasarım aynı zamanda yedeklilik amacıyla da yaygın olarak kullanılmaktadır, bu nedenle herhangi bir web sunucusu veya veritabanı çevrimdışı olursa, kesinti süresini mümkün olduğunca azaltmak için yerinde bir yedekleme çalışır. Bunun uygulanması daha zor olsa ve yük dengeleyiciler gibi araçların uygun şekilde çalışmasını gerektirebilse de, bu mimari, uygun erişim kontrol önlemleri ve uygun varlık segmentasyonu nedeniyle güvenlik açısından en iyi seçeneklerden biridir.</p>
+<p>Bu modellerin yanı sıra sunucusuz web uygulamaları veya mikroservislerden yararlanan web uygulamaları gibi başka web uygulama modelleri de mevcuttur.</p>
+<h2 id="Web-Application-Components"><a href="#Web-Application-Components" class="headerlink" title="Web Application Components"></a><strong><strong>Web Application Components</strong></strong></h2><p>Her web uygulamasının farklı sayıda bileşeni olabilir. Bununla birlikte, daha önce bahsedilen modellerin tüm bileşenleri şu şekilde ayrılabilir:</p>
+<ol>
+<li><code>Client</code></li>
+<li><code>Server</code><ul>
+<li>Webserver</li>
+<li>Web Application Logic</li>
+<li>Database</li>
+</ul>
+</li>
+<li><code>Services</code> (Microservices)<ul>
+<li>3rd Party Integrations</li>
+<li>Web Application Integrations</li>
+</ul>
+</li>
+<li><code>Functions</code> (Serverless)</li>
+</ol>
+<h2 id="Web-Application-Architecture"><a href="#Web-Application-Architecture" class="headerlink" title="Web Application Architecture"></a><strong><strong>Web Application Architecture</strong></strong></h2><p>Bir web uygulamasının bileşenleri üç farklı katmana ayrılır.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Presentation Layer</td>
+<td>Consists of UI process components that enable communication with the application and the system. These can be accessed by the client via the web browser and are returned in the form of HTML, JavaScript, and CSS.</td>
+</tr>
+<tr>
+<td>Application Layer</td>
+<td>This layer ensures that all client requests (web requests) are correctly processed. Various criteria are checked, such as authorization, privileges, and data passed on to the client.</td>
+</tr>
+<tr>
+<td>Data Layer</td>
+<td>The data layer works closely with the application layer to determine exactly where the required data is stored and can be accessed.</td>
+</tr>
+</tbody></table>
+<p>Bir web uygulaması mimarisi örneği şöyle görünebilir:</p>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%205.png" alt="Untitled"></p>
+<h3 id="Microservices"><a href="#Microservices" class="headerlink" title="Microservices"></a><strong><strong>Microservices</strong></strong></h3><p>Mikroservisler, çoğu durumda yalnızca bir görev için programlanan web uygulamasının bağımsız bileşenleri olarak düşünebiliriz. Örneğin, bir çevrimiçi mağaza için temel görevleri aşağıdaki bileşenlere ayırabiliriz:</p>
+<ul>
+<li>Registration</li>
+<li>Search</li>
+<li>Payments</li>
+<li>Ratings</li>
+<li>Reviews</li>
+</ul>
+<p>Bu bileşenler müşteri ile ve birbirleriyle iletişim kurar. Bu mikro hizmetler arasındaki iletişim durumsuzdur, yani istek ve yanıt bağımsızdır. Bunun nedeni, saklanan verilerin ilgili mikro hizmetlerden ayrı olarak depolanmasıdır. Mikro hizmetlerin kullanımı, tek bir iş hedefine odaklanan farklı otomatik işlevlerin bir koleksiyonu olarak oluşturulmuş hizmet odaklı mimari (SOA) olarak kabul edilir. Bununla birlikte, bu mikro hizmetler birbirine bağlıdır.</p>
+<p>Bir diğer önemli ve verimli mikro hizmet bileşeni, farklı programlama dillerinde yazılabilmeleri ve yine de etkileşime girebilmeleridir. Mikro hizmetler, yeniliği teşvik eden ve yeni özelliklerin pazara sunulmasını hızlandıran uygulamaların daha kolay ölçeklenmesinden ve daha hızlı geliştirilmesinden yararlanır. Mikro hizmetlerin bazı faydaları şunlardır:</p>
+<ul>
+<li>Agility</li>
+<li>Flexible scaling</li>
+<li>Easy deployment</li>
+<li>Reusable code</li>
+<li>Resilience</li>
+</ul>
+<p>This AWS <a href="/img/content-images/htb-academy/https://d1.awsstatic.com/whitepapers/microservices-on-aws.pdf">whitepaper</a> provides an excellent overview of microservice implementation.</p>
+<h3 id="Serverless"><a href="#Serverless" class="headerlink" title="Serverless"></a><strong><strong>Serverless</strong></strong></h3><p>Diğerlerinin yanı sıra AWS, GCP, Azure gibi bulut sağlayıcıları sunucusuz mimariler sunar. Bu platformlar, sunucuların kendileri hakkında endişelenmenize gerek kalmadan bu tür web uygulamaları oluşturmak için uygulama çerçeveleri sağlar. Bu web uygulamaları daha sonra durum bilgisi olmayan bilgi işlem kapsayıcılarında (örneğin Docker) çalışır. Bu tür bir mimari, bir şirkete altyapıyı yönetmek zorunda kalmadan uygulama ve hizmetler oluşturma ve dağıtma esnekliği verir; tüm sunucu yönetimi, uygulamaları ve veritabanlarını çalıştırmak için gereken sunucuları sağlama, ölçeklendirme ve bakımını yapma ihtiyacından kurtulan bulut sağlayıcısı tarafından yapılır.</p>
+<p>You can read more about serverless computing and its various use cases <a target="_blank" rel="noopener" href="https://aws.amazon.com/serverless">here</a>.</p>
+<h2 id="Architecture-Security"><a href="#Architecture-Security" class="headerlink" title="Architecture Security"></a><strong><strong>Architecture Security</strong></strong></h2><p>Herhangi bir web uygulamasında bir sızma testi gerçekleştirirken, web uygulamalarının genel mimarisini ve her web uygulamasının özel tasarımını anlamak önemlidir. Çoğu durumda, tek bir web uygulamasının güvenlik açığı, mutlaka bir programlama hatasından değil, mimarisindeki bir tasarım hatasından kaynaklanabilir.</p>
+<p>Örneğin, tek bir web uygulaması, tüm temel işlevlerinin güvenli bir şekilde uygulanmasına sahip olabilir. Bununla birlikte, tasarımında uygun erişim kontrolü önlemlerinin olmaması, yani Rol Tabanlı Erişim Kontrolü (RBAC) kullanımı nedeniyle, kullanıcılar doğrudan erişilmesi amaçlanmayan bazı yönetici özelliklerine erişebilir ve hatta erişim sağlayabilir. ayrıcalıklara sahip olmadan diğer kullanıcının özel bilgileri. Bu tür bir sorunu çözmek için, hem maliyetli hem de zaman alıcı olabilecek önemli bir tasarım değişikliğinin uygulanması gerekecektir.</p>
+<p>Başka bir örnek, bir güvenlik açığından yararlandıktan ve arka uç sunucu üzerinde kontrol kazandıktan sonra veritabanını bulamamamız olabilir; bu, veritabanının ayrı bir sunucuda barındırıldığı anlamına gelebilir. Veritabanı verilerinin yalnızca bir kısmını bulabiliriz, bu da kullanımda olan birkaç veritabanı olduğu anlamına gelebilir. Bu nedenle, web uygulaması geliştirmenin her aşamasında güvenlik dikkate alınmalı ve web uygulaması geliştirme yaşam döngüsü boyunca sızma testleri yapılmalıdır.</p>
+<h1 id="Front-End-vs-Back-End"><a href="#Front-End-vs-Back-End" class="headerlink" title="Front End vs. Back End"></a><strong><strong>Front End vs. Back End</strong></strong></h1><p>Ön uç ve arka uç web geliştirme terimlerini veya hem ön hem de arka uç web geliştirmeyi ifade eden Full Stack web geliştirme terimini duymuş olabiliriz. Bu terimler, web geliştirme döngüsünün çoğunluğunu oluşturdukları için web uygulaması geliştirme ile eş anlamlı hale gelmektedir. Ancak bu terimler birbirinden çok farklıdır, çünkü her biri web uygulamasının bir tarafını ifade eder ve her biri farklı alanlarda işlev görür ve iletişim kurar.</p>
+<h2 id="Front-End"><a href="#Front-End" class="headerlink" title="Front End"></a>Front End</h2><p>Bir web uygulamasının ön ucu, kullanıcının bileşenlerini doğrudan web tarayıcıları (istemci tarafı) aracılığıyla içerir. Bu bileşenler, bir web uygulamasını ziyaret ederken görüntülediğimiz web sayfasının kaynak kodunu oluşturur ve genellikle tarayıcılarımız tarafından gerçek zamanlı olarak yorumlanan HTML, CSS ve JavaScript’i içerir.</p>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%206.png" alt="Untitled"></p>
+<p>Bu, başlık ve metin HTML gibi sayfanın ana öğeleri, tüm CSS öğelerinin tasarımı ve animasyonu ve bir sayfanın her bir bölümünün JavaScript’i hangi işlevi yerine getirdiği gibi kullanıcının gördüğü ve etkileşimde bulunduğu her şeyi içerir.</p>
+<p>Modern web uygulamalarında, ön uç bileşenleri herhangi bir ekran boyutuna uyum sağlamalı ve herhangi bir cihazdaki herhangi bir tarayıcıda çalışmalıdır. Bu, genellikle belirli bir platform veya işletim sistemi için yazılan arka uç bileşenleriyle çelişir. Bir web uygulamasının ön ucu iyi optimize edilmemişse, tüm web uygulamasının yavaşlamasına ve yanıt vermemesine neden olabilir. Bu durumda, bazı kullanıcılar barındırma sunucusunun veya internetlerinin yavaş olduğunu düşünebilirken, sorun tamamen kullanıcının tarayıcısında istemci tarafında yatmaktadır. Bu nedenle bir web uygulamasının ön ucunun çoğu platform, cihaz (mobil dahil!) ve ekran boyutları için optimize edilmesi gerekir.</p>
+<p>Ön uç kod geliştirmenin yanı sıra, ön uç web uygulaması geliştirme ile ilgili diğer görevlerden bazıları şunlardır:</p>
+<ul>
+<li>Visual Concept Web Design</li>
+<li>User Interface (UI) design</li>
+<li>User Experience (UX) design</li>
+</ul>
+<h2 id="Back-End"><a href="#Back-End" class="headerlink" title="Back End"></a><strong><strong>Back End</strong></strong></h2><p>Bir web uygulamasının arka ucu, tümü web uygulamasının doğru çalışması için gereken her şeyi işleyen arka uç sunucusunda yürütülen tüm temel web uygulaması işlevlerini yürütür. Bu, asla göremeyebileceğimiz veya doğrudan etkileşime geçemeyeceğimiz kısımdır, ancak bir web sitesi yalnızca arka ucu olmayan statik web sayfalarının bir koleksiyonudur.</p>
+<p>Web uygulamaları için dört ana arka uç bileşeni vardır:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Back end Servers</td>
+<td>The hardware and operating system that hosts all other components and are usually run on operating systems like Linux, Windows, or using Containers.</td>
+</tr>
+<tr>
+<td>Web Servers</td>
+<td>Web servers handle HTTP requests and connections. Some examples are Apache, NGINX, and IIS.</td>
+</tr>
+<tr>
+<td>Databases</td>
+<td>Databases (DBs) store and retrieve the web application data. Some examples of relational databases are MySQL, MSSQL, Oracle, PostgreSQL, while examples of non-relational databases include NoSQL and MongoDB.</td>
+</tr>
+<tr>
+<td>Development Frameworks</td>
+<td>Development Frameworks are used to develop the core Web Application. Some well-known frameworks include PHP, C#, Java, Python, and NodeJS JavaScript.</td>
+</tr>
+</tbody></table>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%207.png" alt="Untitled"></p>
+<p>Docker gibi servisleri kullanarak arka ucun her bir bileşenini kendi izole sunucusunda veya izole konteynerlerde barındırmak da mümkündür. Web uygulamasının veritabanı gibi bazı bölümleri, ana web uygulaması başka bir Docker kapsayıcısına yüklenerek bir Docker kapsayıcısına kurulabilir, böylece her birini mantıksal olarak ayrı tutmak için birini etkileyebilecek herhangi bir güvenlik açığı (yani, bir web uygulaması güvenlik açığı) diğer kapsayıcı(lar). Her birini, daha fazla kaynak gerektiren ve bakımı zaman alıcı olabilen özel sunucusuna ayırmak da mümkündür. Yine de, söz konusu web uygulamasının iş durumuna ve tasarımına&#x2F;işlevselliğine bağlıdır.</p>
+<p>Arka uç bileşenleri tarafından gerçekleştirilen ana işlerden bazıları şunlardır:</p>
+<ul>
+<li>Develop the main logic and services of the back end of the web application</li>
+<li>Develop the main code and functionalities of the web application</li>
+<li>Develop and maintain the back end database</li>
+<li>Develop and implement libraries to be used by the web application</li>
+<li>Implement technical&#x2F;business needs for the web application</li>
+<li>Implement the main <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/API">APIs</a> for front end component communications</li>
+<li>Integrate remote servers and cloud services into the web application</li>
+</ul>
+<h2 id="Securing-Front-x2F-Back-End"><a href="#Securing-Front-x2F-Back-End" class="headerlink" title="Securing Front&#x2F;Back End"></a><strong><strong>Securing Front&#x2F;Back End</strong></strong></h2><p>Çoğu durumda, bireysel işlevleri ve kodun yapısını analiz etmek için arka uç koduna erişimimiz olmayacak olsa da, bu, uygulamayı zarar göremez hale getirmez. Örneğin, yine de çeşitli enjeksiyon saldırıları tarafından kullanılabilir.</p>
+<p>Bir web uygulamasında, yapısı gereği yanlışlıkla arama sorgularımızı doğru şekilde işlemeyen bir arama fonksiyonumuz olduğunu varsayalım. Bu durumda, sorguları, belirli veritabanı verisi SQL enjeksiyonlarına yetkisiz erişim elde edeceğimiz veya hatta Komut Enjeksiyonları olarak da bilinen web uygulaması aracılığıyla işletim sistemi komutlarını yürütecek şekilde işlemek için belirli teknikler kullanabiliriz.</p>
+<p>Ön ve arka uçlarda kullanılan her bir bileşenin nasıl sabitleneceğini daha sonra tartışacağız. Ön uç bileşenlerin kaynak koduna tam erişimimiz olduğunda, Whitebox Pentesting olarak adlandırılan şeyin bir parçası olan güvenlik açıklarını bulmak için bir kod incelemesi yapabiliriz.</p>
+<p>Öte yandan, arka uç bileşenlerinin kaynak kodu arka uç sunucusunda depolanır, bu nedenle varsayılan olarak ona erişimimiz yoktur, bu da bizi yalnızca Blackbox Pentesting olarak bilinen şeyi gerçekleştirmeye zorlar. Ancak, göreceğimiz gibi, bazı web uygulamaları açık kaynaktır, yani kaynak kodlarına büyük olasılıkla erişimimiz vardır. Ayrıca, Local File Inclusion gibi bazı güvenlik açıkları, kaynak kodunu arka uç sunucudan almamıza izin verebilir. Elimizde bu kaynak koduyla, kaynak koduna erişim olmadan, uygulamanın nasıl çalıştığını daha iyi anlamak, kaynak koddaki hassas verileri (parolalar gibi) potansiyel olarak bulmak ve hatta zor veya imkansız olabilecek güvenlik açıklarını bulmak için arka uç bileşenleri üzerinde bir kod incelemesi gerçekleştirebiliriz. </p>
+<h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><p>Web uygulamalarının ön ucunun ilk ve en baskın bileşeni HTML’dir (Köprü Metni İşaretleme Dili). HTML, internette gördüğümüz herhangi bir web sayfasının tam merkezinde yer alır. Başlıklar, formlar, resimler ve diğer birçok öğe dahil olmak üzere her sayfanın temel öğelerini içerir. Web tarayıcısı da bu öğeleri yorumlar ve bunları son kullanıcıya görüntüler.</p>
+<h2 id="URL-Encoding"><a href="#URL-Encoding" class="headerlink" title="URL Encoding"></a><strong><strong>URL Encoding</strong></strong></h2><p>HTML’de öğrenilmesi gereken önemli bir kavram, URL Kodlaması veya yüzde kodlamasıdır. Bir tarayıcının bir sayfanın içeriğini düzgün bir şekilde görüntülemesi için, kullanılan karakter kümesini bilmesi gerekir. Örneğin, URL’lerde tarayıcılar yalnızca ASCII kodlamasını kullanabilir, bu da yalnızca alfasayısal karakterlere ve belirli özel karakterlere izin verir. Bu nedenle, ASCII karakter kümesinin dışındaki tüm diğer karakterlerin bir URL içinde kodlanması gerekir. URL kodlaması, güvenli olmayan ASCII karakterlerini % sembolü ve ardından iki onaltılık basamakla değiştirir.</p>
+<p>Bazı yaygın karakter kodlamaları şunlardır:</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Encoding</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>space</td>
+<td>%20</td>
+</tr>
+<tr>
+<td>!</td>
+<td>%21</td>
+</tr>
+<tr>
+<td>“</td>
+<td>%22</td>
+</tr>
+<tr>
+<td>#</td>
+<td>%23</td>
+</tr>
+<tr>
+<td>$</td>
+<td>%24</td>
+</tr>
+<tr>
+<td>%</td>
+<td>%25</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>%26</td>
+</tr>
+<tr>
+<td>‘</td>
+<td>%27</td>
+</tr>
+<tr>
+<td>(</td>
+<td>%28</td>
+</tr>
+<tr>
+<td>)</td>
+<td>%29</td>
+</tr>
+</tbody></table>
+<p>A full character encoding table can be seen <a target="_blank" rel="noopener" href="https://www.w3schools.com/tags/ref_urlencode.ASP">here</a>.</p>
+<div class="note info flat"><p>🌐 “The W3C Document Object Model (DOM) is a platform and language-neutral interface that allows programs and scripts to dynamically access and update the content, structure, and style of a document.”</p>
+</div>
+
+<p>The DOM standard is separated into 3 parts:</p>
+<ul>
+<li><code>Core DOM</code> - the standard model for all document types</li>
+<li><code>XML DOM</code> - the standard model for XML documents</li>
+<li><code>HTML DOM</code> - the standard model for HTML documents</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Document_Object_Model"></a></p>
+<h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><p>CSS (Basamaklı Stil Sayfaları), HTML öğelerinin stilini biçimlendirmek ve ayarlamak için HTML ile birlikte kullanılan stil sayfası dilidir. HTML gibi, CSS’nin birkaç sürümü vardır ve sonraki her sürüm, HTML öğelerini biçimlendirmek için kullanılabilecek yeni bir dizi yetenek sunar. Tarayıcılar, bu yeni özellikleri desteklemek için onunla birlikte güncellenir.</p>
+<p>CSS, hızlı hesaplamalar yapmak, belirli HTML öğelerinin stil özelliklerini dinamik olarak ayarlamak veya tuş vuruşlarına veya fare imleci konumuna dayalı gelişmiş animasyonlar elde etmek için JavaScript’in yanında sıklıkla kullanılır.</p>
+<p>Ayrıca CSS, stillerini XML gibi veya SVG öğeleri içinde uygulamak için diğer dillerle birlikte kullanılabilir ve ayrıca tüm mobil uygulama Kullanıcı Arayüzlerini (UI) tasarlamak için modern mobil geliştirme platformlarında kullanılabilir.</p>
+<h2 id="Frameworks"><a href="#Frameworks" class="headerlink" title="Frameworks"></a><strong><strong>Frameworks</strong></strong></h2><p>Birçoğu, CSS’yi geliştirmenin zor olduğunu düşünebilir. Buna karşılık, diğerleri, her web sayfasındaki tüm HTML öğelerinin stilini ve tasarımını manuel olarak ayarlamanın verimsiz olduğunu iddia edebilir. Bu nedenle, güzel HTML öğeleri oluşturmayı çok daha hızlı ve kolay hale getirmek için bir CSS stil sayfaları ve tasarımları koleksiyonu içeren birçok CSS çerçevesi tanıtıldı.</p>
+<p>Ayrıca, bu çerçeveler web uygulaması kullanımı için optimize edilmiştir. JavaScript ile kullanılmak ve bir web uygulamasında geniş kullanım için tasarlanmıştır ve genellikle modern web uygulamalarında gerekli olan öğeleri içerir. En yaygın CSS çerçevelerinden bazıları şunlardır:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3schools.com/bootstrap4/">Bootstrap</a></li>
+<li><a target="_blank" rel="noopener" href="https://sass-lang.com/">SASS</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Foundation_(framework)">Foundation</a></li>
+<li><a target="_blank" rel="noopener" href="https://bulma.io/">Bulma</a></li>
+<li><a target="_blank" rel="noopener" href="https://purecss.io/">Pure</a></li>
+</ul>
+<h1 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a><strong><strong>JavaScript</strong></strong></h1><p>JavaScript, dünyada en çok kullanılan dillerden biridir. Çoğunlukla web geliştirme ve mobil geliştirme için kullanılır. JavaScript genellikle bir tarayıcıda yürütülecek bir uygulamanın ön ucunda kullanılır. Yine de, NodeJS gibi tüm web uygulamalarını geliştirmek için kullanılan arka uç JavaScript uygulamaları vardır.</p>
+<p>HTML ve CSS, bir web sayfasının nasıl göründüğünden esas olarak sorumlu olsa da, JavaScript genellikle ön uç web sayfasının gerektirdiği herhangi bir işlevi kontrol etmek için kullanılır. JavaScript olmadan, bir web sayfası çoğunlukla statik olurdu ve fazla işlevselliğe veya etkileşimli öğelere sahip olmazdı.</p>
+<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>En yaygın web uygulamaları, web sayfası görünümünü gerçek zamanlı olarak güncellemek, içeriği gerçek zamanlı olarak dinamik olarak güncellemek, kullanıcı girdisini kabul etmek ve işlemek ve diğer birçok potansiyel işlevsellik gibi web sayfasındaki gerekli tüm işlevleri yürütmek için JavaScript’e büyük ölçüde güvenir.</p>
+<p>JavaScript ayrıca karmaşık süreçleri otomatikleştirmek ve arka uç bileşenleriyle etkileşim kurmak ve Ajax gibi teknolojiler aracılığıyla veri göndermek ve almak için HTTP isteklerini gerçekleştirmek için kullanılır.</p>
+<p>Otomasyona ek olarak, JavaScript, daha önce belirtildiği gibi, yalnızca CSS ile mümkün olmayan gelişmiş animasyonları yürütmek için sıklıkla CSS ile birlikte kullanılır. Birçok gelişmiş ve görsel olarak çekici animasyonlar kullanan etkileşimli ve dinamik bir web sayfasını her ziyaret ettiğimizde, tarayıcımızda çalışan aktif JavaScript kodunun sonucunu görüyoruz.</p>
+<p>Tüm modern web tarayıcıları, sayfayı güncellemek için arka uç web sunucusuna güvenmeden istemci tarafında JavaScript kodunu çalıştırabilen JavaScript motorlarıyla donatılmıştır. Bu, JavaScript’i çok sayıda işlemi hızlı bir şekilde gerçekleştirmenin çok hızlı bir yolu haline getirir.</p>
+<h2 id="Frameworks-1"><a href="#Frameworks-1" class="headerlink" title="Frameworks"></a><strong><strong>Frameworks</strong></strong></h2><p>Web uygulamaları daha gelişmiş hale geldikçe, tüm bir web uygulamasını sıfırdan geliştirmek için saf JavaScript kullanmak verimsiz olabilir. Bu nedenle, web uygulaması geliştirme deneyimini geliştirmek için bir dizi JavaScript çerçevesi sunulmuştur.</p>
+<p>Bu platformlar, kullanıcı oturum açma ve kullanıcı kaydı gibi gelişmiş işlevleri yeniden oluşturmayı çok basit hale getiren kitaplıklar sunar ve statik HTML kodu kullanmak yerine dinamik olarak değişen HTML kodunun kullanılması gibi mevcut olanlara dayalı yeni teknolojiler sunar.</p>
+<p>Bu platformlar, programlama dili olarak JavaScript’i kullanır veya kodunu JavaScript kodunda derleyen bir JavaScript uygulaması kullanır.</p>
+<p>En yaygın ön uç JavaScript çerçevelerinden bazıları şunlardır:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3schools.com/angular/angular_intro.asp">Angular</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.w3schools.com/react/react_intro.asp">React</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.w3schools.com/whatis/whatis_vue.asp">Vue</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.w3schools.com/jquery/">jQuery</a></li>
+</ul>
+<p>A listing and comparison of common JavaScript frameworks can be found <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Comparison_of_JavaScript_frameworks">here</a>.</p>
+<h1 id="Back-End-Servers"><a href="#Back-End-Servers" class="headerlink" title="Back End Servers"></a><strong><strong>Back End Servers</strong></strong></h1><p>Arka uç sunucusu, web uygulamasını çalıştırmak için gerekli tüm uygulamaları barındıran arka uçtaki donanım ve işletim sistemidir. Web uygulamasının tamamını oluşturan tüm süreçleri yürüten ve görevlerin tamamını taşıyan gerçek sistemdir. Arka uç sunucusu, Veri erişim katmanında bulunur.</p>
+<h2 id="Software"><a href="#Software" class="headerlink" title="Software"></a><strong><strong>Software</strong></strong></h2><p>Arka uç sunucusu, diğer 3 arka uç bileşenini içerir:</p>
+<ul>
+<li><code>Web Server</code></li>
+<li><code>Database</code></li>
+<li><code>Development Framework</code></li>
+</ul>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%208.png" alt="Untitled"></p>
+<p>Arka uç sunucudaki diğer yazılım bileşenleri, hipervizörler, kapsayıcılar ve WAF’leri içerebilir.</p>
+<p>Arka uç sunucuları için, belirli bir arka uç bileşenleri kümesi içeren birçok popüler “yığın” kombinasyonu vardır. Bazı yaygın örnekler şunları içerir:</p>
+<table>
+<thead>
+<tr>
+<th>Combinations</th>
+<th>Components</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LAMP</td>
+<td>Linux, Apache, MySQL, and PHP.</td>
+</tr>
+<tr>
+<td>WAMP</td>
+<td>Windows, Apache, MySQL, and PHP.</td>
+</tr>
+<tr>
+<td>WINS</td>
+<td>Windows, IIS, .NET, and SQL Server</td>
+</tr>
+<tr>
+<td>MAMP</td>
+<td>macOS, Apache, MySQL, and PHP.</td>
+</tr>
+<tr>
+<td>XAMPP</td>
+<td>Cross-Platform, Apache, MySQL, and PHP&#x2F;PERL.</td>
+</tr>
+</tbody></table>
+<p>We can find a comprehensive list of Web Solution Stacks in this <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Solution_stack">article</a>.</p>
+<h2 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a><strong><strong>Hardware</strong></strong></h2><p>Arka uç sunucusu, gerekli tüm donanımı içerir. Bu donanımın gücü ve performans yetenekleri, web uygulamasının ne kadar kararlı ve duyarlı olacağını belirler. Mimari bölümünde daha önce tartışıldığı gibi, birçok mimari, özellikle büyük web uygulamaları için, yüklerini, aynı görevleri gerçekleştirmek ve web uygulamasını son kullanıcıya teslim etmek için birlikte çalışan birçok arka uç sunucuya dağıtmak üzere tasarlanmıştır. Web uygulamalarının doğrudan tek bir arka uç sunucuda çalışması gerekmez, ancak web uygulaması için sanal ana bilgisayarlar sağlayan veri merkezlerini ve bulut barındırma hizmetlerini kullanabilir.</p>
+<h1 id="Web-Servers"><a href="#Web-Servers" class="headerlink" title="Web Servers"></a><strong><strong>Web Servers</strong></strong></h1><p>Web sunucusu, istemci tarafı tarayıcıdan gelen tüm HTTP trafiğini işleyen, onu istenen sayfalara yönlendiren ve son olarak istemci tarafı tarayıcıya yanıt veren arka uç sunucuda çalışan bir uygulamadır. Web sunucuları genellikle 80 veya 443 numaralı TCP bağlantı noktalarında çalışır ve çeşitli yanıtlarını işlemenin yanı sıra son kullanıcıları web uygulamasının çeşitli bölümlerine bağlamaktan sorumludur.</p>
+<h2 id="Workflow"><a href="#Workflow" class="headerlink" title="Workflow"></a><strong><strong>Workflow</strong></strong></h2><p>Tipik bir web sunucusu, istemci tarafından HTTP isteklerini kabul eder ve başarılı bir istek için bir kod 200 OK yanıtı, mevcut olmayan sayfalar istenirken bir kod 404 BULUNAMADI, kısıtlanmış sayfalara erişim talep etme için kod 403 YASAKTIR gibi farklı HTTP yanıtları ve kodlarıyla yanıt verir. </p>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%209.png" alt="Untitled"></p>
+<p>The following are some of the most common <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response codes</a>:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Successful responses</td>
+<td></td>
+</tr>
+<tr>
+<td>200 OK</td>
+<td>The request has succeeded</td>
+</tr>
+<tr>
+<td>Redirection messages</td>
+<td></td>
+</tr>
+<tr>
+<td>301 Moved Permanently</td>
+<td>The URL of the requested resource has been changed permanently</td>
+</tr>
+<tr>
+<td>302 Found</td>
+<td>The URL of the requested resource has been changed temporarily</td>
+</tr>
+<tr>
+<td>Client error responses</td>
+<td></td>
+</tr>
+<tr>
+<td>400 Bad Request</td>
+<td>The server could not understand the request due to invalid syntax</td>
+</tr>
+<tr>
+<td>401 Unauthorized</td>
+<td>Unauthenticated attempt to access page</td>
+</tr>
+<tr>
+<td>403 Forbidden</td>
+<td>The client does not have access rights to the content</td>
+</tr>
+<tr>
+<td>404 Not Found</td>
+<td>The server can not find the requested resource</td>
+</tr>
+<tr>
+<td>405 Method Not Allowed</td>
+<td>The request method is known by the server but has been disabled and cannot be used</td>
+</tr>
+<tr>
+<td>408 Request Timeout</td>
+<td>This response is sent on an idle connection by some servers, even without any previous request by the client</td>
+</tr>
+<tr>
+<td>Server error responses</td>
+<td></td>
+</tr>
+<tr>
+<td>500 Internal Server Error</td>
+<td>The server has encountered a situation it doesn’t know how to handle</td>
+</tr>
+<tr>
+<td>502 Bad Gateway</td>
+<td>The server, while working as a gateway to get a response needed to handle the request, received an invalid response</td>
+</tr>
+<tr>
+<td>504 Gateway Timeout</td>
+<td>The server is acting as a gateway and cannot get a response in time</td>
+</tr>
+</tbody></table>
+<p>Web sunucuları ayrıca metin, JSON ve hatta ikili veriler (yani dosya yüklemeleri için) dahil olmak üzere HTTP istekleri içinde çeşitli kullanıcı girdilerini kabul eder. Bir web sunucusu bir web isteği aldığında, onu hedefine yönlendirmekten, bu istek için gereken tüm işlemleri yürütmekten ve yanıtı istemci tarafında kullanıcıya geri göndermekten sorumludur. Web sunucusunun işlediği ve trafiği yönlendirdiği sayfalar ve dosyalar, web uygulaması çekirdek dosyalarıdır.</p>
+<p>Aşağıda, cURL yardımcı programını kullanarak bir Linux terminalinde bir sayfa istemeye ve başlıkları görüntüleyen -I bayrağını kullanırken sunucu yanıtını almaya ilişkin bir örnek gösterilmektedir:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FHK@htb[/htb]$ curl -I https://academy.hackthebox.comHTTP/2 200</span><br><span class="line"><span class="built_in">date</span>: Tue, 15 Dec 2020 19:54:29 GMT</span><br><span class="line">content-type: text/html; charset=UTF-8</span><br><span class="line">...SNIP...</span><br></pre></td></tr></table></figure>
+
+<p>Bu cURL komut örneği bize web sayfasının kaynak kodunu gösterirken:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FHK@htb[/htb]$ curl https://academy.hackthebox.com&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;<span class="built_in">head</span>&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;utf-8&quot;</span> /&gt;</span><br><span class="line">&lt;title&gt;Cyber Security Training : HTB Academy&lt;/title&gt;</span><br><span class="line">&lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Web uygulamalarını çalıştırmak için birçok web sunucusu türü kullanılabilir. Bunların çoğu, her tür karmaşık HTTP isteğini işleyebilir ve genellikle ücretsizdir. Python, JavaScript ve PHP gibi dilleri kullanarak kendi temel web sunucumuzu bile geliştirebiliriz. Ancak, her dil için, büyük miktarda web trafiğini işlemek üzere optimize edilmiş, kendi web sunucumuzu oluştururken bize zaman kazandıran popüler bir web uygulaması vardır.</p>
+<h2 id="Apache"><a href="#Apache" class="headerlink" title="Apache"></a>Apache</h2><p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%2010.png" alt="Untitled"></p>
+<p>Apache ‘veya httpd’ internetteki en yaygın web sunucusudur ve tüm internet sitelerinin %40’ından fazlasını barındırır. Apache genellikle çoğu Linux dağıtımında önceden yüklenmiş olarak gelir ve ayrıca Windows ve macOS sunucularına da yüklenebilir.</p>
+<p>Apache genellikle web uygulaması geliştirme için PHP ile birlikte kullanılır, ancak .Net, Python, Perl gibi diğer dilleri ve hatta Bash gibi CGI aracılığıyla işletim sistemi dillerini de destekler. Kullanıcılar, işlevselliğini genişletmek ve daha fazla dili desteklemek için çok çeşitli Apache modülleri kurabilir. Örneğin, PHP dosyalarının sunulmasını desteklemek için, kullanıcıların Apache için mod_php modülünü kurmanın yanı sıra arka uç sunucuya PHP kurmaları gerekir.</p>
+<p>Apache açık kaynaklı bir projedir ve topluluk kullanıcıları, sorunları gidermek ve güvenlik açıklarını aramak için kaynak koduna erişebilir. Bakımlıdır ve istismara karşı güvende tutmak için güvenlik açıklarına karşı düzenli olarak yamalanır. Ayrıca, web sunucusunun farklı bölümlerini kullanmayı ve yapılandırmayı nispeten kolaylaştıran çok iyi belgelenmiştir. Apache, geliştirmesi kolay olduğu için yeni başlayanlar ve daha küçük şirketler tarafından yaygın olarak kullanılır. Yine de, aşağıdakiler de dahil olmak üzere bazı büyük şirketler Apache’yi kullanır:</p>
+<p><code>Apple   Adobe   Baidu</code></p>
+<h2 id="NGINX"><a href="#NGINX" class="headerlink" title="NGINX"></a><strong><strong>NGINX</strong></strong></h2><p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%2011.png" alt="Untitled"></p>
+<p>NGINX, internetteki en yaygın ikinci web sunucusudur ve tüm internet sitelerinin yaklaşık %30’unu barındırır. NGINX, bunu yapmak için zaman uyumsuz bir mimari kullanarak nispeten düşük bellek ve CPU yükü ile birçok eşzamanlı web isteğini sunmaya odaklanır. Bu, NGINX’i popüler web uygulamaları ve dünya çapındaki en iyi işletmeler için çok güvenilir bir web sunucusu yapar; bu nedenle, NGINX kullanan ilk 100.000 web sitesinin yaklaşık %60’ı ile yüksek trafikli web siteleri arasında en popüler web sunucusudur.</p>
+<p>NGINX ayrıca güvenlik ve güvenilirlik gibi daha önce bahsedilen tüm faydaları sağlayan ücretsiz ve açık kaynaklıdır. NGINX kullanan bazı popüler web siteleri şunları içerir:</p>
+<p><code>Google   Facebook   Twitter   Cisco   Intel   Netflix   HackTheBox</code></p>
+<h2 id="IIS"><a href="#IIS" class="headerlink" title="IIS"></a><strong><strong>IIS</strong></strong></h2><p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%2012.png" alt="Untitled"></p>
+<p>IIS (İnternet Bilgi Servisleri), internetteki en yaygın üçüncü web sunucusudur ve tüm internet web sitelerinin yaklaşık %15’ini barındırır. IIS, Microsoft tarafından geliştirilir ve sürdürülür ve esas olarak Microsoft Windows Sunucularında çalışır. IIS genellikle Microsoft .NET çerçevesi için geliştirilmiş web uygulamalarını barındırmak için kullanılır, ancak PHP gibi diğer dillerde geliştirilmiş web uygulamalarını barındırmak veya FTP gibi diğer hizmet türlerini barındırmak için de kullanılabilir. Ayrıca, IIS, Active Directory entegrasyonu için çok iyi optimize edilmiştir ve Active Directory kullanarak kullanıcıların kimliğini doğrulamak için Windows Auth gibi özellikler içerir ve bu sayede web uygulamalarında otomatik olarak oturum açmalarına olanak tanır.</p>
+<p>En popüler web sunucusu olmasa da, birçok büyük kuruluş web sunucusu olarak IIS kullanır. Birçoğu arka uçlarında Windows Server kullanıyor veya organizasyonları içinde büyük ölçüde Active Directory’ye güveniyor. IIS kullanan bazı popüler web siteleri şunları içerir:</p>
+<p><code>Microsoft   Office365   Skype   StackOverflow   Dell</code></p>
+<p>Bu 3 web sunucusunun yanı sıra, Java web uygulamaları için Apache Tomcat ve arka uçta JavaScript kullanılarak geliştirilen web uygulamaları için Node.JS gibi yaygın olarak kullanılan birçok web sunucusu vardır.</p>
+<h1 id="Databases"><a href="#Databases" class="headerlink" title="Databases"></a><strong><strong>Databases</strong></strong></h1><p>Web uygulamaları, web uygulamasıyla ilgili çeşitli içerik ve bilgileri depolamak için arka uç veritabanlarını kullanır. Bu, resimler ve dosyalar gibi temel web uygulaması varlıkları, gönderiler ve güncellemeler gibi web uygulaması içeriği veya kullanıcı adları ve parolalar gibi kullanıcı verileri olabilir. Bu, web uygulamalarının verileri kolayca ve hızlı bir şekilde depolamasına ve almasına ve her kullanıcı için farklı olan dinamik içeriği etkinleştirmesine olanak tanır.</p>
+<p>Her biri belirli bir kullanım türüne uyan birçok farklı veritabanı türü vardır. Çoğu geliştirici, veri depolama ve alma hızı, büyük miktarda veri depolarken boyut, web uygulaması büyüdükçe ölçeklenebilirlik ve maliyet gibi bir veritabanında belirli özellikler arar.</p>
+<h2 id="Relational-SQL"><a href="#Relational-SQL" class="headerlink" title="Relational (SQL)"></a><strong><strong>Relational (SQL)</strong></strong></h2><p>İlişkisel (SQL) veritabanları, verilerini tablolarda, satırlarda ve sütunlarda depolar. Her tablonun, tabloları birbirine bağlayabilen ve tablolar arasında ilişkiler oluşturabilen benzersiz anahtarları olabilir.</p>
+<p>Örneğin, ilişkisel bir veritabanında id, username, first_name, last_name vb. gibi sütunlar içeren bir users tablosuna sahip olabiliriz. Kimlik, tablo anahtarı olarak kullanılabilir. Başka bir tablo, gönderiler, tüm kullanıcılar tarafından id, user_id, tarih, içerik vb. sütunlarla yapılan gönderileri içerebilir.</p>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%2013.png" alt="Untitled"></p>
+<p>Her gönderide tüm kullanıcı ayrıntılarını depolamak zorunda kalmadan, her gönderi için kullanıcı ayrıntılarını kolayca almak için users tablosundaki id’yi gönderiler tablosundaki user_id’ye bağlayabiliriz.</p>
+<p>Bir tablonun birden fazla anahtarı olabilir, çünkü başka bir sütun başka bir tabloyla bağlantı kurmak için anahtar olarak kullanılabilir. Örneğin, id sütunu, gönderiler tablosunu, her biri belirli bir gönderiye ait olan yorumları içeren başka bir tabloya bağlamak için bir anahtar olarak kullanılabilir.</p>
+<div class="note info flat"><p>🌐 The relationship between tables within a database is called a Schema.</p>
+</div>
+
+<p>Bu şekilde ilişkisel veritabanları kullanılarak, tüm veritabanlarından belirli bir öğeye ilişkin tüm verileri almak çok hızlı ve kolay hale gelir. Örneğin, belirli bir kullanıcıya bağlı tüm detayları tek bir sorgu ile tüm tablolardan alabiliriz. Bu, açık bir yapıya ve tasarıma sahip büyük veri kümeleri için ilişkisel veritabanlarını çok hızlı ve güvenilir hale getirir. Veritabanları ayrıca veri yönetimini çok verimli hale getirir.</p>
+<p>En yaygın ilişkisel veritabanlarından bazıları şunlardır:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MySQL</td>
+<td>The most commonly used database around the internet. It is an open-source database and can be used completely free of charge</td>
+</tr>
+<tr>
+<td>MSSQL</td>
+<td>Microsoft’s implementation of a relational database. Widely used with Windows Servers and IIS web servers</td>
+</tr>
+<tr>
+<td>Oracle</td>
+<td>A very reliable database for big businesses, and is frequently updated with innovative database solutions to make it faster and more reliable. It can be costly, even for big businesses</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>Another free and open-source relational database. It is designed to be easily extensible, enabling adding advanced new features without needing a major change to the initial database design</td>
+</tr>
+</tbody></table>
+<p>Diğer yaygın SQL veritabanları şunları içerir: SQLite, MariaDB, Amazon Aurora ve Azure SQL.</p>
+<h2 id="Non-relational-NoSQL"><a href="#Non-relational-NoSQL" class="headerlink" title="Non-relational (NoSQL)"></a><strong><strong>Non-relational (NoSQL)</strong></strong></h2><p>İlişkisel olmayan bir veritabanı tabloları, satırları, sütunları, birincil anahtarları, ilişkileri veya şemaları kullanmaz. Bunun yerine, bir NoSQL veritabanı, depolanan verilerin türüne bağlı olarak çeşitli depolama modelleri kullanarak verileri depolar.</p>
+<p>Veritabanı için tanımlanmış bir yapının olmaması nedeniyle, NoSQL veritabanları çok ölçeklenebilir ve esnektir. Çok iyi tanımlanmamış ve yapılandırılmamış veri kümeleriyle uğraşırken, verilerimizi depolamak için bir NoSQL veritabanı en iyi seçim olacaktır.</p>
+<p>NoSQL veritabanları için 4 ortak depolama modeli vardır:</p>
+<ul>
+<li>Key-Value</li>
+<li>Document-Based</li>
+<li>Wide-Column</li>
+<li>Graph</li>
+</ul>
+<p>Yukarıdaki modellerin her birinin veri depolamanın farklı bir yolu vardır. Örneğin, Anahtar-Değer modeli genellikle verileri JSON veya XML’de depolar ve her bir çift için bir anahtara sahiptir ve tüm verilerini değeri olarak saklar:</p>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%2014.png" alt="Untitled"></p>
+<p>Yukarıdaki örnek, JSON kullanılarak aşağıdaki gibi gösterilebilir:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;100001&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;date&quot;</span>: <span class="string">&quot;01-01-2021&quot;</span>,</span><br><span class="line">    <span class="string">&quot;content&quot;</span>: <span class="string">&quot;Welcome to this web application.&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;100002&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;date&quot;</span>: <span class="string">&quot;02-01-2021&quot;</span>,</span><br><span class="line">    <span class="string">&quot;content&quot;</span>: <span class="string">&quot;This is the first post on this web app.&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;100003&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;date&quot;</span>: <span class="string">&quot;02-01-2021&quot;</span>,</span><br><span class="line">    <span class="string">&quot;content&quot;</span>: <span class="string">&quot;Reminder: Tomorrow is the ...&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Python veya PHP gibi dillerde bir sözlük&#x2F;harita&#x2F;anahtar&#x2F;değer çiftine benziyor. {‘key’:’value’}’, anahtarın genellikle bir dize olduğu durumlarda, değer bir dize, sözlük veya herhangi bir sınıf nesnesi olabilir.</p>
+<p>Belge Tabanlı model, verileri karmaşık JSON nesnelerinde depolar ve her nesne, verilerin geri kalanını Anahtar-Değer modeline benzer şekilde depolarken belirli meta verilere sahiptir.</p>
+<p>En yaygın NoSQL veritabanlarından bazıları şunlardır:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MongoDB</td>
+<td>The most common NoSQL database. It is free and open-source, uses the Document-Based model, and stores data in JSON objects</td>
+</tr>
+<tr>
+<td>ElasticSearch</td>
+<td>Another free and open-source NoSQL database. It is optimized for storing and analyzing huge datasets. As its name suggests, searching for data within this database is very fast and efficient</td>
+</tr>
+<tr>
+<td>Apache Cassandra</td>
+<td>Also free and open-source. It is very scalable and is optimized for gracefully handling faulty values</td>
+</tr>
+</tbody></table>
+<p>Diğer yaygın NoSQL veritabanları şunları içerir: Redis, Neo4j, CouchDB ve Amazon DynamoDB.</p>
+<h2 id="Use-in-Web-Applications"><a href="#Use-in-Web-Applications" class="headerlink" title="Use in Web Applications"></a><strong><strong>Use in Web Applications</strong></strong></h2><p>Çoğu modern web geliştirme dili ve çerçevesi, çeşitli veritabanı türlerinden verileri entegre etmeyi, depolamayı ve almayı kolaylaştırır. Ancak önce, veritabanı arka uç sunucuda install edilmeli ve kurulmalıdır ve bir kez kurulup çalıştırıldığında, web uygulamaları veri depolamak ve almak için onu kullanmaya başlayabilir.</p>
+<p>Örneğin, bir PHP web uygulamasında, MySQL çalışır duruma geldiğinde, veritabanı sunucusuna aşağıdakilerle bağlanabiliriz:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$conn</span> = <span class="keyword">new</span> <span class="title function_ invoke__">mysqli</span>(<span class="string">&quot;localhost&quot;</span>, <span class="string">&quot;user&quot;</span>, <span class="string">&quot;pass&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Ardından, aşağıdakilerle yeni bir veritabanı oluşturabiliriz:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;CREATE DATABASE database1&quot;</span>;</span><br><span class="line"><span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$sql</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Bundan sonra, yeni veritabanımıza bağlanabilir ve MySQL veritabanını MySQL sözdizimi üzerinden PHP içinde, aşağıdaki gibi kullanmaya başlayabiliriz:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$conn</span> = <span class="keyword">new</span> <span class="title function_ invoke__">mysqli</span>(<span class="string">&quot;localhost&quot;</span>, <span class="string">&quot;user&quot;</span>, <span class="string">&quot;pass&quot;</span>, <span class="string">&quot;database1&quot;</span>);</span><br><span class="line"><span class="variable">$query</span> = <span class="string">&quot;select * from table_1&quot;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$query</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Web uygulamaları, verileri alırken genellikle kullanıcı girişini kullanır. Örneğin, bir kullanıcı diğer kullanıcıları aramak için arama işlevini kullandığında, onların arama girdisi, girdiyi veritabanlarında arama yapmak için kullanan web uygulamasına iletilir.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$searchInput</span> =  <span class="variable">$_POST</span>[<span class="string">&#x27;findUser&#x27;</span>];</span><br><span class="line"><span class="variable">$query</span> = <span class="string">&quot;select * from users where name like &#x27;%<span class="subst">$searchInput</span>%&#x27;&quot;</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="variable">$conn</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$query</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Son olarak, web uygulaması sonucu kullanıcıya geri gönderir:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="variable">$row</span> = <span class="variable">$result</span>-&gt;<span class="title function_ invoke__">fetch_assoc</span>() )&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="variable">$row</span>[<span class="string">&quot;name&quot;</span>].<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Bu temel örnek bize veritabanlarını kullanmanın ne kadar kolay olduğunu gösteriyor. Ancak, güvenli bir şekilde kodlanmazsa veritabanı kodu, SQL Injection güvenlik açıkları gibi çeşitli sorunlara yol açabilir.</p>
+<h1 id="Development-Frameworks-amp-APIs"><a href="#Development-Frameworks-amp-APIs" class="headerlink" title="Development Frameworks &amp; APIs"></a><strong><strong>Development Frameworks &amp; APIs</strong></strong></h1><p>Çeşitli dillerde web uygulamalarını barındırabilen web sunucularına ek olarak, temel web uygulama dosyalarının ve işlevlerinin geliştirilmesine yardımcı olan birçok yaygın web geliştirme çerçevesi vardır. Web uygulamalarının artan karmaşıklığı ile sıfırdan modern ve sofistike bir web uygulaması oluşturmak zor olabilir. Bu nedenle, popüler web uygulamalarının çoğu web çerçeveleri kullanılarak geliştirilir.</p>
+<p>Çoğu web uygulaması, kullanıcı kaydı gibi ortak işlevleri paylaştığından, web geliştirme çerçeveleri bu işlevselliği hızlı bir şekilde uygulamayı ve bunları ön uç bileşenlere bağlamayı kolaylaştırarak tamamen işlevsel bir web uygulaması oluşturur. En yaygın web geliştirme çerçevelerinden bazıları şunlardır:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://laravel.com/">Laravel</a> (<code>PHP</code>): usually used by startups and smaller companies, as it is powerful yet easy to develop for.</li>
+<li><a target="_blank" rel="noopener" href="https://expressjs.com/">Express</a> (<code>Node.JS</code>): used by <code>PayPal</code>, <code>Yahoo</code>, <code>Uber</code>, <code>IBM</code>, and <code>MySpace</code>.</li>
+<li><a target="_blank" rel="noopener" href="https://www.djangoproject.com/">Django</a> (<code>Python</code>): used by <code>Google</code>, <code>YouTube</code>, <code>Instagram</code>, <code>Mozilla</code>, and <code>Pinterest</code>.</li>
+<li><a target="_blank" rel="noopener" href="https://academy.hackthebox.com/module/75/section/rubyonrails">Rails</a> (<code>Ruby</code>): used by <code>GitHub</code>, <code>Hulu</code>, <code>Twitch</code>, <code>Airbnb</code>, and even <code>Twitter</code> in the past.</li>
+</ul>
+<div class="note info flat"><p>🌐 It must be noted that popular websites usually utilize a variety of frameworks and web servers, rather than just one.</p>
+</div>
+
+<h2 id="APIs"><a href="#APIs" class="headerlink" title="APIs"></a><strong><strong>APIs</strong></strong></h2><p>Arka uç web uygulaması geliştirmenin önemli bir yönü, ön uç ve arka uç bileşenleri arasında ileri ve geri veri gönderebilmek ve içinde çeşitli işlevleri yerine getirebilmek için ön uç ile arka ucu birbirine bağlamak için Web API’lerinin ve HTTP İstek parametrelerinin  web uygulamasında kullanılmasıdır.</p>
+<p>Ön uç bileşenin arka uçla etkileşime girmesi ve belirli görevlerin yerine getirilmesini istemesi için, bunları arka uç bileşeninden belirli bir girdiyle belirli bir görev istemek için kullanırlar. Arka uç bileşenleri bu istekleri işler, gerekli işlevleri gerçekleştirir ve son olarak istemci tarafında son kullanıcının çıktısını oluşturan ön uç bileşenlerine belirli bir yanıt verir.</p>
+<h3 id="Query-Parameters"><a href="#Query-Parameters" class="headerlink" title="Query Parameters"></a><strong><strong>Query Parameters</strong></strong></h3><p>Bir web sayfasına belirli argümanlar göndermenin varsayılan yöntemi, GET ve POST istek parametreleridir. Bu, ön uç bileşenlerinin, arka uç bileşenlerinin bunları işlemesi ve buna göre yanıt vermesi için sayfada kullanılan belirli parametreler için değerler belirlemesine olanak tanır.</p>
+<p>Örneğin, bir &#x2F;search.php sayfası, arama öğesini belirtmek için kullanılabilecek bir öğe parametresi alır. Bir parametrenin bir GET isteği aracılığıyla iletilmesi, ‘&#x2F;search.php?item&#x3D;apples’ URL’si aracılığıyla yapılırken, POST parametreleri, POST HTTP isteğinin altındaki POST verileri aracılığıyla iletilir:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">POST /search.php HTTP/1.1</span><br><span class="line">...SNIP...</span><br><span class="line"></span><br><span class="line">item=apples</span><br></pre></td></tr></table></figure>
+
+<p>Sorgu parametreleri, tek bir sayfanın, her biri farklı şekilde işlenebilen çeşitli girdi türlerini almasına izin verir. Diğer belirli senaryolar için Web API’lerinin kullanımı çok daha hızlı ve daha verimli olabilir. Web İstekleri modülü, HTTP isteklerine daha derin bir dalış yapar.</p>
+<h1 id="Web-APIs"><a href="#Web-APIs" class="headerlink" title="Web APIs"></a><strong><strong>Web APIs</strong></strong></h1><p>API (Uygulama Programlama Arayüzü), uygulamanın diğer uygulamalarla nasıl etkileşime girebileceğini belirten bir uygulama içindeki bir arayüzdür. Web Uygulamaları için, arka uç bileşenlerindeki işlevlere uzaktan erişime izin veren şeydir. API’ler web uygulamalarına özel değildir ve genel olarak yazılım uygulamaları için kullanılır. Web API’lerine genellikle HTTP protokolü üzerinden erişilir ve genellikle web sunucuları aracılığıyla işlenir ve çevrilir.</p>
+<p><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/Untitled%2015.png" alt="Untitled"></p>
+<p>Örneğin bir hava durumu web uygulaması, belirli bir şehir için mevcut hava durumunu almak için belirli bir API’ye sahip olabilir. API URL’sini talep edebilir ve şehir adını veya şehir kimliğini iletebiliriz ve bu, mevcut hava durumunu bir JSON nesnesinde döndürür. Başka bir örnek, belirli bir hesaptan XML veya JSON formatlarında en son Tweetleri almamıza ve hatta ‘kimliği doğrulanmışsa’ bir Tweet göndermemize izin veren Twitter API’sidir.</p>
+<p>API’lerin bir web uygulaması içinde kullanılmasını sağlamak için geliştiricilerin bu işlevselliği SOAP veya REST gibi API standartlarını kullanarak web uygulamasının arka ucunda geliştirmesi gerekir.</p>
+<h2 id="SOAP"><a href="#SOAP" class="headerlink" title="SOAP"></a><strong><strong>SOAP</strong></strong></h2><p>SOAP (Basit Nesne Erişimi) standardı, verileri XML aracılığıyla paylaşır; burada, istek bir HTTP isteği aracılığıyla XML’de yapılır ve yanıt da XML’de döndürülür. Ön uç bileşenleri, bu XML çıktısını düzgün bir şekilde ayrıştırmak için tasarlanmıştır. Aşağıdaki örnek bir SOAP mesajıdır:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">soap:Envelope</span></span></span><br><span class="line"><span class="tag"><span class="attr">xmlns:soap</span>=<span class="string">&quot;http://www.example.com/soap/soap/&quot;</span><span class="attr">soap:encodingStyle</span>=<span class="string">&quot;http://www.w3.org/soap/soap-encoding&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">soap:Header</span>&gt;</span><span class="tag">&lt;/<span class="name">soap:Header</span>&gt;</span><span class="tag">&lt;<span class="name">soap:Body</span>&gt;</span><span class="tag">&lt;<span class="name">soap:Fault</span>&gt;</span><span class="tag">&lt;/<span class="name">soap:Fault</span>&gt;</span><span class="tag">&lt;/<span class="name">soap:Body</span>&gt;</span><span class="tag">&lt;/<span class="name">soap:Envelope</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>SOAP, yapılandırılmış verileri (yani, tüm sınıf nesnesini) veya hatta ikili verileri aktarmak için çok kullanışlıdır ve çoğu zaman, tümü ön uç ve arka uç bileşenleri arasında karmaşık verilerin paylaşılmasını ve uygun şekilde ayrıştırılmasını sağlayan serileştirilmiş nesnelerle birlikte kullanılır. Ayrıca, modern web uygulamaları ve mobil uygulamalarla daha yaygın hale gelen durum bilgisi olan nesnelerin paylaşılması (yani bir web sayfasının mevcut durumunun paylaşılması&#x2F;değiştirilmesi) için de çok kullanışlıdır.</p>
+<p>Ancak, yeni başlayanlar için SOAP’ı kullanmak zor olabilir veya temel arama veya filtre sorguları gibi daha küçük sorgular için bile uzun ve karmaşık istekler gerektirebilir. REST API standardının daha kullanışlı olduğu yer burasıdır.</p>
+<h2 id="REST"><a href="#REST" class="headerlink" title="REST"></a><strong><strong>REST</strong></strong></h2><p>REST (Temsili Durum Aktarımı) standardı, verileri URL yolu üzerinden paylaşır ‘yani. search&#x2F;users&#x2F;1’ ve genellikle çıktıyı JSON biçiminde ‘yani. kullanıcı kimliği 1’.</p>
+<p>Sorgu Parametrelerinden farklı olarak, REST API’leri genellikle, adını veya türünü belirtmeden doğrudan URL yolundan bir tür girdinin geçmesini bekleyen sayfalara odaklanır. Bu genellikle arama, sıralama veya filtreleme gibi sorgular için kullanışlıdır. Bu nedenle, REST API’leri genellikle web uygulaması işlevselliğini daha küçük API’lere böler ve web uygulamasının daha gelişmiş eylemler gerçekleştirmesini sağlamak için bu daha küçük API isteklerini kullanır ve web uygulamasını daha modüler ve ölçeklenebilir hale getirir.</p>
+<p>REST API isteklerine verilen yanıtlar genellikle JSON biçiminde yapılır ve daha sonra bu yanıtı işlemek ve düzgün bir şekilde işlemek için ön uç bileşenler geliştirilir. REST için diğer çıktı biçimleri arasında XML, x-www-form-urlencoded ve hatta ham veriler bulunur. Veritabanı bölümünde daha önce görüldüğü gibi, aşağıda GET &#x2F;category&#x2F;posts&#x2F; API isteğine bir JSON yanıtı örneği verilmiştir:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;100001&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;date&quot;</span><span class="punctuation">:</span> <span class="string">&quot;01-01-2021&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;content&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Welcome to this web application.&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;100002&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;date&quot;</span><span class="punctuation">:</span> <span class="string">&quot;02-01-2021&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;content&quot;</span><span class="punctuation">:</span> <span class="string">&quot;This is the first post on this web app.&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;100003&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;date&quot;</span><span class="punctuation">:</span> <span class="string">&quot;02-01-2021&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;content&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Reminder: Tomorrow is the ...&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>REST, web uygulamasında farklı eylemler gerçekleştirmek için çeşitli HTTP yöntemlerini kullanır:</p>
+<ul>
+<li><code>GET</code> request to retrieve data</li>
+<li><code>POST</code> request to create data</li>
+<li><code>PUT</code> request to change existing data</li>
+<li><code>DELETE</code> request to remove data</li>
+</ul>
+<h1 id="Ogrendiklerini-Pekistirmek-icin-Yapilacaklar-Listesi"><a href="#Ogrendiklerini-Pekistirmek-icin-Yapilacaklar-Listesi" class="headerlink" title="Öğrendiklerini Pekiştirmek için Yapılacaklar Listesi"></a>Öğrendiklerini Pekiştirmek için Yapılacaklar Listesi</h1><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>To-Do</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Set up a VM with a web server</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Create an HTML page</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Design it with CSS</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Add some simple functions with JavaScript</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Program a simple web application</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Connect your web application to the database</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Experiment with APIs</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Test your application for various vulnerabilities and security holes</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Try to adjust your code and configurations to close the vulnerabilities</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://fhk0.github.io">fhk0</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://fhk0.github.io/2022/09/15/Introduction-to-Web-Applications/">https://fhk0.github.io/2022/09/15/Introduction-to-Web-Applications/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/webapplications_htbacademy.jpg" data-sites="facebook, twitter, linkedin"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/09/15/Information-Gathering/"><img class="prev-cover" src="/img/content-images/htb-academy/Bilgi%20Toplama%20a41d603810c34c25afd7c8af7953272e/infogathering.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Information Gathering</div></div></a></div><div class="next-post pull-right"><a href="/2022/09/14/Web-Proxy/"><img class="next-cover" src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/webproxy_htbacademy.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Web Proxy</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/mrrobot.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">fhk0</div><div class="author-info__description">Web Application Pentester</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/FHK0"><i class="fab fa-github"></i><span>Follow Me on GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.linkedin.com/in/firathilmikaplan/" target="_blank" title="Linkedin"><i class="fa-brands fa-linkedin"></i></a><a class="social-icon" href="https://medium.com/@fhk0" target="_blank" title="Medium"><i class="fa-brands fa-medium"></i></a><a class="social-icon" href="https://www.youtube.com/channel/UCik9LW_i9-h2NKVrs6180ng" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a class="social-icon" href="https://www.hackerrank.com/fhk0x" target="_blank" title="HackerRank"><i class="fa-brands fa-hackerrank"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Hey! I'm currently solving PortSwigger Labs. I'll share the solutions of them soon.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-Applications-vs-Websites"><span class="toc-number">1.1.</span> <span class="toc-text">Web Applications vs. Websites</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-Applications-vs-Native-Operating-System-Applications"><span class="toc-number">1.2.</span> <span class="toc-text">Web Applications vs. Native Operating System Applications</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-Application-Distribution"><span class="toc-number">1.3.</span> <span class="toc-text">Web Application Distribution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Security-Risks-of-Web-Applications"><span class="toc-number">1.4.</span> <span class="toc-text">Security Risks of Web Applications</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Attacking-Web-Applications"><span class="toc-number">1.5.</span> <span class="toc-text">Attacking Web Applications</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web-Application-Layout"><span class="toc-number">2.</span> <span class="toc-text">Web Application Layout</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-Application-Infrastructure"><span class="toc-number">2.1.</span> <span class="toc-text">Web Application Infrastructure</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Client-Server"><span class="toc-number">2.1.1.</span> <span class="toc-text">Client-Server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#One-Server"><span class="toc-number">2.1.2.</span> <span class="toc-text">One Server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Many-Servers-One-Database"><span class="toc-number">2.1.3.</span> <span class="toc-text">Many Servers - One Database</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Many-Servers-Many-Databases"><span class="toc-number">2.1.4.</span> <span class="toc-text">Many Servers - Many Databases</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-Application-Components"><span class="toc-number">2.2.</span> <span class="toc-text">Web Application Components</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-Application-Architecture"><span class="toc-number">2.3.</span> <span class="toc-text">Web Application Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Microservices"><span class="toc-number">2.3.1.</span> <span class="toc-text">Microservices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Serverless"><span class="toc-number">2.3.2.</span> <span class="toc-text">Serverless</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Architecture-Security"><span class="toc-number">2.4.</span> <span class="toc-text">Architecture Security</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Front-End-vs-Back-End"><span class="toc-number">3.</span> <span class="toc-text">Front End vs. Back End</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Front-End"><span class="toc-number">3.1.</span> <span class="toc-text">Front End</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Back-End"><span class="toc-number">3.2.</span> <span class="toc-text">Back End</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Securing-Front-x2F-Back-End"><span class="toc-number">3.3.</span> <span class="toc-text">Securing Front&#x2F;Back End</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTML"><span class="toc-number">4.</span> <span class="toc-text">HTML</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URL-Encoding"><span class="toc-number">4.1.</span> <span class="toc-text">URL Encoding</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS"><span class="toc-number">5.</span> <span class="toc-text">CSS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Frameworks"><span class="toc-number">5.1.</span> <span class="toc-text">Frameworks</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaScript"><span class="toc-number">6.</span> <span class="toc-text">JavaScript</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Usage"><span class="toc-number">6.1.</span> <span class="toc-text">Usage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frameworks-1"><span class="toc-number">6.2.</span> <span class="toc-text">Frameworks</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Back-End-Servers"><span class="toc-number">7.</span> <span class="toc-text">Back End Servers</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Software"><span class="toc-number">7.1.</span> <span class="toc-text">Software</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hardware"><span class="toc-number">7.2.</span> <span class="toc-text">Hardware</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web-Servers"><span class="toc-number">8.</span> <span class="toc-text">Web Servers</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Workflow"><span class="toc-number">8.1.</span> <span class="toc-text">Workflow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Apache"><span class="toc-number">8.2.</span> <span class="toc-text">Apache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NGINX"><span class="toc-number">8.3.</span> <span class="toc-text">NGINX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IIS"><span class="toc-number">8.4.</span> <span class="toc-text">IIS</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Databases"><span class="toc-number">9.</span> <span class="toc-text">Databases</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Relational-SQL"><span class="toc-number">9.1.</span> <span class="toc-text">Relational (SQL)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Non-relational-NoSQL"><span class="toc-number">9.2.</span> <span class="toc-text">Non-relational (NoSQL)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Use-in-Web-Applications"><span class="toc-number">9.3.</span> <span class="toc-text">Use in Web Applications</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Development-Frameworks-amp-APIs"><span class="toc-number">10.</span> <span class="toc-text">Development Frameworks &amp; APIs</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#APIs"><span class="toc-number">10.1.</span> <span class="toc-text">APIs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Query-Parameters"><span class="toc-number">10.1.1.</span> <span class="toc-text">Query Parameters</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web-APIs"><span class="toc-number">11.</span> <span class="toc-text">Web APIs</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SOAP"><span class="toc-number">11.1.</span> <span class="toc-text">SOAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REST"><span class="toc-number">11.2.</span> <span class="toc-text">REST</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ogrendiklerini-Pekistirmek-icin-Yapilacaklar-Listesi"><span class="toc-number">12.</span> <span class="toc-text">Öğrendiklerini Pekiştirmek için Yapılacaklar Listesi</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/15/ffuf/" title="Ffuf"><img src="/img/content-images/htb-academy/FFuF%20Kullan%C4%B1m%C4%B1%20bce44819a46c47d58eed6d2c437dacc9/ffuf.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Ffuf"/></a><div class="content"><a class="title" href="/2022/09/15/ffuf/" title="Ffuf">Ffuf</a><time datetime="2022-09-15T17:54:21.000Z" title="Created 2022-09-15 20:54:21">2022-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/15/Information-Gathering/" title="Information Gathering"><img src="/img/content-images/htb-academy/Bilgi%20Toplama%20a41d603810c34c25afd7c8af7953272e/infogathering.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Information Gathering"/></a><div class="content"><a class="title" href="/2022/09/15/Information-Gathering/" title="Information Gathering">Information Gathering</a><time datetime="2022-09-15T17:42:10.000Z" title="Created 2022-09-15 20:42:10">2022-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/15/Introduction-to-Web-Applications/" title="Introduction to Web Applications"><img src="/img/content-images/htb-academy/Introduction%20to%20Web%20Applications%20a34760089e204fdc9d36fbda2150c87c/webapplications_htbacademy.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Introduction to Web Applications"/></a><div class="content"><a class="title" href="/2022/09/15/Introduction-to-Web-Applications/" title="Introduction to Web Applications">Introduction to Web Applications</a><time datetime="2022-09-15T16:48:47.000Z" title="Created 2022-09-15 19:48:47">2022-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/14/Web-Proxy/" title="Web Proxy"><img src="/img/content-images/htb-academy/Web%20Proxy%2016f688a30ef84ef487c46ed1605822a1/webproxy_htbacademy.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Web Proxy"/></a><div class="content"><a class="title" href="/2022/09/14/Web-Proxy/" title="Web Proxy">Web Proxy</a><time datetime="2022-09-14T19:31:29.000Z" title="Created 2022-09-14 22:31:29">2022-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/14/HTTP/" title="HTTP"><img src="/img/content-images/htb-academy/HTTP%20c125dbe0daee427ab81fd529d04baf58/http_htbacademy.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTTP"/></a><div class="content"><a class="title" href="/2022/09/14/HTTP/" title="HTTP">HTTP</a><time datetime="2022-09-14T18:18:44.000Z" title="Created 2022-09-14 21:18:44">2022-09-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By fhk0</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,0" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

